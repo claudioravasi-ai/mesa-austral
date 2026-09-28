@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mi reserva</title>
+<meta name="theme-color" content="#0F4C5E">
+<meta name="robots" content="noindex">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icono.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400..700&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/estilos.css">
+<style>
+.ticket{--r:7px;background:var(--surf);padding:22px 20px;display:grid;gap:8px;font-family:var(--mono);font-size:14px;
+  -webkit-mask:radial-gradient(var(--r) at 50% 0,#0000 98%,#000) 50% 0/calc(2*var(--r) + 7px) 51% repeat-x,radial-gradient(var(--r) at 50% 100%,#0000 98%,#000) 50% 100%/calc(2*var(--r) + 7px) 51% repeat-x;
+  mask:radial-gradient(var(--r) at 50% 0,#0000 98%,#000) 50% 0/calc(2*var(--r) + 7px) 51% repeat-x,radial-gradient(var(--r) at 50% 100%,#0000 98%,#000) 50% 100%/calc(2*var(--r) + 7px) 51% repeat-x}
+.ticket .cod{font-size:30px;font-weight:600;letter-spacing:.16em;text-align:center;color:var(--acento)}
+.ticket .l{display:flex;justify-content:space-between;gap:10px;border-top:1px dotted var(--line-2);padding-top:7px}
+.ticket .l span{color:var(--muted)}
+.sombra-ticket{filter:drop-shadow(0 10px 22px rgba(12,40,52,.16))}
+.chat-cab{display:flex;align-items:center;gap:10px;background:#0F4C5E;color:#fff;border-radius:18px 18px 0 0;padding:10px 14px;margin-bottom:-12px}
+.chat-cab b{display:block;font-size:14.5px}.chat-cab small{font-size:12px;opacity:.8}
+</style>
+</head>
+<body>
+<div class="envol angosto">
+  <header class="cab"><span class="logo" id="logo" aria-hidden="true">·</span><div><b id="nombreResto">Mi reserva</b><small id="subResto"></small></div></header>
+  <main id="app" class="pila" aria-live="polite"><div class="muted">Cargando…</div></main>
+</div>
+<script type="module" src="js/mi.js"></script>
+</body>
+</html>

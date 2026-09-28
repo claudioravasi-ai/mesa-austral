@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Panel del dueño</title>
+<meta name="theme-color" content="#0F4C5E">
+<meta name="robots" content="noindex">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icono.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="css/app.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<style>
+.duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:16px;align-items:start}
+.duo>*{min-width:0}
+.marea svg{display:block;width:100%;height:auto}
+.marea .area{fill:var(--canal-2);opacity:.2}.marea .linea{fill:none;stroke:var(--canal-2);stroke-width:2.2}.marea .tope{stroke:var(--mal);stroke-width:1.2;stroke-dasharray:4 4}
+.marea .grilla{stroke:var(--line);stroke-width:1}.marea .eje{fill:var(--muted);font:500 11px var(--mono)}.marea .cursor{stroke:var(--acento);stroke-width:2}.marea .punto{fill:var(--acento)}
+.marea .rot{fill:var(--acento);font:700 12px var(--mono)}.marea .tope-t{fill:var(--mal);font:600 10.5px var(--mono)}.marea .ahora{stroke:var(--ink-2);stroke-width:1;stroke-dasharray:2 3}
+.hora-ctl{display:grid;gap:4px;background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+input[type="range"]{width:100%;accent-color:var(--acento);height:28px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.cal .dsem{font:600 11px var(--mono);color:var(--muted);text-align:center}
+.cal button,.cal .vacio{aspect-ratio:1/1;border-radius:9px;display:grid;align-content:space-between;padding:5px 6px;text-align:left;font-size:11px;line-height:1}
+.cal button{background:color-mix(in srgb,var(--canal-2) var(--p,0%),var(--surf-2))}
+.cal button.alto{color:#fff}.cal button b{font:600 12px var(--mono)}.cal button span{font-size:10.5px;font-weight:700}
+.cal button.cerrado{background:repeating-linear-gradient(135deg,var(--surf-3) 0 5px,var(--surf-2) 5px 10px);color:var(--muted)}
+.cal button.futuro{opacity:.65}.cal button.hoy{box-shadow:inset 0 0 0 2px var(--acento)}.cal button[aria-pressed="true"]{outline:2.5px solid var(--ink);outline-offset:1px}
+.sem{display:grid;gap:6px}.sem div{display:grid;grid-template-columns:34px 1fr 44px;gap:8px;align-items:center;font-size:13px}
+.sem span{font-family:var(--mono);color:var(--muted)}.sem i{display:block;height:12px;border-radius:6px;background:var(--canal-2)}.sem b{font-family:var(--mono);text-align:right}
+.detalle{display:grid;gap:6px}.detalle .f{display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:6px}.detalle .f span{color:var(--muted)}
+.rg{display:grid;gap:3px;padding:12px 0;border-bottom:1px solid var(--line)}
+.rg-t{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.rg-t label{font-weight:700}.rg-t output{font:600 15px var(--mono);color:var(--acento)}
+.rg small{color:var(--muted);font-size:13px}
+.sw{display:flex;justify-content:space-between;align-items:center;gap:12px}.sw label{font-weight:700}
+.sw input{appearance:none;-webkit-appearance:none;flex:none;width:46px;height:28px;border-radius:14px;background:var(--line-2);position:relative;cursor:pointer;margin:0}
+.sw input::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+.sw input:checked{background:var(--ok)}.sw input:checked::after{transform:translateX(18px)}
+.qr{background:#fff;border-radius:14px;padding:12px;width:190px}.qr svg{display:block;width:100%;height:auto}
+.editor{display:grid;gap:12px}.ed-barra{display:grid;gap:8px}.ed-grupo{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.ed-grupo .etiqueta{min-width:70px}
+.ed-cuerpo{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:12px;align-items:start}
+.ed-panel{position:sticky;top:12px}.ed-svg{touch-action:none;cursor:default}.ed-svg [data-el],.ed-svg [data-mesa]{cursor:grab}.ed-asa{cursor:nwse-resize}
+.turno{display:grid;gap:10px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--surf)}
+.dias-sem{display:flex;gap:4px;flex-wrap:wrap}.dias-sem label{display:flex;gap:4px;align-items:center;padding:6px 9px;border-radius:9px;background:var(--surf-2);font-size:14px;font-weight:700}
+table.tabla{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}.tabla th{text-align:left;font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:9px 10px;border-bottom:1px solid var(--line-2)}
+.tabla td{padding:9px 10px;border-top:1px solid var(--line);vertical-align:middle}.tabla-caja{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surf)}
+.solo-movil{display:none}
+@media (max-width:900px){ .duo,.ed-cuerpo{grid-template-columns:1fr} .ed-panel{position:static} }
+@media (max-width:620px){ .solo-movil{display:block} .ed-grupo .etiqueta{min-width:100%} .cal{gap:3px} .cal button,.cal .vacio{padding:3px 4px} .cal button span{font-size:9.5px} }
+@media (min-width:901px) and (max-width:1100px){ .duo{grid-template-columns:1fr 1fr} .ed-cuerpo{grid-template-columns:minmax(0,1fr) 240px} }
+</style>
+</head>
+<body>
+<div class="envol">
+  <header class="cab"><span class="logo" aria-hidden="true">·</span><div><b id="nombreResto">Panel del dueño</b><small id="quien"></small></div>
+    <div class="der"><a class="boton chico" href="sala.html">Sala</a><button class="boton chico" id="salir" hidden>Salir</button></div></header>
+  <nav class="solapas" id="solapas" role="tablist" aria-label="Secciones" hidden></nav>
+  <main id="app" class="pila" style="margin-top:14px"><div class="muted">Cargando…</div></main>
+</div>
+<script type="module" src="js/dueno.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pagar</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="icono.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400..700&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<div class="envol angosto" style="padding-top:24px">
+  <main id="app" class="pila" aria-live="polite"><div class="muted">Cargando…</div></main>
+</div>
+<script type="module">
+import { $, esc, api, pesos, fechaLarga, barraPrueba } from './js/comun.js';
+const qs = new URLSearchParams(location.search), id = qs.get('p'), k = qs.get('k'), app = $('#app');
+let P = null;
+async function cargar(){
+  try { P = await api('GET', `/api/pago/${id}?k=${encodeURIComponent(k)}`); } catch (e){ app.innerHTML = `<div class="aviso mal">${esc(e.message)}</div>`; return; }
+  if (P.proveedor === 'mercadopago' && P.estado === 'pendiente'){ location.href = P.enlace; return; }
+  document.documentElement.dataset.estilo = P.estilo || 'canal';
+  const concepto = P.tipo === 'sena' ? 'Seña de la reserva (se descuenta de la cuenta)' : 'Compromiso por la reserva';
+  const volver = P.reserva ? `mi.html?c=${P.reserva.codigo}&k=${P.reserva.k}` : 'index.html';
+  app.innerHTML = `<span class="pill warn" style="justify-self:start">Pasarela de prueba · no se cobra nada</span>
+    <h1 class="disp" style="font-size:clamp(40px,8vw,64px)">${esc(P.resto)}</h1>
+    <div class="tarjeta"><div class="fila-h entre"><span class="muted">${concepto}</span></div>
+      <div style="font-family:var(--display);font-stretch:66%;font-size:52px;font-weight:850;line-height:1">${pesos(P.monto)}</div>
+      ${P.reserva ? `<div class="muted">Reserva ${esc(P.reserva.codigo)} · ${fechaLarga(P.reserva.fecha)} · ${P.reserva.hora} · ${P.reserva.pax} personas</div>` : ''}</div>
+    ${P.estado === 'pendiente' ? `<div class="aviso info">En la app real este botón abre Mercado Pago. Acá se simula el resultado para probar lo que pasa después.</div>
+      <button class="boton ok bloque" data-r="aprobado">Simular pago aprobado</button><button class="boton bloque" data-r="rechazado">Simular pago rechazado</button>` :
+      `<div class="aviso ${P.estado === 'aprobado' ? 'ok' : ''}">${P.estado === 'aprobado' ? '¡Pago recibido! Gracias.' : 'Este pago ya no está disponible (' + esc(P.estado) + ').'}</div>`}
+    <a class="boton canal bloque" href="${volver}">Volver a la reserva</a>`;
+}
+app.addEventListener('click', async e => {
+  const b = e.target.closest('[data-r]'); if (!b) return; b.disabled = true;
+  try { const r = await api('POST', `/api/pago/${id}/simular`, { k, resultado:b.dataset.r }); if (r.estado === 'rechazado'){ app.insertAdjacentHTML('afterbegin', '<div class="aviso mal">El pago fue rechazado (simulado). Probá de nuevo.</div>'); b.disabled = false; return; } cargar(); }
+  catch (err){ app.insertAdjacentHTML('afterbegin', `<div class="aviso mal">${esc(err.message)}</div>`); b.disabled = false; }
+});
+barraPrueba(); cargar();
+</script>
+</body>
+</html>

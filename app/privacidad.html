@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es" data-estilo="canal">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Privacidad y condiciones de reserva</title>
+<link rel="icon" href="icono.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/estilos.css">
+<style>
+main{max-width:720px;margin:0 auto;padding-block:36px 60px;display:grid;gap:18px}
+main h1{font-size:clamp(40px,8vw,64px)}
+main h2{font-size:26px;margin-top:10px}
+main p,main li{color:var(--ink-2);line-height:1.6}
+main ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.modelo{background:var(--e-nota);padding:12px 14px;border-radius:12px;font-size:14px}
+</style>
+</head>
+<body>
+<main>
+  <a href="index.html" class="muted">← Volver a reservar</a>
+  <h1 class="disp">Privacidad y condiciones</h1>
+  <p class="modelo">Texto modelo. Lo tiene que revisar un abogado matriculado antes de usarse con clientes reales.</p>
+
+  <h2 class="disp">Quién trata tus datos</h2>
+  <p>El restaurante donde reservás es el responsable de tus datos. Mesa Austral es el sistema que usa para las reservas y los trata por encargo del restaurante, solo para eso (Ley 25.326 de Protección de los Datos Personales).</p>
+
+  <h2 class="disp">Qué datos pedimos y para qué</h2>
+  <ul>
+    <li><b>Nombre y teléfono con WhatsApp:</b> para confirmar tu reserva, recordártela y avisarte si tu mesa se libera antes o se demora.</li>
+    <li><b>Correo</b> (opcional): para comprobantes.</li>
+    <li><b>Alergias</b> (opcional): es un dato de salud. Solo si lo marcás y lo autorizás aparte. Lo ven la sala y la cocina el día de tu visita y se borra a los 7 días.</li>
+    <li><b>Ocasión</b> (opcional): para atenderte mejor.</li>
+    <li><b>Novedades del restaurante:</b> solo si marcás esa casilla. Podés darte de baja cuando quieras.</li>
+  </ul>
+  <p>No pedimos DNI. Las tarjetas se cargan en Mercado Pago: el restaurante y Mesa Austral no ven sus números.</p>
+
+  <h2 class="disp">Cancelaciones y plantones</h2>
+  <ul>
+    <li>Podés cancelar sin cargo hasta la hora que te indicamos al reservar. Si reservás sobre la hora, tenés 15 minutos para cancelar sin cargo.</li>
+    <li>Si cancelás después o no venís, queda un incidente y un compromiso de pago por persona, con el monto que ves antes de confirmar. Si lo pagás y volvés dentro del plazo indicado, se descuenta de tu cuenta.</li>
+    <li>El compromiso no se cobra a la fuerza: si no lo pagás, tu próxima reserva online va a pedir una seña.</li>
+    <li>Con alerta meteorológica del Servicio Meteorológico Nacional no hay cargo. Ante una emergencia, avisanos: el restaurante puede dejarlo sin efecto.</li>
+    <li>Si el restaurante cancela tu reserva, te devuelve la seña completa.</li>
+    <li>Los incidentes son solo del restaurante donde reservaste: no se comparten con otros locales ni se publican, y vencen a los 12 meses.</li>
+  </ul>
+
+  <h2 class="disp">Cuánto tiempo guardamos los datos</h2>
+  <ul>
+    <li>Alergias: 7 días después de la visita.</li>
+    <li>Texto de los mensajes: 7 días (queda solo el tipo de aviso y si se envió).</li>
+    <li>Nombre, teléfono y correo: 12 meses desde tu última visita; después se borran y la reserva queda anónima, solo para estadística.</li>
+    <li>Incidentes: 12 meses.</li>
+  </ul>
+
+  <h2 class="disp">Tus derechos</h2>
+  <p>Desde el enlace de tu reserva podés ver tus datos y borrarlos. También podés pedirle al restaurante acceso a tus datos (respuesta en 10 días corridos), o corregirlos o suprimirlos (respuesta en 5 días hábiles). La Agencia de Acceso a la Información Pública es la autoridad de control de la Ley 25.326.</p>
+
+  <h2 class="disp">Dónde se guardan</h2>
+  <p>En servidores de Cloudflare. Los mensajes pasan por WhatsApp (Meta) y los pagos por Mercado Pago. Algunos de esos servidores están fuera de la Argentina. La conexión va cifrada (HTTPS).</p>
+</main>
+<script type="module">
+import { api, CONFIG } from './js/comun.js';
+const slug = new URLSearchParams(location.search).get('r') || CONFIG.RESTO;
+api('GET', `/api/r/${slug}`).then(i => { document.documentElement.dataset.estilo = (i.pagina && i.pagina.estilo) || 'canal'; }).catch(() => {});
+</script>
+</body>
+</html>

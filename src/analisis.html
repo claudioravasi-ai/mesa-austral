@@ -1,0 +1,424 @@
+<title>Del Azahar a Mesa Austral</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F1F4F6; --surf:#FFFFFF; --surf-2:#F6F8F9; --surf-3:#E6ECEF;
+  --ink:#0D2330; --ink-2:#3D5360; --muted:#687D89; --line:#DAE3E8; --line-2:#C3D0D8;
+  --acento:#C8431C; --acento-suave:#FCE6DD; --canal:#0F4C5E; --canal-suave:#DDEEF2;
+  --ok:#1D8452; --ok-suave:#DDF1E6; --aviso:#9A5F07; --aviso-suave:#FBF0D9; --mal:#BF2F2F; --mal-suave:#FBE4E4;
+  --display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#071A22; --surf:#0D2430; --surf-2:#112C3A; --surf-3:#173746;
+    --ink:#E5EEF2; --ink-2:#AEC1CB; --muted:#7F97A3; --line:#1B3B4A; --line-2:#285163;
+    --acento:#FF8A62; --acento-suave:#3B1D12; --canal:#8FD0E2; --canal-suave:#12394A;
+    --ok:#4FCB8B; --ok-suave:#0F3323; --aviso:#EDB24F; --aviso-suave:#382810; --mal:#F07A7A; --mal-suave:#3A1717;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#071A22; --surf:#0D2430; --surf-2:#112C3A; --surf-3:#173746;
+  --ink:#E5EEF2; --ink-2:#AEC1CB; --muted:#7F97A3; --line:#1B3B4A; --line-2:#285163;
+  --acento:#FF8A62; --acento-suave:#3B1D12; --canal:#8FD0E2; --canal-suave:#12394A;
+  --ok:#4FCB8B; --ok-suave:#0F3323; --aviso:#EDB24F; --aviso-suave:#382810; --mal:#F07A7A; --mal-suave:#3A1717;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased;padding-inline:16px;padding-block:0 60px}
+.doc{max-width:960px;margin:0 auto}
+h1,h2,h3{margin:0;font-family:var(--display);font-stretch:70%;letter-spacing:-.01em;line-height:1.05;text-wrap:balance}
+h1{font-size:clamp(40px,6.4vw,72px);font-weight:850;font-stretch:64%}
+h2{font-size:clamp(28px,3.8vw,40px);font-weight:820}
+h3{font-size:21px;font-weight:780;font-stretch:78%}
+p{margin:0;max-width:70ch}
+a{color:var(--canal)}
+.ojo{font-family:var(--mono);font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+header{padding-block:44px 26px;display:grid;gap:16px;border-bottom:1px solid var(--line-2)}
+header .lead{font-size:19px;color:var(--ink-2);max-width:62ch}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--muted)}
+.indice{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.indice a{font-size:13.5px;font-weight:600;text-decoration:none;padding:5px 10px;border-radius:8px;background:var(--surf);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink-2)}
+.indice a:hover{box-shadow:inset 0 0 0 1px var(--canal);color:var(--ink)}
+section{padding-block:44px 6px;display:grid;gap:16px}
+section>p,.bajada{color:var(--ink-2)}
+.veredicto{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:20px 22px;display:grid;gap:12px}
+.veredicto ul,.lista{margin:0;padding-left:20px;display:grid;gap:6px}
+.veredicto li b,.lista li b{color:var(--ink)}
+.lista li{color:var(--ink-2)}
+.dos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.caja{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:grid;gap:8px;align-content:start}
+.caja h3{font-size:19px}
+.caja p,.caja li{font-size:15px;color:var(--ink-2)}
+.caja ul,.caja ol{margin:0;padding-left:18px;display:grid;gap:4px}
+.tabla{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surf)}
+table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:680px}
+th{text-align:left;font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding:11px 14px;border-bottom:1px solid var(--line-2);background:var(--surf-2)}
+td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top;color:var(--ink-2)}
+tr:first-child td{border-top:0}
+td b{color:var(--ink)}
+td code,p code,li code{font-family:var(--mono);font-size:13px;background:var(--surf-3);padding:1px 5px;border-radius:5px;color:var(--ink)}
+.grav{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:600;padding:2px 7px;border-radius:5px;white-space:nowrap}
+.g-alta{background:var(--mal-suave);color:var(--mal)} .g-media{background:var(--aviso-suave);color:var(--aviso)} .g-baja{background:var(--surf-3);color:var(--ink-2)}
+.si{color:var(--ok);font-weight:700} .no{color:var(--mal);font-weight:700} .parcial{color:var(--aviso);font-weight:700}
+.formula{font-family:var(--mono);font-size:14.5px;background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:14px 16px;overflow-x:auto;color:var(--ink);line-height:1.7}
+.formula span{color:var(--muted)}
+.numeros{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surf)}
+.numeros div{padding:14px 16px;display:grid;gap:2px}
+.numeros div+div{border-left:1px solid var(--line)}
+.numeros b{font-family:var(--display);font-stretch:66%;font-size:32px;font-weight:850;line-height:1;font-variant-numeric:tabular-nums}
+.numeros span{font-size:13.5px;color:var(--ink-2);line-height:1.35}
+.arq{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:stretch}
+.arq .col{display:grid;gap:8px;align-content:start}
+.arq .col>b{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.nodo{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px;color:var(--ink-2)}
+.nodo b{display:block;color:var(--ink);font-size:15px}
+.nodo.centro{border-color:var(--canal);box-shadow:inset 0 0 0 1px var(--canal)}
+.flecha{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.nota{background:var(--aviso-suave);color:var(--ink);border-radius:12px;padding:12px 14px;font-size:14.5px}
+.nota b{color:var(--aviso)}
+.fuentes{font-size:14px;color:var(--ink-2);display:grid;gap:4px;padding-left:18px;margin:0}
+footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted)}
+@media (max-width:760px){
+  .dos,.arq{grid-template-columns:1fr}
+  .numeros{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .numeros div:nth-child(3){border-left:0}
+  .numeros div:nth-child(n+3){border-top:1px solid var(--line)}
+}
+</style>
+
+<div class="doc">
+<header>
+  <span class="ojo">Análisis técnico y comercial · 28 de septiembre de 2026</span>
+  <h1>Del Azahar a Mesa Austral</h1>
+  <p class="lead">Desglose del sistema de reservas «Restaurante Azahar», qué le falta para funcionar de verdad en internet, cómo lo hacen otras apps en Argentina y el mundo, y la propuesta para venderlo a restaurantes de Ushuaia.</p>
+  <div class="meta"><span>Archivo analizado: <code>Reservas mesas restaurant.html</code> (2.541 líneas)</span><span>Para: Claudio Ravasi</span></div>
+  <nav class="indice" aria-label="Contenido">
+    <a href="#veredicto">Veredicto</a><a href="#hace">Qué hace</a><a href="#errores">Errores y contrapuntos</a><a href="#comparacion">Comparación</a><a href="#automatizar">Automatizaciones</a><a href="#liberar">La mesa que se libera</a><a href="#politica">Plantones</a><a href="#base">Base de datos</a><a href="#arquitectura">100 % online</a><a href="#seguridad">Seguridad</a><a href="#privacidad">Privacidad</a><a href="#plan">Plan y precio</a><a href="#fuentes">Fuentes</a>
+  </nav>
+</header>
+
+<section id="veredicto">
+  <h2>El veredicto</h2>
+  <div class="veredicto">
+    <p><b>Es un muy buen prototipo de pantallas y un sistema de reservas que todavía no existe.</b> El plano del salón, las combinaciones de mesas y el cálculo de disponibilidad están bien pensados. Pero todo vive en el navegador de quien lo abre: las reservas, las contraseñas y los datos de los clientes se guardan en <code>localStorage</code>, los correos «enviados» no se envían y dos personas en dos teléfonos nunca ven las mismas mesas.</p>
+    <ul>
+      <li><b>Conservar:</b> el motor de disponibilidad (franja + preparación antes y después), el plano con estados y «se libera a las…», las combinaciones con restricciones y la búsqueda de alternativas.</li>
+      <li><b>Rehacer:</b> guardado, usuarios y permisos en un servidor; avisos reales por WhatsApp; política de cancelación; pagos con Mercado Pago.</li>
+      <li><b>Sumar:</b> recordatorios con botones, plantón automático, lista de espera que se ofrece sola, la mesa que se pide mientras se libera, panel simple para el dueño y cierres diario y mensual.</li>
+      <li><b>Técnica:</b> sacar Babel del navegador (tarda y pesa en un 4G de Ushuaia) y escribirlo como las otras apps: PWA sin compilación, más un servidor chico.</li>
+      <li><b>Argentinizar:</b> hoy está escrito para España («Introduce», teléfonos de 9 dígitos, fechas <code>es-ES</code>, «trona»).</li>
+    </ul>
+  </div>
+</section>
+
+<section id="hace">
+  <h2>Qué hace hoy, pantalla por pantalla</h2>
+  <div class="dos">
+    <div class="caja"><h3>Para el cliente</h3><ol>
+      <li><b>Búsqueda:</b> fecha (hasta 60 días), hora cada 30 min en dos turnos (12:30–15:30 y 20:00–22:30), 1 a 16 personas, zona preferida y «accesible».</li>
+      <li><b>Plano:</b> dibujo SVG con zoom, arrastre y pellizco. Siete estados de mesa (libre, elegida, ocupada, se libera pronto, no compatible, bloqueada, fuera de servicio). Lista de opciones ordenadas por menos lugares desperdiciados.</li>
+      <li><b>Datos:</b> nombre, teléfono, correo, preferencias, alergias, accesibilidad, silla para bebé, consentimiento y novedades.</li>
+      <li><b>Resumen</b> y <b>confirmación</b> con un código de 4 letras y 4 números.</li>
+      <li><b>Mi reserva:</b> buscar con código + correo o teléfono; modificar o cancelar.</li>
+      <li><b>Sin lugar:</b> otras horas del mismo día (±3 h), otros días (hasta 6), lista de espera y el plano de esa franja.</li>
+    </ol></div>
+    <div class="caja"><h3>Para el restaurante</h3><ul>
+      <li><b>Ingreso</b> con tres roles: administrador, maître y sala.</li>
+      <li><b>Tablero:</b> reservas, personas, ocupación, lista de espera, plano en vivo con un reloj simulado, próximas liberaciones y retrasos.</li>
+      <li><b>Reservas del día:</b> sentar, cerrar, no presentado, editar y cancelar; exportar CSV.</li>
+      <li><b>Editor del plano:</b> mover, crear, duplicar, rotar y borrar mesas; paredes, ventanas, puertas, salidas, barra y zonas; combinaciones con restricciones.</li>
+      <li><b>Bloqueos</b> por zona o mesa, con motivo.</li>
+      <li><b>Clientes:</b> reservas, personas, última visita, cancelaciones, ausencias y alergias; «habitual» desde 3 reservas.</li>
+      <li><b>Métricas, auditoría</b> (con reintento de avisos fallidos) y <b>ajustes</b>.</li>
+    </ul></div>
+  </div>
+  <div class="caja"><h3>El motor, en una línea</h3>
+    <p>Cada reserva ocupa la mesa desde 15 minutos antes hasta 15 minutos después de su duración (90 min hasta 4 personas, 105 hasta 8, 120 más). Una mesa sirve si alcanza la capacidad y ninguna reserva o bloqueo se superpone con esa franja. Las opciones se ordenan con un puntaje: lugares sobrantes × 10 + cantidad de mesas × 3, más castigos si no es la zona pedida o no es accesible.</p>
+  </div>
+</section>
+
+<section id="errores">
+  <h2>Errores y contrapuntos</h2>
+  <p class="bajada">Encontrados leyendo el código completo. La línea es la del archivo original.</p>
+  <div class="tabla"><table>
+    <thead><tr><th>Qué pasa</th><th>Dónde</th><th>Por qué importa</th><th>Gravedad</th></tr></thead>
+    <tbody>
+      <tr><td><b>Nada sale del navegador.</b> Reservas, clientes, usuarios y contraseñas se guardan en <code>localStorage</code>.</td><td>427–431, 2467–2470</td><td>Dos clientes pueden reservar la misma mesa desde dos teléfonos. Cualquiera que use esa computadora ve todos los datos.</td><td><span class="grav g-alta">alta</span></td></tr>
+      <tr><td><b>Contraseñas escritas en el código</b> y precargadas en el formulario de ingreso; los permisos solo esconden botones.</td><td>401–405, 1634–1635, 1664–1671, 1680–1684</td><td>Cualquiera entra como administrador. Los permisos se tienen que verificar en el servidor.</td><td><span class="grav g-alta">alta</span></td></tr>
+      <tr><td><b>Modificar una reserva no revisa la disponibilidad</b>, aunque el cartel dice que sí; si suben de 4 a 8 personas, siguen en la mesa de 4.</td><td>1116–1122, 1518–1520</td><td>Doble reserva y mesas chicas para el grupo.</td><td><span class="grav g-alta">alta</span></td></tr>
+      <tr><td><b>Cancelar se puede siempre</b>, incluso después de la hora, sin política; el aviso de cancelación sale sin destinatario.</td><td>1106–1114 (1110)</td><td>No hay forma de desalentar la cancelación sobre la hora.</td><td><span class="grav g-alta">alta</span></td></tr>
+      <tr><td><b>Se puede reservar una hora que ya pasó</b> (hoy a las 12:30 cuando son las 21:00).</td><td>1171–1182, 993</td><td>Reservas imposibles que ocupan mesa.</td><td><span class="grav g-media">media</span></td></tr>
+      <tr><td><b>«Te guardamos la mesa 10 minutos»</b> es solo un texto: no hay reserva temporal.</td><td>1421–1424</td><td>Con varios clientes a la vez, dos llegan al último paso con la misma mesa.</td><td><span class="grav g-media">media</span></td></tr>
+      <tr><td><b>La preparación de cada mesa y la del ajuste general no se usan:</b> el cálculo siempre toma 15 minutos fijos.</td><td>259, 436–447, 2011–2013, 2189–2191</td><td>El dueño cambia un número y no pasa nada.</td><td><span class="grav g-media">media</span></td></tr>
+      <tr><td><b>El máximo de personas online no se aplica:</b> la lista siempre ofrece hasta 16.</td><td>1186–1188 contra 424</td><td>Grupos grandes sin seña ni control.</td><td><span class="grav g-media">media</span></td></tr>
+      <tr><td><b>Al editar, las mesas se escriben a mano</b> separadas por coma, sin validar.</td><td>2244–2245</td><td>Mesas que no existen o dobles reservas desde el panel.</td><td><span class="grav g-media">media</span></td></tr>
+      <tr><td><b>La lista de espera no avisa a nadie:</b> «Avisar» solo cambia el estado, y al liberarse una mesa no se ofrece sola.</td><td>2123</td><td>Se pierde la herramienta que más mesas recupera.</td><td><span class="grav g-media">media</span></td></tr>
+      <tr><td><b>La ocupación engaña:</b> personas del día ÷ lugares, sin contar que las mesas rotan; la de Métricas divide sentadas por mesas.</td><td>1711–1712, 2375</td><td>Números que el dueño no puede usar.</td><td><span class="grav g-baja">baja</span></td></tr>
+      <tr><td><b>Combinaciones sin control:</b> se pueden unir mesas que no se tocan y la capacidad es la suma (al juntar se pierden lugares).</td><td>1788–1798</td><td>Grupos sentados en mesas que no se pueden armar.</td><td><span class="grav g-baja">baja</span></td></tr>
+      <tr><td><b>Paredes, puertas y zonas</b> se agregan en un lugar fijo y no se pueden mover ni borrar.</td><td>1800–1807</td><td>El editor no alcanza para dibujar un salón real.</td><td><span class="grav g-baja">baja</span></td></tr>
+      <tr><td><b>Turnos fijos en el código</b>; en Ajustes se ven pero no se editan. No hay feriados ni cierres.</td><td>261–264, 2197–2200</td><td>Cada restaurante tiene sus horarios y sus días.</td><td><span class="grav g-baja">baja</span></td></tr>
+      <tr><td><b>El CSV exporta teléfono y correo</b> de todos los clientes del día.</td><td>1738–1749</td><td>Una planilla con datos personales que termina en un pendrive.</td><td><span class="grav g-media">media</span></td></tr>
+      <tr><td><b>React + Babel en el navegador</b>, desde unpkg.</td><td>238–240</td><td>Varios megas y compilación en cada visita: lento en un teléfono con 4G. Sin Node en tu equipo, conviene JavaScript directo.</td><td><span class="grav g-media">media</span></td></tr>
+      <tr><td><b>Escrito para España:</b> textos, formato de teléfono y fechas.</td><td>254, 1042–1044, 1343</td><td>Hay que llevarlo al voseo y a <code>+54 9 2901</code>.</td><td><span class="grav g-baja">baja</span></td></tr>
+      <tr><td><b>«Restablecer datos demo»</b> borra todo con un toque.</td><td>2204–2208</td><td>En producción, un toque equivocado borra la base.</td><td><span class="grav g-baja">baja</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="comparacion">
+  <h2>Cómo lo hacen otros, en Argentina y afuera</h2>
+  <div class="tabla"><table>
+    <thead><tr><th>App</th><th>Dónde y cuántos</th><th>Contra los plantones</th><th>Qué tomamos</th></tr></thead>
+    <tbody>
+      <tr><td><b>Meitre</b></td><td>Argentina, desde 2017. Más de 1.000 restaurantes en Latinoamérica, casi todos de alta cocina.</td><td>Recordatorios con opción de cancelar o cambiar; penalidad si el cliente no va. Su CEO informó que se cumple el 98 % de las reservas.</td><td>Recordatorio con botones; foco en restaurantes con pocas mesas.</td></tr>
+      <tr><td><b>Woki</b></td><td>Argentina. Más de 1.500 restaurantes en Argentina y Chile. App para comensales, además del sistema.</td><td>Permite penalidades sin cobrar al reservar. Fila virtual desde el teléfono. Integración con WhatsApp, Google, Instagram y Fudo.</td><td>La fila virtual y la conexión con el sistema de caja.</td></tr>
+      <tr><td><b>Mesa Express</b></td><td>Argentina, sin comisiones.</td><td>Seña online automática con Mercado Pago; confirmación por WhatsApp.</td><td>Seña con Mercado Pago.</td></tr>
+      <tr><td><b>CoverManager</b></td><td>España. 3.500 locales en 11 países, con Latinoamérica.</td><td>Tarjeta en garantía, prepago, SMS de reconfirmación, reserva desde Google. Informa menos del 2 % de ausencias. Tarifa fija sin comisión por comensal.</td><td>Abono fijo sin comisión; reserva desde Google.</td></tr>
+      <tr><td><b>OpenTable</b></td><td>Estados Unidos y el mundo.</td><td>Retiene la tarjeta y cobra si no vas o cancelás tarde: hasta 16 % menos ausencias. Desde 2025–2026 suma un 2 % sobre esos cobros.</td><td>La retención de tarjeta, sin cobrar al reservar.</td></tr>
+      <tr><td><b>Resy, SevenRooms, Tock</b></td><td>Estados Unidos.</td><td>Depósitos, entradas prepagas para menús cerrados y ficha de cliente.</td><td>Prepago solo para fechas especiales y grupos.</td></tr>
+      <tr><td><b>TheFork / Restorando</b></td><td>Se fue de Argentina en octubre de 2021.</td><td>—</td><td>Un sistema local, con soporte en la ciudad, tiene espacio.</td></tr>
+      <tr><td><b>WhatsApp y cuaderno</b></td><td>La mayoría de los restaurantes de Ushuaia.</td><td>Ninguna. El plantón se descubre cuando la mesa ya quedó vacía.</td><td>Es el verdadero competidor: la app tiene que ser más fácil que un mensaje.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="caja"><h3>Dónde se diferencia Mesa Austral</h3><ul>
+    <li><b>El plano en vivo con la hora de liberación</b> y la posibilidad de pedir una mesa ocupada para cuando se desocupe (ver más abajo). No lo vimos en las apps revisadas.</li>
+    <li><b>El compromiso vuelve como crédito</b> si el cliente regresa: educa sin espantar.</li>
+    <li><b>Ushuaia primero:</b> exención automática con alerta del SMN, cierre por temporal con un gesto, turistas en su idioma y con la hora de zarpada del crucero.</li>
+    <li><b>Los clientes son del restaurante,</b> no de una app de terceros que después les ofrece la competencia.</li>
+    <li><b>Soporte en la ciudad</b> y abono fijo.</li>
+  </ul></div>
+</section>
+
+<section id="automatizar">
+  <h2>Automatizaciones: cuando pasa esto, la app hace aquello</h2>
+  <div class="tabla"><table>
+    <thead><tr><th>Cuando…</th><th>La app…</th><th>A quién le avisa</th></tr></thead>
+    <tbody>
+      <tr><td>Alguien confirma una reserva</td><td>Bloquea la mesa (o las mesas combinadas) en una sola operación, manda la confirmación con el enlace «Mi reserva» y la agenda en la noche de la sala.</td><td>Cliente (WhatsApp) · sala (aviso en la tablet)</td></tr>
+      <tr><td>El mediodía del día de la reserva</td><td>Recordatorio con tres botones: confirmo, cambio o cancelo.</td><td>Cliente</td></tr>
+      <tr><td>Faltan 2 horas y no contestó</td><td>Segundo aviso; en la tablet queda en amarillo para llamar.</td><td>Cliente · encargado</td></tr>
+      <tr><td>Pasó la mitad de la tolerancia</td><td>«¿Vienen? Te guardamos la mesa hasta las…»</td><td>Cliente</td></tr>
+      <tr><td>Terminó la tolerancia sin respuesta</td><td>Marca el plantón, libera la mesa, registra el incidente y manda el enlace del compromiso.</td><td>Sala · cliente</td></tr>
+      <tr><td>Se libera una mesa (cancelación o plantón)</td><td>Se la ofrece al primero de la lista de espera con 10 minutos para aceptar; si no, al siguiente.</td><td>Lista de espera</td></tr>
+      <tr><td>La sala toca «pidieron la cuenta»</td><td>Recalcula cuándo se libera la mesa y avisa a quien la pidió para después.</td><td>Cliente siguiente</td></tr>
+      <tr><td>Una mesa se pasa de su tiempo</td><td>Avisa al siguiente con tiempo y le ofrece esperar en la barra u otra mesa equivalente.</td><td>Cliente siguiente · sala</td></tr>
+      <tr><td>Muchas reservas a la misma hora</td><td>Respeta un tope de personas que entran cada 15 minutos, para no ahogar la cocina.</td><td>—</td></tr>
+      <tr><td>El SMN emite alerta para Ushuaia</td><td>La muestra en la sala, propone cerrar y exime de compromisos a quien no venga.</td><td>Encargado · clientes</td></tr>
+      <tr><td>El teléfono es de Brasil o del exterior</td><td>Escribe en portugués o inglés y marca el idioma en la tablet.</td><td>Cliente · sala</td></tr>
+      <tr><td>A las 03:00 de cada día</td><td>Cierra el día (ver «Base de datos»).</td><td>—</td></tr>
+      <tr><td>El día 1 de cada mes</td><td>Manda al dueño el resumen del mes anterior.</td><td>Dueño</td></tr>
+      <tr><td>Dos horas después de la visita</td><td>Pide una reseña en Google, solo a quien aceptó recibir mensajes.</td><td>Cliente</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="liberar">
+  <h2>La mesa que se libera (tu idea)</h2>
+  <p>El cliente ve en el plano, en vivo, cuándo se desocupa cada mesa y la puede pedir para ese momento. El sistema de la Azahar ya calcula «se libera a las…» (líneas 462–471), pero con una duración fija. La propuesta es que la estimación use el tiempo real que lleva la mesa y aprenda de cada noche.</p>
+  <div class="formula">
+    libre_estimada = hora_en_que_se_sentaron + duración_esperada(personas, turno, día)<br>
+    reservable_desde = libre_estimada + limpieza <span>(15 min, configurable por mesa)</span><br><br>
+    <span>Tu ejemplo:</span> 20:30 + 90 min (mesa de 2) = 22:00 → + 15 min de limpieza = <b>22:15</b><br><br>
+    duración_esperada = promedio de las últimas 8 semanas para ese tamaño de grupo, turno y día<br>
+    <span>(arranca con 90 / 105 / 120 min y se ajusta sola; los lunes de invierno una mesa de 2 puede durar 72 min)</span>
+  </div>
+  <div class="dos">
+    <div class="caja"><h3>Lo que ve el cliente</h3><ul>
+      <li>La mesa ocupada con «libre 22:15» debajo.</li>
+      <li>Al tocarla: desde qué hora está ocupada, cuándo se estima libre y desde cuándo la puede pedir.</li>
+      <li>Si se libera antes: «¿querés venir ya?». Si se demora más de 10 minutos: aviso con tiempo y opción de esperar en la barra u otra mesa equivalente.</li>
+    </ul></div>
+    <div class="caja"><h3>Lo que cuida el sistema</h3><ul>
+      <li>La reserva «al liberarse» queda firme para esa hora: la mesa ya no se ofrece a otro para ese horario.</li>
+      <li>Nunca se promete una hora anterior a la estimada, solo se ofrece adelantar.</li>
+      <li>La sala mejora la estimación con dos toques: «pidieron la cuenta» y «se quedan un rato más». Con Fudo u otro sistema de caja, la cuenta pedida llega sola.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="politica">
+  <h2>Plantones: cuánto cobrar y cómo, sin maltratar</h2>
+  <div class="numeros">
+    <div><b>$ 55.000</b><span>ticket de referencia por persona (cena en Ushuaia: $ 45.000 a $ 80.000)</span></div>
+    <div><b>$ 143.000</b><span>margen que pierde el restaurante con una mesa de 4 vacía (65 % del ticket)</span></div>
+    <div><b>$ 10.000</b><span>compromiso sugerido por persona (18 % del ticket)</span></div>
+    <div><b>28 %</b><span>de lo perdido que cubre el compromiso de una mesa de 4 ($ 40.000)</span></div>
+  </div>
+  <div class="tabla"><table>
+    <thead><tr><th>Situación</th><th>Qué pasa</th><th>Valor sugerido</th></tr></thead>
+    <tbody>
+      <tr><td><b>Cancela con 3 horas o más</b></td><td>Sin cargo. La mesa se ofrece a la lista de espera.</td><td>$ 0</td></tr>
+      <tr><td><b>Cancela con menos de 3 horas</b></td><td>Antes le ofrece alternativas (llegar más tarde, otra hora, menos personas). Si igual cancela: incidente y enlace de pago.</td><td>$ 10.000 por persona, tope $ 60.000</td></tr>
+      <tr><td><b>No viene ni avisa</b></td><td>«¿Vienen?» a mitad de la tolerancia (15 min); plantón al final. Incidente y enlace de pago.</td><td>$ 10.000 por persona</td></tr>
+      <tr><td><b>Paga el compromiso</b></td><td>Se transforma en crédito si vuelve en 90 días. El restaurante recupera algo y, sobre todo, al cliente.</td><td>—</td></tr>
+      <tr><td><b>No lo paga</b></td><td>No se persigue ni se intima: la próxima reserva online pide seña.</td><td>—</td></tr>
+      <tr><td><b>Dos incidentes en 12 meses</b></td><td>Reservas online solo con seña durante 6 meses.</td><td>—</td></tr>
+      <tr><td><b>Grupos de 8 o más, fechas especiales</b></td><td>Seña al reservar, descontada de la cuenta; se devuelve completa con más de 48 horas de aviso.</td><td>$ 15.000 por persona</td></tr>
+      <tr><td><b>Alerta del SMN o emergencia justificada</b></td><td>Sin cargo automático con alerta; el encargado puede condonar a mano y queda registrado quién lo hizo.</td><td>$ 0</td></tr>
+      <tr><td><b>El restaurante cancela</b></td><td>Devuelve la seña completa al instante y ofrece otra fecha. La regla vale para los dos lados.</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+  <div class="dos">
+    <div class="caja"><h3>Cómo se cobra en Argentina</h3><ul>
+      <li><b>Enlace de pago</b> (Mercado Pago) después del incidente: es lo que pediste, simple y sin datos de tarjeta guardados. Es voluntario; la consecuencia es la seña en la próxima reserva.</li>
+      <li><b>Retención en la tarjeta</b> (Mercado Pago con <code>capture=false</code>): la reserva de fondos dura 7 días y solo con Visa, Mastercard, American Express o Cabal. Sirve para reservas de la semana o para pedirla en el recordatorio a quien ya tuvo un incidente.</li>
+      <li><b>Seña</b>: pago real al reservar, para grupos y fechas especiales.</li>
+    </ul></div>
+    <div class="caja"><h3>Lo legal (modelo, a revisar por un abogado matriculado)</h3><ul>
+      <li><b>Ley 24.240, art. 4:</b> la condición se informa antes de confirmar, clara, en dos líneas, con casilla de aceptación.</li>
+      <li><b>Art. 37:</b> un monto desproporcionado puede considerarse abusivo. Por eso 18 % del ticket y tope.</li>
+      <li><b>Art. 8 bis, trato digno:</b> mensajes amables, sin «deuda», sin amenazas ni escraches.</li>
+      <li><b>Código Civil y Comercial, art. 1059:</b> la seña es a cuenta del precio; la política se aplica igual para el restaurante.</li>
+      <li>Revisar cómo encaja la seña online con el <b>botón de arrepentimiento</b> (Res. SCI 424/2020).</li>
+      <li><b>Los incidentes nunca se comparten con otros restaurantes:</b> una «lista negra» común sería una base de datos sobre conducta de pago de personas.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="base">
+  <h2>Base de datos para la rotación diaria y mensual</h2>
+  <p>Las reservas son datos relacionados (mesa, cliente, turno, pago, incidente) y el dueño quiere cuentas por noche y por mes. Por eso conviene una base SQL, no un árbol como el de Firebase.</p>
+  <div class="tabla"><table>
+    <thead><tr><th>Tabla</th><th>Campos principales</th><th>Para qué</th></tr></thead>
+    <tbody>
+      <tr><td><code>restaurantes</code></td><td>nombre, zona horaria <code>America/Argentina/Ushuaia</code>, política (JSON)</td><td>Varios restaurantes en la misma app, separados.</td></tr>
+      <tr><td><code>personal</code></td><td>restaurante, cuenta, nombre, rol (dueño, encargado, sala, cocina), activo</td><td>Permisos verificados en el servidor.</td></tr>
+      <tr><td><code>mesas</code>, <code>combinaciones</code></td><td>zona, forma, posición, capacidad mínima y máxima, limpieza en minutos, combinable</td><td>El plano y las mesas que se juntan.</td></tr>
+      <tr><td><code>turnos</code>, <code>excepciones</code></td><td>día de la semana, desde, hasta, intervalo, tope de personas por franja; feriados, cierres, eventos, temporal</td><td>Horarios reales y ritmo de la cocina.</td></tr>
+      <tr><td><code>clientes</code></td><td>nombre, teléfono E.164, correo, idioma, acepta avisos, acepta promociones, visitas, última visita</td><td>Sin DNI. Uno por restaurante.</td></tr>
+      <tr><td><code>reservas</code></td><td>código, cliente, fecha, inicio y fin (minutos), personas, estado, canal, ocasión, alergias cifradas + fecha de borrado, versión</td><td>El corazón.</td></tr>
+      <tr><td><code>ocupacion</code></td><td>restaurante, mesa, fecha, bloque de 15 min — <b>clave primaria</b> — y reserva</td><td><b>Hace imposible la doble reserva:</b> reservar inserta todos los bloques en una operación; si uno ya existe, falla entera.</td></tr>
+      <tr><td><code>espera</code></td><td>franja deseada, personas, orden, oferta vigente hasta</td><td>La lista que se ofrece sola.</td></tr>
+      <tr><td><code>incidentes</code></td><td>tipo (tardía, plantón), monto, estado (pendiente, pagado, condonado, exento por alerta, vencido), quién condonó, vence</td><td>La política, con rastro.</td></tr>
+      <tr><td><code>pagos</code></td><td>tipo (seña, garantía, compromiso), id de Mercado Pago único, monto, estado</td><td>Sin datos de tarjeta; el id único evita procesar dos veces el mismo aviso de pago.</td></tr>
+      <tr><td><code>mensajes</code></td><td>canal, plantilla, estado, intentos, error</td><td>Reintentos, sin guardar el texto.</td></tr>
+      <tr><td><code>duraciones</code></td><td>personas, turno, día, promedio de las últimas 8 semanas</td><td>La estimación de «se libera a las…».</td></tr>
+      <tr><td><code>metricas_dia</code></td><td>fecha, turno, reservas, personas, sin reserva, plantones, tardías, ocupación, giro de mesas, recuperado</td><td>El panel mensual abre al instante.</td></tr>
+      <tr><td><code>auditoria</code></td><td>quién, qué, cuándo, detalle sin datos personales</td><td>Solo se agrega, nunca se edita.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="dos">
+    <div class="caja"><h3>Cierre del día (03:00)</h3><ul>
+      <li>Reservas confirmadas sin llegada y sin marcar → plantón; sentadas → finalizadas.</li>
+      <li>Calcula <code>metricas_dia</code> y actualiza <code>duraciones</code>.</li>
+      <li>Borra los bloques de <code>ocupacion</code> de días pasados.</li>
+      <li>Borra las alergias de visitas de hace más de 7 días.</li>
+      <li>Vence ofertas de espera, reintenta avisos fallidos, hace el respaldo.</li>
+    </ul></div>
+    <div class="caja"><h3>Cierre del mes (día 1)</h3><ul>
+      <li>Resumen al dueño: personas, ocupación por día y turno, giro de mesas, plantones, plata recuperada, clientes nuevos y habituales.</li>
+      <li>Reservas de más de 12 meses: se borran nombre, teléfono y correo; quedan fecha, personas y estado para estadística.</li>
+      <li>Incidentes de más de 12 meses: vencen.</li>
+      <li>Clientes sin visitas en 24 meses: se borran.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="arquitectura">
+  <h2>100 % online y en tiempo real</h2>
+  <div class="arq">
+    <div class="col"><b>Pantallas</b>
+      <div class="nodo"><b>Reservar</b>página pública: enlace en Instagram, Google Maps y QR en la puerta</div>
+      <div class="nodo"><b>Sala</b>tablet de la entrada, instalable como app</div>
+      <div class="nodo"><b>Dueño</b>teléfono, tres solapas</div>
+      <span class="flecha">todo en JavaScript directo, sin compilar, como tus otras PWA</span></div>
+    <div class="col"><b>Servidor</b>
+      <div class="nodo centro"><b>Cloudflare Workers</b>la API; verifica permisos, reglas y pagos</div>
+      <div class="nodo centro"><b>D1 (SQL)</b>la base de arriba</div>
+      <div class="nodo centro"><b>Durable Object por restaurante</b>ordena las reservas de a una y empuja los cambios en vivo a la sala</div>
+      <div class="nodo"><b>Cron y colas</b>recordatorios, plantones, cierres, reintentos</div>
+      <div class="nodo"><b>R2</b>respaldos diarios</div></div>
+    <div class="col"><b>Afuera</b>
+      <div class="nodo"><b>WhatsApp Cloud API</b>plantillas de confirmación, recordatorio y aviso</div>
+      <div class="nodo"><b>Mercado Pago</b>señas, retenciones y compromisos; avisos de pago firmados</div>
+      <div class="nodo"><b>Firebase Auth</b>cuentas del personal (ya lo usás en HRU)</div>
+      <div class="nodo"><b>SMN</b>alertas para Ushuaia (a confirmar la fuente)</div></div>
+  </div>
+  <p>Ya usás un Worker de Cloudflare en NiJu. La alternativa conocida es Firebase con funciones en el servidor (plan Blaze): sirve, pero cuesta más garantizar que nunca haya dos reservas en la misma mesa y armar los informes del mes.</p>
+  <div class="nota"><b>WhatsApp cambia sus precios el 1 de octubre de 2026.</b> En Argentina se cobra por mensaje según la categoría; los de confirmación y recordatorio son «utilidad», de pocos centavos de dólar. Con 300 reservas por mes y 3 mensajes cada una, el costo es chico, pero hay que calcularlo con la tarifa vigente de Meta. Los avisos al personal van por notificaciones del navegador, gratis.</div>
+</section>
+
+<section id="seguridad">
+  <h2>Seguridad</h2>
+  <div class="dos">
+    <div class="caja"><h3>Cuentas y permisos</h3><ul>
+      <li>Personal con cuenta propia; el dueño con doble verificación.</li>
+      <li>En la tablet compartida: la sesión es del equipo registrado y cada persona entra con un PIN; se cierra sola por inactividad.</li>
+      <li>El servidor revisa el rol en cada pedido. Cada consulta lleva el restaurante: uno nunca ve los datos de otro.</li>
+      <li>Los clientes no tienen cuenta: cada mensaje trae un enlace firmado que vence. Buscar por código pide también el teléfono, con límite de intentos.</li>
+    </ul></div>
+    <div class="caja"><h3>Datos y dinero</h3><ul>
+      <li>Reservar es una sola operación con número de intento: dos toques no crean dos reservas.</li>
+      <li>La tarjeta la carga el cliente en Mercado Pago; Mesa Austral nunca la ve.</li>
+      <li>Cada aviso de pago se verifica con la firma de Mercado Pago y se vuelve a consultar el pago antes de acreditarlo.</li>
+      <li>Claves y tokens solo en el servidor; nada en GitHub.</li>
+      <li>Protección contra robots en el formulario público y límite de pedidos por minuto.</li>
+      <li>Respaldo diario y recuperación a cualquier momento de los últimos 30 días.</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="privacidad">
+  <h2>Privacidad (Ley 25.326)</h2>
+  <div class="tabla"><table>
+    <thead><tr><th>Dato</th><th>Por qué se pide</th><th>Quién lo ve</th><th>Cuándo se borra</th></tr></thead>
+    <tbody>
+      <tr><td><b>Nombre y teléfono</b></td><td>Reservar y avisar</td><td>Sala, encargado, dueño</td><td>12 meses después de la última reserva (queda anónimo para estadística)</td></tr>
+      <tr><td><b>Correo</b> (opcional)</td><td>Comprobantes</td><td>Encargado, dueño</td><td>Igual que el teléfono</td></tr>
+      <tr><td><b>Alergias</b> (dato de salud, sensible)</td><td>Cocinar seguro esa noche</td><td>Sala y cocina, solo ese día</td><td>7 días después de la visita; guardadas cifradas</td></tr>
+      <tr><td><b>Ocasión</b> (cumpleaños, aniversario)</td><td>Atención</td><td>Sala</td><td>Con la reserva</td></tr>
+      <tr><td><b>Incidentes</b></td><td>Política de plantones</td><td>Encargado, dueño</td><td>12 meses; nunca se comparten con otros restaurantes</td></tr>
+      <tr><td><b>Promociones</b></td><td>Solo con casilla aparte</td><td>Dueño</td><td>Cuando el cliente se da de baja</td></tr>
+    </tbody>
+  </table></div>
+  <ul class="lista">
+    <li><b>El restaurante es el responsable</b> de su base; Mesa Austral la trata por encargo, con contrato que lo diga. Cada restaurante evalúa su inscripción ante la AAIP.</li>
+    <li><b>Derechos del cliente</b> desde el enlace de su reserva: ver sus datos (respuesta en 10 días corridos), corregirlos o borrarlos (5 días hábiles).</li>
+    <li><b>Servidores fuera del país</b> (Cloudflare, Meta, Mercado Pago): se informa en la política como transferencia internacional.</li>
+    <li><b>Nada sensible en avisos ni registros:</b> la notificación de la tablet dice «Nueva reserva · 21:00 · 4», no alergias; la auditoría no guarda nombres.</li>
+    <li><b>El CSV</b> solo para el dueño, sin alergias y con aviso de que contiene datos personales.</li>
+    <li>La reforma de la Ley 25.326 (proyectos 1751-D-2026 y 3397-D-2026) todavía no se aprobó, pero pide privacidad desde el diseño y aviso de filtraciones: conviene hacerlo desde el principio.</li>
+    <li>Todos los textos legales son modelos a revisar por un abogado matriculado.</li>
+  </ul>
+</section>
+
+<section id="plan">
+  <h2>Plan por etapas y precio sugerido</h2>
+  <div class="tabla"><table>
+    <thead><tr><th>Etapa</th><th>Qué incluye</th></tr></thead>
+    <tbody>
+      <tr><td><b>0 · Venta</b><br>ahora</td><td>La página interactiva para mostrar en el restaurante. Elegir un restaurante piloto.</td></tr>
+      <tr><td><b>1 · Piloto</b></td><td>Reserva web con plano y «pedir la mesa que se libera», tablet de sala, WhatsApp (confirmación, recordatorio, «¿vienen?»), lista de espera automática, plantón con incidente y enlace de Mercado Pago, panel del dueño con las tres solapas.</td></tr>
+      <tr><td><b>2 · Completo</b></td><td>Señas y retención en tarjeta, idiomas, alertas del SMN, cierre por temporal, informe mensual, reseñas, editor del plano, aprendizaje de duraciones.</td></tr>
+      <tr><td><b>3 · Varios restaurantes</b></td><td>Alta de nuevos locales sin tocar código, integración con Fudo, botón «Reservar» de Google.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="caja"><h3>Precio, como punto de partida para conversar</h3>
+    <p>Abono fijo mensual, sin comisión por comensal (el modelo de CoverManager y Mesa Express), con los mensajes de WhatsApp y las comisiones de Mercado Pago aparte y a costo. Una referencia para empezar: <b>entre $ 60.000 y $ 90.000 por mes</b> según incluya o no señas y el plano editable. El argumento es simple: evitar dos plantones de 4 personas por mes ya lo paga (2 × 4 × $ 55.000 × 65 % ≈ $ 286.000 de margen).</p>
+  </div>
+</section>
+
+<section id="fuentes">
+  <h2>Fuentes</h2>
+  <ul class="fuentes">
+    <li><a href="https://www.lanacion.com.ar/sabado/la-polemica-de-las-reservas-es-justo-pagarlas-por-anticipado-nid09042022/" target="_blank" rel="noopener">La Nación (2022): la polémica de las reservas pagas, Meitre</a></li>
+    <li><a href="https://www.lanacion.com.ar/sabado/tolerancia-cero-cada-vez-mas-restaurantes-sancionan-a-quienes-no-asisten-a-la-reserva-nid04102024/" target="_blank" rel="noopener">La Nación (2024): restaurantes que sancionan a quienes no asisten</a></li>
+    <li><a href="https://restaurantes.wokiapp.com/" target="_blank" rel="noopener">Woki para restaurantes</a> y <a href="https://www.wokiapp.com/en" target="_blank" rel="noopener">Woki</a></li>
+    <li><a href="https://mesa.express/" target="_blank" rel="noopener">Mesa Express</a></li>
+    <li><a href="https://www.covermanager.com/en/solution/payments" target="_blank" rel="noopener">CoverManager: pagos y prepagos</a></li>
+    <li><a href="https://www.opentable.com/restaurant-solutions/resources/3-proven-payment-strategies-reduce-no-shows/" target="_blank" rel="noopener">OpenTable: estrategias de pago contra ausencias</a> y <a href="https://www.inquirer.com/food/restaurants/opentable-service-fee-no-show-restaurant-reservation-20260114.html" target="_blank" rel="noopener">el cargo del 2 % (2026)</a></li>
+    <li><a href="https://www.infobae.com/economia/2021/09/21/se-confirmo-la-salida-de-argentina-de-la-principal-plataforma-de-reservas-online-de-restaurantes/" target="_blank" rel="noopener">Infobae (2021): TheFork se va de Argentina</a></li>
+    <li><a href="https://www.mercadopago.com.ar/developers/es/docs/checkout-api/payment-management/make-value-reserve" target="_blank" rel="noopener">Mercado Pago: reservar fondos</a> y <a href="https://www.mercadopago.com.ar/developers/es/docs/checkout-api/payment-management/capture-authorized-payment" target="_blank" rel="noopener">capturar un pago autorizado</a></li>
+    <li><a href="https://excursionesenushuaia.com/en/gastronomia-y-cultura-en-ushuaia/5-lugares-comer-en-ushuaia-restaurantes/" target="_blank" rel="noopener">Dónde comer en Ushuaia (2026): precios de cena</a></li>
+    <li><a href="https://www.basework.com.ar/precios-whatsapp-business-api-argentina" target="_blank" rel="noopener">Precios de WhatsApp Business API en Argentina (2026)</a> y <a href="https://www.axyoma.com.ar/precios-whatsapp-business-api-2026/" target="_blank" rel="noopener">el cambio de octubre de 2026</a></li>
+    <li><a href="https://www.argentina.gob.ar/aaip/proyecto-ley-datos-personales" target="_blank" rel="noopener">AAIP: proyecto de ley de datos personales</a> y <a href="https://www.diariojudicial.com/news-103126-proteccion-de-datos-personales-sigue-siendo-suficiente-la-ley-25326-en-2026" target="_blank" rel="noopener">Diario Judicial (2026)</a></li>
+  </ul>
+</section>
+
+<footer>Análisis de trabajo. Los montos son sugerencias para el mercado de Ushuaia en septiembre de 2026 y los textos legales son modelos a revisar por un abogado matriculado. «Mesa Austral» es un nombre provisorio: conviene verificarlo antes de registrarlo.</footer>
+</div>

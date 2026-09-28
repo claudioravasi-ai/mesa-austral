@@ -1,0 +1,74 @@
+/* Mesa Austral · estilos de la página del restaurante (lo que ve el cliente).
+ * Cada estilo es un mundo completo: paleta, tipografías y el color de las mesas del plano.
+ * Se aplica con <html data-estilo="…">. Va después de app.css y le gana en la cascada. */
+
+:root[data-estilo]{
+  --bg:var(--e-bg); --surf:var(--e-surf); --surf-2:var(--e-surf-2); --surf-3:var(--e-surf-3);
+  --ink:var(--e-ink); --ink-2:var(--e-ink-2); --muted:var(--e-muted); --line:var(--e-line); --line-2:var(--e-line-2);
+  --acento:var(--e-acc); --acento-2:var(--e-acc-hover); --acento-suave:var(--e-acc-suave); --acento-ink:var(--e-acc-ink);
+  --canal:var(--e-acc); --canal-2:var(--e-acc); --canal-suave:var(--e-acc-suave); --canal-ink:var(--e-acc-ink);
+  --pl-suelo:var(--e-surf); --pl-pared:var(--e-ink-2); --pl-silla:var(--e-line-2); --pl-et:var(--e-muted); --pl-sel:var(--e-ink); --pl-zona:var(--e-surf-2);
+  --display:var(--e-display); --body:var(--e-body);
+  --aviso-suave:var(--e-nota); --ok-suave:var(--e-bien); --mal-suave:var(--e-mal-suave); --info-suave:var(--e-surf-2);
+}
+
+/* Canal · Ushuaia de noche: azul profundo, marfil y cobre */
+:root[data-estilo="canal"]{
+  --e-bg:#0C1720; --e-surf:#122230; --e-surf-2:#18293A; --e-surf-3:#223A4E; --e-ink:#F1EBE1; --e-ink-2:#C9C0B2; --e-muted:#8C99A3; --e-line:#233747; --e-line-2:#35506A;
+  --e-acc:#D6925F; --e-acc-hover:#E4A574; --e-acc-suave:#3A2A1E; --e-acc-ink:#1A0E05; --e-acc-2:#7CC4D8;
+  --e-display:"Instrument Serif","Times New Roman",serif; --e-body:"Instrument Sans",system-ui,sans-serif; --e-disp-peso:400; --e-disp-estilo:normal; --e-disp-mayus:none; --e-disp-track:-.02em;
+  --e-nota:#2B2418; --e-bien:#16301F; --e-mal-suave:#3A1C1C; --e-ocupada:#2E4458; --e-ocupada-t:#C9C0B2; --e-nota-t:#E4A574;
+  color-scheme:dark;
+}
+/* Bistró · París: marfil, tinta y bordó */
+:root[data-estilo="bistro"]{
+  --e-bg:#F3EEE4; --e-surf:#FBF8F1; --e-surf-2:#ECE5D7; --e-surf-3:#E0D6C4; --e-ink:#16120E; --e-ink-2:#3F3830; --e-muted:#7A7064; --e-line:#D9CFBE; --e-line-2:#BFB29E;
+  --e-acc:#7A1F2B; --e-acc-hover:#5F1620; --e-acc-suave:#F1DCDC; --e-acc-ink:#FBF8F1; --e-acc-2:#1F3B2E;
+  --e-display:"Bodoni Moda","Didot","Bodoni 72",serif; --e-body:"Instrument Sans",system-ui,sans-serif; --e-disp-peso:600; --e-disp-estilo:normal; --e-disp-mayus:none; --e-disp-track:-.035em;
+  --e-nota:#F3E6CF; --e-bien:#E1ECDF; --e-mal-suave:#F4DCDC; --e-ocupada:#D8CDBB; --e-ocupada-t:#4A4239; --e-nota-t:#7A1F2B;
+  color-scheme:light;
+}
+/* Palermo · Buenos Aires: verde botella, crema y bronce */
+:root[data-estilo="palermo"]{
+  --e-bg:#0E231B; --e-surf:#143026; --e-surf-2:#1A3A2E; --e-surf-3:#24493A; --e-ink:#EFE7D6; --e-ink-2:#CFC6B1; --e-muted:#94A396; --e-line:#244236; --e-line-2:#35594A;
+  --e-acc:#C9A45C; --e-acc-hover:#D9B670; --e-acc-suave:#3A3320; --e-acc-ink:#161206; --e-acc-2:#E07A5F;
+  --e-display:"Cormorant Garamond","Garamond",serif; --e-body:"Instrument Sans",system-ui,sans-serif; --e-disp-peso:600; --e-disp-estilo:italic; --e-disp-mayus:none; --e-disp-track:-.01em;
+  --e-nota:#2E2A18; --e-bien:#1C3A26; --e-mal-suave:#3C2020; --e-ocupada:#2C4A3D; --e-ocupada-t:#CFC6B1; --e-nota-t:#D9B670;
+  color-scheme:dark;
+}
+/* Galería · vanguardia: blanco de muro, negro y azul cobalto */
+:root[data-estilo="galeria"]{
+  --e-bg:#F6F6F2; --e-surf:#FFFFFF; --e-surf-2:#EDEDE8; --e-surf-3:#DFDFD8; --e-ink:#0A0A0A; --e-ink-2:#2E2E2C; --e-muted:#6E6E69; --e-line:#D9D9D3; --e-line-2:#B8B8B0;
+  --e-acc:#2340D6; --e-acc-hover:#1A31AA; --e-acc-suave:#E1E6FB; --e-acc-ink:#FFFFFF; --e-acc-2:#FF5A36;
+  --e-display:"Archivo","Arial Narrow",sans-serif; --e-body:"Instrument Sans",system-ui,sans-serif; --e-disp-peso:900; --e-disp-estilo:normal; --e-disp-mayus:uppercase; --e-disp-track:-.035em;
+  --e-nota:#FFF1D6; --e-bien:#E3F2E6; --e-mal-suave:#FBE2DC; --e-ocupada:#DADAD3; --e-ocupada-t:#2E2E2C; --e-nota-t:#2340D6;
+  color-scheme:light;
+}
+
+/* ---------------- la página ---------------- */
+:root[data-estilo] body{background:var(--e-bg);color:var(--e-ink);font-family:var(--e-body);transition:background .5s ease,color .5s ease}
+:root[data-estilo] .boton{border-radius:999px}
+:root[data-estilo] .boton.pri,:root[data-estilo] .boton.canal{background:var(--e-acc);color:var(--e-acc-ink)}
+:root[data-estilo] .boton.pri:hover{background:var(--e-acc-hover)}
+:root[data-estilo] .chip{border-radius:999px;background:transparent}
+:root[data-estilo] .chip.on{background:var(--e-ink);color:var(--e-bg);border-color:var(--e-ink)}
+:root[data-estilo] .campo input,:root[data-estilo] .campo select,:root[data-estilo] .campo textarea{background:transparent;border:0;border-bottom:1.5px solid var(--e-line-2);border-radius:0;padding-inline:2px}
+:root[data-estilo] .campo input:focus,:root[data-estilo] .campo select:focus{border-bottom-color:var(--e-acc);box-shadow:none}
+:root[data-estilo] .campo select option{background:var(--e-surf);color:var(--e-ink)}
+:root[data-estilo] .etiqueta,:root[data-estilo] .campo label{font-family:var(--mono);font-weight:500;font-size:11.5px;letter-spacing:.14em;color:var(--e-muted)}
+:root[data-estilo] .aviso{background:var(--e-surf-2);color:var(--e-ink)}
+:root[data-estilo] .aviso.warn{background:var(--e-nota)} :root[data-estilo] .aviso.ok{background:var(--e-bien)} :root[data-estilo] .aviso.mal{background:var(--e-mal-suave)}
+:root[data-estilo] .hoja{background:var(--e-surf);color:var(--e-ink)}
+:root[data-estilo] .barra-prueba{background:var(--e-nota);color:var(--e-ink);border-color:var(--e-line)}
+:root[data-estilo] .plano-caja{background:var(--e-surf);border-color:var(--e-line)}
+:root[data-estilo] .tarjeta{background:var(--e-surf);border-color:var(--e-line);box-shadow:none}
+.disp{font-family:var(--e-display);font-weight:var(--e-disp-peso);font-style:var(--e-disp-estilo);text-transform:var(--e-disp-mayus);letter-spacing:var(--e-disp-track);font-stretch:normal;line-height:.9}
+:root[data-estilo="galeria"] .disp{font-stretch:62%}
+
+/* elegir el estilo */
+.estilos{display:flex;align-items:center;gap:8px}
+.estilos span{font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--e-muted)}
+.estilos button{width:26px;height:26px;border-radius:50%;box-shadow:0 0 0 1.5px var(--e-line-2);position:relative;overflow:hidden;transition:transform .2s}
+.estilos button::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,var(--a) 0 50%,var(--b) 50% 100%)}
+.estilos button[aria-pressed="true"]{box-shadow:0 0 0 2px var(--e-bg),0 0 0 4px var(--e-ink);transform:scale(1.08)}
+.estilos button:hover{transform:scale(1.12)}

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sala</title>
+<meta name="theme-color" content="#06141B">
+<meta name="robots" content="noindex">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icono.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="css/app.css">
+<style>
+.sala{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:16px;align-items:start}
+.sala .col{display:grid;gap:12px;min-width:0}
+.sala .plano-col{position:sticky;top:12px}
+.barra-sala{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.reloj{font:600 clamp(17px,4vw,22px) var(--mono)}
+.vista-sel{display:none}
+.msj-pend{display:grid;gap:6px;padding:12px 14px;border-top:1px solid var(--line)}
+.msj-pend:first-child{border-top:0}
+.msj-pend p{font-size:14px;white-space:pre-line;color:var(--ink-2)}
+/* Tablet horizontal: lista y plano lado a lado; tablet vertical y teléfono: se elige con «Lista / Plano». */
+@media (min-width:901px) and (max-width:1100px){ .sala{grid-template-columns:minmax(0,1fr) minmax(0,1fr)} }
+@media (max-width:900px){
+  .sala{grid-template-columns:1fr}
+  .sala .plano-col{position:static}
+  .vista-sel{display:flex}
+  .sala[data-vista="lista"] .plano-col,.sala[data-vista="plano"] .lista-col{display:none}
+}
+</style>
+</head>
+<body>
+<div class="envol">
+  <header class="cab"><span class="logo" aria-hidden="true">·</span><div><b id="nombreResto">Sala</b><small id="quien"></small></div>
+    <div class="der"><span class="reloj" id="reloj"></span><button class="boton chico" id="salir" hidden>Salir</button></div></header>
+  <main id="app" class="pila"><div class="muted">Cargando…</div></main>
+</div>
+<script type="module" src="js/sala.js"></script>
+</body>
+</html>
