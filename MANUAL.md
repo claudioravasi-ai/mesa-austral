@@ -3,6 +3,15 @@
 Tres pantallas, tres personas: **el cliente** reserva, **la sala** atiende la noche en la tablet de la
 entrada y **el dueño** mira los números y fija las reglas.
 
+**Dos entradas separadas:**
+- **Clientes:** `…/app/` — la página de reservas. No tiene ningún enlace a la sala ni al panel del dueño.
+- **Equipo:** `…/app/equipo.html` — elige entre la tablet de la sala y el panel del dueño. Se guarda en la
+  pantalla de inicio de la tablet como una app aparte («MA Equipo»). La seguridad no depende de que la
+  dirección sea secreta: cada pantalla del equipo pide PIN (en tablet habilitada) o correo y contraseña.
+
+**No se abre con doble clic.** Si se abre un `.html` directo desde la carpeta, el navegador no deja correr
+la app: aparece un aviso con la dirección de internet. En la Mac, doble clic en `Abrir Mesa Austral.command`.
+
 ## En qué pantallas funciona
 Teléfono, tablet y computadora, de 320 px de ancho en adelante:
 - **Teléfono:** todo en una columna; el plano del salón se desliza de costado para que cada mesa se pueda
@@ -14,9 +23,27 @@ Teléfono, tablet y computadora, de 320 px de ancho en adelante:
 - En pantallas táctiles, todo lo que se toca mide al menos 44 px. El editor del salón anda en todos, pero se
   usa mejor en tablet o computadora.
 
-## El cliente (app/index.html)
+## El cliente (app/index.html) · diseño «Bosque nórdico» (0.3.0, 16-11-2026)
+La página se recorre de arriba abajo, por secciones (en la computadora, los puntos del costado muestran dónde estás;
+en el teléfono, el menú ☰ abre las secciones a pantalla completa, con el estilo y el idioma):
+1. **Portada viva:** el canal Beagle dibujado, que cambia solo con la hora del restaurante (amanecer, día, atardecer o
+   noche con estrellas y aurora), con humo del fogón y lengas que se mueven. Muestra el horario de hoy.
+2. **La carta:** los platos de la marquesina en tarjetas que se deslizan. Con ♥ el cliente guarda los que quiere probar
+   y se anotan solos en la nota de la reserva («Quiero probar: …»).
+3. **Esta noche:** el clima de Ushuaia en vivo (Open-Meteo) con una zona recomendada (fresco → la zona del hogar o el
+   salón; despejado → el ventanal), cuenta regresiva hasta la apertura o «abiertos ahora», y los horarios con lugar de
+   hoy: tocando uno, la reserva queda con ese día y esa hora.
+4. **El salón:** el plano para recorrer. La mesa (o la zona) que le gusta queda marcada y, al llegar al paso de la mesa,
+   se elige sola si está libre; si no, se le avisa.
+5. **Reservar** (los pasos de siempre, abajo) y 6. **Cómo llegar:** mapa animado del canal, «Abrir el mapa» y WhatsApp.
+Lo elegido (platos y mesa) se ve en la reserva y se puede quitar con ×. Se guarda solo en ese teléfono.
+
+### Los pasos de la reserva
 1. Entra por el enlace del restaurante (Instagram, Google Maps o el QR de la puerta). Ve la portada del
    restaurante con el estilo que eligió el dueño; puede cambiar el estilo y el idioma (español, inglés, portugués).
+   Los cinco estilos: **Bosque** (crema, verde musgo y brasa; el de la demo), **Aurora** (noche índigo, rosa y verde aurora), **Fuego** (crema, rojo chile y
+   mandarina), **Lenga** (verde bosque y lima) y **Pop** (lavanda, azul eléctrico y rosa). En el teléfono,
+   al bajar aparece un botón fijo «Reservar una mesa».
 2. **¿Qué día? ¿Cuántos van? ¿A qué hora?** Las horas sin lugar para ese grupo aparecen tachadas.
 3. **Elegí tu mesa:** el plano del salón en vivo.
    - Libres, con el color del restaurante.
@@ -65,8 +92,8 @@ Teléfono, tablet y computadora, de 320 px de ancho en adelante:
   hora, qué mirar, alerta del SMN (con alerta, los plantones no cobran) y **Cerrar hoy por temporal**
   (avisa a todas las reservas).
 - **El mes:** personas, ocupación, plantones y plata recuperada, día por día y por día de la semana.
-- **Reglas:** nombre, WhatsApp de contacto, cómo salen los WhatsApp, **tu página web** (estilo Canal, Bistró,
-  Palermo o Galería; lema; platos de la marquesina), plantones y cancelaciones, limpieza entre mesas, señas,
+- **Reglas:** nombre, WhatsApp de contacto, cómo salen los WhatsApp, **tu página web** (estilo Aurora, Fuego,
+  Lenga o Pop; lema; platos de la marquesina), plantones y cancelaciones, limpieza entre mesas, señas,
   y el enlace de reservas con su QR.
 - **Salón:** el editor del lugar en 2D. Mesas redondas, cuadradas y largas; paredes, ventanas, puertas,
   entrada, barra, hogar, columnas, plantas y zonas. Arrastrar para mover, el punto naranja estira, «Girar»,
@@ -76,7 +103,8 @@ Teléfono, tablet y computadora, de 320 px de ancho en adelante:
 - **Horarios:** turnos por día, cada cuánto se reserva, tope de personas por franja y días cerrados.
 - **Equipo:** encargados, sala y cocina con su PIN; dar de baja; habilitar la tablet.
 - **Clientes:** incidentes (condonar) y clientes (visitas, crédito, si la próxima reserva pide seña).
-- **Prueba** (solo en modo prueba): reloj de prueba y volver a empezar.
+- **Demo** (solo mientras no esté conectado el servidor de Cloudflare): la hora es la real; se puede
+  adelantar para mostrar recordatorios, «¿vienen?» y plantones, y volver a empezar la demo.
 
 ## Protección de datos
 Ver `app/privacidad.html` (modelo, a revisar por un abogado matriculado).

@@ -16,7 +16,7 @@ async function cargar(){
   cargando = false;
 }
 function pintar(){
-  document.documentElement.dataset.estilo = R.resto.estilo || 'canal';
+  document.documentElement.dataset.estilo = R.resto.estilo || 'bosque';
   $('#nombreResto').textContent = R.resto.nombre; $('#subResto').textContent = 'Reserva ' + R.codigo; $('#logo').textContent = R.resto.nombre.replace(/^(el|la|los|las)\s+/i, '').slice(0, 1).toUpperCase();
   const [et, cl] = ESTADOS[R.estado] || [R.estado, ''], activa = R.estado === 'confirmada';
   const inc = R.incidente;

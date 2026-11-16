@@ -71,9 +71,9 @@ export const POLITICA = {
   horas:3, monto:10000, tope_personas:6, credito:true, dias_credito:90, tolerancia:15, grupo_desde:8, sena:15000,
   smn:true, limpieza:15, anticipacion:30, max_pax:12, oferta_min:10, recordatorio:720, sena_min:30,
   dur:{ 2:90, 4:105, 6:120, 99:135 }, wa_modo:'simulado',
-  pagina:{ estilo:'canal', lema:'', destacados:[] },
+  pagina:{ estilo:'bosque', lema:'', destacados:[] },
 };
-const ESTILOS = ['canal', 'bistro', 'palermo', 'galeria'];
+const ESTILOS = ['bosque', 'canal', 'bistro', 'palermo', 'galeria'];
 async function resto(env, slug){
   const r = await una(env, 'SELECT * FROM restaurantes WHERE slug = ?', slug);
   if (!r) falla(404, 'No encontramos ese restaurante');
@@ -686,7 +686,7 @@ export async function sembrar(env){
     { id:'p1', tipo:'pared', x:10, y:10, w:780, h:10 }, { id:'p2', tipo:'pared', x:10, y:10, w:10, h:500 }, { id:'p3', tipo:'pared', x:780, y:10, w:10, h:500 }, { id:'p4', tipo:'pared', x:10, y:500, w:780, h:10 },
     { id:'v1', tipo:'ventana', x:90, y:8, w:600, h:14, texto:'Ventanal · Canal Beagle' }, { id:'b1', tipo:'barra', x:700, y:190, w:62, h:190, texto:'Barra' },
     { id:'h1', tipo:'hogar', x:60, y:486, w:160, h:18, texto:'Hogar' }, { id:'e1', tipo:'entrada', x:590, y:494, w:110, h:18, texto:'Entrada' } ] };
-  await correr(env, 'INSERT INTO restaurantes (slug, nombre, subtitulo, whatsapp, politica, plano, creado) VALUES (?,?,?,?,?,?,?)', 'fogon', 'Fogón del Ñire', 'Cocina fueguina frente al canal', '5492901494953', JSON.stringify({ pagina:{ estilo:'canal', lema:'Fuego de lenga, mar del Beagle y la mesa mirando al canal.', destacados:['Centolla al natural', 'Cordero fueguino al asador', 'Merluza negra', 'Trucha del Lago Escondido', 'Hongos de ñire', 'Calafate'] } }), JSON.stringify(plano), ahora);
+  await correr(env, 'INSERT INTO restaurantes (slug, nombre, subtitulo, whatsapp, politica, plano, creado) VALUES (?,?,?,?,?,?,?)', 'fogon', 'Fogón del Ñire', 'Cocina fueguina frente al canal', '5492901494953', JSON.stringify({ pagina:{ estilo:'bosque', lema:'Fuego de lenga, mar del Beagle y la mesa mirando al canal.', destacados:['Centolla al natural', 'Cordero fueguino al asador', 'Merluza negra', 'Trucha del Lago Escondido', 'Hongos de ñire', 'Calafate'] } }), JSON.stringify(plano), ahora);
   const R = await resto(env, 'fogon');
   const M = [['V1', 'redonda', 90, 70, 60, 60, 1, 2, 'Ventanal', ''], ['V2', 'redonda', 200, 70, 60, 60, 1, 2, 'Ventanal', ''], ['V3', 'rect', 300, 60, 110, 70, 3, 4, 'Ventanal', 'V'], ['V4', 'rect', 440, 60, 110, 70, 3, 4, 'Ventanal', 'V'],
     ['V5', 'redonda', 600, 70, 60, 60, 1, 2, 'Ventanal', ''], ['M1', 'cuadrada', 70, 200, 80, 80, 2, 4, 'Salón', ''], ['M2', 'cuadrada', 200, 200, 80, 80, 2, 4, 'Salón', ''], ['M3', 'cuadrada', 330, 200, 80, 80, 2, 4, 'Salón', ''],

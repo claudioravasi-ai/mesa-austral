@@ -4,7 +4,7 @@
 import worker, { tareas } from '../../worker/worker.js';
 
 const SQLJS = 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/';
-const CLAVE_V = 'ma_prueba_version', CLAVE_RELOJ = 'ma_prueba_reloj', CLAVE_SECRETO = 'ma_prueba_secreto';
+const CLAVE_V = 'ma_prueba_version', CLAVE_RELOJ = 'ma_demo_reloj', CLAVE_SECRETO = 'ma_prueba_secreto';
 let SQL = null, db = null, versionCargada = -1, sucio = false;
 const canal = 'BroadcastChannel' in self ? new BroadcastChannel('mesa-austral-prueba') : null;
 const leerLS = (k, d) => { try { const v = localStorage.getItem(k); return v == null ? d : v; } catch (e){ return d; } };
@@ -15,7 +15,8 @@ const TZ = -180;
 export function relojOffset(){ return Number(leerLS(CLAVE_RELOJ, 'NaN')); }
 export function relojFijar(fecha, min){ const ms = Date.parse(fecha + 'T00:00:00Z') - TZ * 60000 + min * 60000; guardarLS(CLAVE_RELOJ, String(ms - Date.now())); canal?.postMessage('reloj'); }
 export function relojReal(){ guardarLS(CLAVE_RELOJ, '0'); canal?.postMessage('reloj'); }
-function ahora(){ let o = relojOffset(); if (!Number.isFinite(o)){ const hoy = new Date(Date.now() + TZ * 60000).toISOString().slice(0, 10); relojFijar(hoy, 20 * 60 + 40); o = relojOffset(); } return Date.now() + o; }
+/* Hora real salvo que el dueño la mueva a propósito desde la solapa «Demo». */
+function ahora(){ const o = relojOffset(); return Date.now() + (Number.isFinite(o) ? o : 0); }
 
 /* ---------- base guardada en IndexedDB ---------- */
 function abrirIDB(){ return new Promise((ok, mal) => { const r = indexedDB.open('mesa-austral-prueba', 1); r.onupgradeneeded = () => r.result.createObjectStore('b'); r.onsuccess = () => ok(r.result); r.onerror = () => mal(r.error); }); }

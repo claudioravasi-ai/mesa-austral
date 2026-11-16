@@ -1,0 +1,15 @@
+{
+  "name": "Mesa Austral · Equipo",
+  "short_name": "MA Equipo",
+  "description": "Sala y panel del dueño de Mesa Austral. Solo para el personal.",
+  "lang": "es-AR",
+  "id": "./equipo.html",
+  "start_url": "./equipo.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0E0A24",
+  "theme_color": "#4B2FE0",
+  "icons": [
+    { "src": "icono.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

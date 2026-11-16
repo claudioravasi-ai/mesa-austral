@@ -6,5 +6,5 @@
 export const CONFIG = {
   API_URL: '',
   RESTO: 'fogon',          // restaurante que abre la página de reservas si el enlace no dice otro (?r=…)
-  VERSION: '0.1.0',
+  VERSION: '0.3.0',
 };

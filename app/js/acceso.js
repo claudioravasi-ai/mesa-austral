@@ -9,7 +9,7 @@ export const tablet = () => ls.get('tablet:' + slug);
 export async function pantallaEntrada(app, { soloDueno = false, alEntrar }){
   let eq = { habilitada:false, equipo:[] };
   if (!soloDueno) try { eq = await api('GET', `/api/equipo?slug=${slug}`, undefined, { tablet:tablet() }); } catch (e){}
-  const ayudaPrueba = MODO_PRUEBA ? `<div class="aviso warn">Modo prueba: las cuentas de prueba están en el archivo <b>DATOS-DE-PRUEBA.md</b> de la carpeta del proyecto.</div>` : '';
+  const ayudaPrueba = '';   // las cuentas nunca se muestran en pantalla
   const conCorreo = () => {
     app.innerHTML = `<div class="envol angosto pila"><h1>${soloDueno ? 'Panel del dueño' : 'Entrar'}</h1>${ayudaPrueba}
       <form class="tarjeta" id="fCorreo"><div class="campo"><label for="lMail">Correo</label><input id="lMail" type="email" autocomplete="username" required></div>

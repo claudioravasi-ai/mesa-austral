@@ -5,7 +5,7 @@ import { slug, sesionGuardada, guardarSesion, pantallaEntrada, habilitarTablet, 
 import { montarEditor } from './editor.js';
 
 const app = $('#app'), nav = $('#solapas');
-const SOLAPAS = [['noche', 'Esta noche'], ['mes', 'El mes'], ['reglas', 'Reglas'], ['salon', 'Salón'], ['horarios', 'Horarios'], ['equipo', 'Equipo'], ['clientes', 'Clientes'], ...(MODO_PRUEBA ? [['prueba', 'Prueba']] : [])];
+const SOLAPAS = [['noche', 'Esta noche'], ['mes', 'El mes'], ['reglas', 'Reglas'], ['salon', 'Salón'], ['horarios', 'Horarios'], ['equipo', 'Equipo'], ['clientes', 'Clientes'], ...(MODO_PRUEBA ? [['prueba', 'Demo']] : [])];
 const S = { ses:sesionGuardada(), tab:(location.hash || '#noche').slice(1), N:null, t:null, mesa:null, mes:null, dia:null, editor:null, cargadoEn:0 };
 const tok = () => ({ token:S.ses.token });
 
@@ -149,7 +149,7 @@ const REGLAS = [
   ['max_pax', 'Máximo de personas por reserva online', 2, 40, 1, v => `${v} personas`, 'Más que eso, escriben por WhatsApp.'],
 ];
 function reglas(){
-  const P = { ...S.N.resto.politica }, R = S.N.resto, PG = { estilo:'canal', lema:'', destacados:[], ...(P.pagina || {}) };
+  const P = { ...S.N.resto.politica }, R = S.N.resto, PG = { estilo:'bosque', lema:'', destacados:[], ...(P.pagina || {}) };
   const url = new URL('index.html', location.href); if (slug !== CONFIG.RESTO) url.searchParams.set('r', slug);
   app.innerHTML = `<div class="duo"><form class="tarjeta" id="fReglas">
       <h3>Tu restaurante</h3>
@@ -157,7 +157,7 @@ function reglas(){
       <div class="campo"><label for="rWa">WhatsApp de contacto para los clientes</label><input id="rWa" type="tel" value="${R.whatsapp ? '+' + esc(R.whatsapp) : ''}"><small>Por ahora es el de Claudio; se cambia cuando el restaurante tenga el suyo.</small></div>
       <div class="campo"><label for="rWaModo">Cómo salen los WhatsApp</label><select id="rWaModo"><option value="simulado" ${P.wa_modo === 'simulado' ? 'selected' : ''}>Simulados (para probar)</option><option value="manual" ${P.wa_modo === 'manual' ? 'selected' : ''}>A mano: la sala los envía con un toque</option></select><small>El envío automático se activa cuando el restaurante tenga su número de WhatsApp Business.</small></div>
       <h3 style="margin-top:8px">Tu página web</h3>
-      <div class="pila"><span class="etiqueta">Estilo</span><div class="chips" id="estilosD">${[['canal', 'Canal · Ushuaia de noche', '#0C1720', '#D6925F'], ['bistro', 'Bistró · París', '#F3EEE4', '#7A1F2B'], ['palermo', 'Palermo · Buenos Aires', '#0E231B', '#C9A45C'], ['galeria', 'Galería · vanguardia', '#F6F6F2', '#2340D6']].map(([k, n, a, z]) => `<button type="button" class="chip ${PG.estilo === k ? 'on' : ''}" data-est="${k}"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:-2px;margin-right:6px;background:linear-gradient(135deg,${a} 0 50%,${z} 50%);box-shadow:0 0 0 1px var(--line-2)"></span>${n}</button>`).join('')}</div><small class="muted">Es el que ve el cliente al entrar. Igual puede cambiarlo desde la página.</small></div>
+      <div class="pila"><span class="etiqueta">Estilo</span><div class="chips" id="estilosD">${[['bosque', 'Bosque · nórdico fueguino', '#24382B', '#B4532A'], ['canal', 'Aurora · la aurora austral', '#FF4F8B', '#3EE6C9'], ['bistro', 'Fuego · el fogón', '#F26A12', '#B0126B'], ['palermo', 'Lenga · el bosque fueguino', '#04241C', '#C8F53C'], ['galeria', 'Pop · glaciar pop', '#3A2BFF', '#FF4FA3']].map(([k, n, a, z]) => `<button type="button" class="chip ${PG.estilo === k ? 'on' : ''}" data-est="${k}"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:-2px;margin-right:6px;background:linear-gradient(135deg,${a} 0 50%,${z} 50%);box-shadow:0 0 0 1px var(--line-2)"></span>${n}</button>`).join('')}</div><small class="muted">Es el que ve el cliente al entrar. Igual puede cambiarlo desde la página.</small></div>
       <div class="campo"><label for="rLema">Lema de la portada</label><input id="rLema" maxlength="90" value="${esc(PG.lema || '')}"></div>
       <div class="campo"><label for="rPlatos">Platos de la marquesina (separados por coma)</label><input id="rPlatos" value="${esc((PG.destacados || []).join(', '))}"></div>
       <h3 style="margin-top:8px">Plantones y cancelaciones</h3>
@@ -251,18 +251,18 @@ async function clientes(){
 async function pestañaPrueba(){
   const L = await prueba(), ahora = () => new Date(L.ahoraPrueba() - 180 * 60000), d = ahora();
   const ult = (() => { try { return JSON.parse(ls.get('ultima_reserva') || 'null'); } catch (e){ return null; } })();
-  app.innerHTML = `<div class="duo"><div class="pila"><h3>Reloj de prueba</h3><div class="tarjeta plana"><p>La app funciona con esta hora: así se prueban los recordatorios, el «¿vienen?», los plantones y las ofertas de la lista de espera sin esperar. El reloj sigue corriendo desde la hora que pongas.</p>
+  app.innerHTML = `<div class="duo"><div class="pila"><h3>Hora de la demo</h3><div class="tarjeta plana"><p>La app usa la hora real. Para mostrar los recordatorios, el «¿vienen?», los plantones y la lista de espera sin esperar, podés adelantarla; el reloj sigue corriendo desde la hora que pongas.</p>
       <div class="mono" style="font-size:28px" id="relojP">${d.toISOString().slice(8, 10)}/${d.toISOString().slice(5, 7)} ${d.toISOString().slice(11, 16)}</div>
       <div class="dos-col"><div class="campo"><label for="pF">Fecha</label><input id="pF" type="date" value="${d.toISOString().slice(0, 10)}"></div><div class="campo"><label for="pH">Hora</label><input id="pH" type="time" value="${d.toISOString().slice(11, 16)}"></div></div>
       <div class="fila-h"><button class="boton pri chico" id="pFijar">Poner esta hora</button><button class="boton chico" data-mas="15">+15 min</button><button class="boton chico" data-mas="60">+1 hora</button><button class="boton chico" id="pReal">Hora real</button></div></div>
-      <h3>Datos de prueba</h3><div class="tarjeta plana"><p>Todo lo de esta prueba vive solo en este navegador: el restaurante «Fogón del Ñire», sus mesas, 12 clientes inventados y las reservas de hoy y mañana.</p><button class="boton peligro chico" id="pBorrar">Borrar todo y empezar de nuevo</button></div></div>
-    <div class="pila"><h3>Para probar</h3><div class="tarjeta plana pila"><a class="boton" href="index.html" target="_blank" rel="noopener">Página de reservas (lo que ve el cliente)</a><a class="boton" href="sala.html" target="_blank" rel="noopener">Tablet de la sala</a>${ult ? `<a class="boton" href="mi.html?c=${esc(ult.c)}&k=${esc(ult.k)}#mensajes" target="_blank" rel="noopener">Mi última reserva y su WhatsApp simulado</a>` : ''}
+      <h3>Datos de demostración</h3><div class="tarjeta plana"><p>Mientras el servidor de Cloudflare no esté conectado, la demo vive en este navegador: el restaurante «Fogón del Ñire», sus mesas, 12 clientes inventados y las reservas de hoy y mañana.</p><button class="boton peligro chico" id="pBorrar">Borrar todo y empezar de nuevo</button></div></div>
+    <div class="pila"><h3>Para mostrar</h3><div class="tarjeta plana pila"><a class="boton" href="index.html" target="_blank" rel="noopener">Página de reservas (lo que ve el cliente)</a><a class="boton" href="sala.html" target="_blank" rel="noopener">Tablet de la sala</a>${ult ? `<a class="boton" href="mi.html?c=${esc(ult.c)}&k=${esc(ult.k)}#mensajes" target="_blank" rel="noopener">Mi última reserva y su WhatsApp simulado</a>` : ''}
       <p class="muted" style="font-size:13.5px">Abrí la sala en otra pestaña y reservá desde la página pública: la reserva aparece sola en la sala. Adelantá el reloj para ver el recordatorio, el «¿vienen?» y el plantón.</p></div></div></div>`;
-  const fijar = (fecha, min) => { L.relojFijar(fecha, min); toast('Reloj de prueba: ' + fecha.split('-').reverse().join('/') + ' ' + hhmm(min)); setTimeout(() => location.reload(), 600); };
+  const fijar = (fecha, min) => { L.relojFijar(fecha, min); toast('Hora de la demo: ' + fecha.split('-').reverse().join('/') + ' ' + hhmm(min)); setTimeout(() => location.reload(), 600); };
   $('#pFijar').addEventListener('click', () => { const [h, m] = $('#pH').value.split(':').map(Number); fijar($('#pF').value, h * 60 + m); });
   app.querySelectorAll('[data-mas]').forEach(b => b.addEventListener('click', () => { const x = new Date(ahora().getTime() + +b.dataset.mas * 60000); fijar(x.toISOString().slice(0, 10), x.getUTCHours() * 60 + x.getUTCMinutes()); }));
   $('#pReal').addEventListener('click', () => { L.relojReal(); toast('Reloj real'); setTimeout(() => location.reload(), 600); });
-  $('#pBorrar').addEventListener('click', () => { const h = hoja(`<h3>¿Borrar los datos de prueba?</h3><p>Se vuelve a crear el restaurante de ejemplo desde cero. Tu sesión se cierra.</p><button class="boton peligro bloque" data-si>Borrar y empezar de nuevo</button>`);
+  $('#pBorrar').addEventListener('click', () => { const h = hoja(`<h3>¿Volver a empezar la demo?</h3><p>Se vuelve a crear el restaurante de ejemplo desde cero. Tu sesión se cierra.</p><button class="boton peligro bloque" data-si>Borrar y empezar de nuevo</button>`);
     h.el.querySelector('[data-si]').onclick = async () => { await L.borrarTodo(); try { Object.keys(localStorage).filter(k => k.startsWith('ma_')).forEach(k => localStorage.removeItem(k)); } catch (e){} location.reload(); }; });
 }
 

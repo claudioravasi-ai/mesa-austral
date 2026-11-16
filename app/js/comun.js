@@ -112,10 +112,9 @@ export function plano({ plano:P, mesas, estado = () => ({ c:'neutra' }), sel = n
 }
 export const leyenda = claves => `<div class="leyenda">${claves.map(k => `<span><i style="background:${COLORES[k].f}"></i>${COLORES[k].n}</span>`).join('')}</div>`;
 
-/* ---------- barra de modo prueba ---------- */
+/* ---------- arranque del motor local ---------- */
+/* Ya no se muestra ninguna barra: la app se ve como la de verdad. Solo arranca el motor local
+ * (avisos automáticos cada 20 s) mientras no haya servidor en Cloudflare. */
 export async function barraPrueba(){
-  if (!MODO_PRUEBA) return;
-  const L = await prueba(), b = document.createElement('div'); b.className = 'barra-prueba';
-  const pintar = () => { const d = new Date(L.ahoraPrueba() - 180 * 60000); b.innerHTML = `<b>Modo prueba</b> · datos inventados · reloj de prueba <span class="mono">${d.toISOString().slice(8, 10)}/${d.toISOString().slice(5, 7)} ${d.toISOString().slice(11, 16)}</span> <a href="dueno.html#prueba">cambiar</a>`; };
-  pintar(); setInterval(pintar, 15000); document.body.prepend(b);
+  if (MODO_PRUEBA) await prueba();
 }
