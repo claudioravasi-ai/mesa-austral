@@ -1,0 +1,1334 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mesa Austral</title>
+<link rel="icon" href="app/icono.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="app/iconos/icono-180.png">
+<meta name="apple-mobile-web-app-title" content="Mesa Austral">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F1F4F6; --surf:#FFFFFF; --surf-2:#F6F8F9; --surf-3:#E6ECEF;
+  --ink:#0D2330; --ink-2:#3D5360; --muted:#687D89; --line:#DAE3E8; --line-2:#C3D0D8;
+  --acento:#D9481F; --acento-2:#B83B17; --acento-suave:#FCE6DD; --acento-ink:#FFFFFF;
+  --canal:#0F4C5E; --canal-suave:#DDEEF2; --mapa:#136E86;
+  --hondo:#0C3342; --hondo-ink:#F2F7F8;
+  --ok:#1D8452; --ok-suave:#DDF1E6; --aviso:#9A5F07; --aviso-suave:#FBF0D9; --mal:#BF2F2F; --mal-suave:#FBE4E4;
+  --pl-suelo:#FFFFFF; --pl-pared:#9FB2BD; --pl-et:#7D909B; --pl-silla:#D3DDE3;
+  --sombra:0 1px 2px rgba(13,35,48,.06),0 14px 40px rgba(13,35,48,.10);
+  --display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#071A22; --surf:#0D2430; --surf-2:#112C3A; --surf-3:#173746;
+    --ink:#E5EEF2; --ink-2:#AEC1CB; --muted:#7F97A3; --line:#1B3B4A; --line-2:#285163;
+    --acento:#FF7B50; --acento-2:#FF946F; --acento-suave:#3B1D12; --acento-ink:#1A0A04;
+    --canal:#8FD0E2; --canal-suave:#12394A; --mapa:#4FB3CF;
+    --hondo:#0A2E3B; --hondo-ink:#EAF4F6;
+    --ok:#4FCB8B; --ok-suave:#0F3323; --aviso:#EDB24F; --aviso-suave:#382810; --mal:#F07A7A; --mal-suave:#3A1717;
+    --pl-suelo:#0F2A37; --pl-pared:#3C6273; --pl-et:#7F97A3; --pl-silla:#2A4B5A;
+    --sombra:0 1px 2px rgba(0,0,0,.3),0 16px 44px rgba(0,0,0,.45);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#071A22; --surf:#0D2430; --surf-2:#112C3A; --surf-3:#173746;
+  --ink:#E5EEF2; --ink-2:#AEC1CB; --muted:#7F97A3; --line:#1B3B4A; --line-2:#285163;
+  --acento:#FF7B50; --acento-2:#FF946F; --acento-suave:#3B1D12; --acento-ink:#1A0A04;
+  --canal:#8FD0E2; --canal-suave:#12394A; --mapa:#4FB3CF;
+  --hondo:#0A2E3B; --hondo-ink:#EAF4F6;
+  --ok:#4FCB8B; --ok-suave:#0F3323; --aviso:#EDB24F; --aviso-suave:#382810; --mal:#F07A7A; --mal-suave:#3A1717;
+  --pl-suelo:#0F2A37; --pl-pared:#3C6273; --pl-et:#7F97A3; --pl-silla:#2A4B5A;
+  --sombra:0 1px 2px rgba(0,0,0,.3),0 16px 44px rgba(0,0,0,.45);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;padding-inline:16px;padding-block:0 48px}
+h1,h2,h3{margin:0;font-family:var(--display);font-stretch:72%;letter-spacing:-.01em;line-height:1.02;text-wrap:balance}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
+:focus-visible{outline:2.5px solid var(--acento);outline-offset:2px;border-radius:6px}
+.envol{max-width:1240px;margin:0 auto}
+.ojo{font-family:var(--mono);font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------------- portada ---------------- */
+.portada{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:48px;padding-block:44px 30px;align-items:center}
+.portada-txt{display:grid;gap:20px}
+.portada h1{font-size:clamp(46px,7.4vw,96px);font-weight:850;font-stretch:64%;line-height:.9;letter-spacing:-.015em}
+.portada h1 em{font-style:normal;color:var(--acento)}
+.bajada{font-size:clamp(18px,1.9vw,21px);line-height:1.45;max-width:40ch;color:var(--ink)}
+.promesas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line-2)}
+.promesas div{padding:14px 16px 0 0;display:grid;gap:3px;align-content:start}
+.promesas div+div{padding-left:16px;border-left:1px solid var(--line)}
+.promesas b{font-family:var(--display);font-stretch:78%;font-size:19px;font-weight:750;line-height:1.15}
+.promesas small{font-size:14.5px;color:var(--ink-2);line-height:1.4}
+.acciones{display:flex;flex-wrap:wrap;gap:10px}
+.boton{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none;background:var(--surf);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line-2)}
+.boton:hover{box-shadow:inset 0 0 0 1.5px var(--ink-2)}
+.boton.pri{background:var(--acento);color:var(--acento-ink);box-shadow:none}
+.boton.pri:hover{background:var(--acento-2)}
+
+/* la comanda en vivo (papel de ticket, siempre claro) */
+.comanda-sombra{filter:drop-shadow(0 18px 30px rgba(12,40,52,.20)) drop-shadow(0 2px 3px rgba(12,40,52,.12));justify-self:center;width:min(380px,100%);transform:rotate(1.2deg)}
+.comanda{--r:7px;background:#FDFDFB;color:#1C2A31;font-family:var(--mono);font-size:13px;padding:30px 24px 30px;
+  -webkit-mask:radial-gradient(var(--r) at 50% 0,#0000 98%,#000) 50% 0/calc(2*var(--r) + 7px) 51% repeat-x,radial-gradient(var(--r) at 50% 100%,#0000 98%,#000) 50% 100%/calc(2*var(--r) + 7px) 51% repeat-x;
+  mask:radial-gradient(var(--r) at 50% 0,#0000 98%,#000) 50% 0/calc(2*var(--r) + 7px) 51% repeat-x,radial-gradient(var(--r) at 50% 100%,#0000 98%,#000) 50% 100%/calc(2*var(--r) + 7px) 51% repeat-x}
+.cm-cab{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.cm-cab b{font-family:var(--display);font-stretch:70%;font-size:22px;font-weight:850;letter-spacing:.04em}
+.cm-cab span{font-size:11.5px;color:#5E6E77;text-transform:uppercase;letter-spacing:.08em}
+.cm-tot{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 12px;padding:10px 0;border-block:1.5px dashed #B9C6CD}
+.cm-tot div{display:grid}
+.cm-tot b{font-family:var(--display);font-stretch:70%;font-size:30px;font-weight:850;line-height:1;font-variant-numeric:tabular-nums}
+.cm-tot span{font-size:10.5px;color:#5E6E77;text-transform:uppercase;letter-spacing:.06em}
+.cm-lineas{list-style:none;margin:0;padding:0;display:grid;gap:0;min-height:236px;align-content:start}
+.cm-lineas li{display:grid;grid-template-columns:46px 1fr;gap:2px 10px;padding:7px 0;border-bottom:1px dotted #C9D3D8}
+.cm-lineas li time{font-weight:600;color:#C23E17}
+.cm-lineas li b{font-weight:600}
+.cm-lineas li span{grid-column:2;color:#5E6E77;font-size:12px}
+.cm-lineas li.nueva{animation:entra .5s ease both}
+@keyframes entra{from{opacity:0;transform:translateY(-8px)}}
+.cm-pie{margin-top:12px;font-size:11px;color:#6D7C84;text-align:center;letter-spacing:.04em}
+
+/* cifras */
+.cifras{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:14px;background:var(--surf);overflow:hidden;margin-block:8px 10px}
+.cifras div{padding:16px 18px;display:grid;gap:2px}
+.cifras div+div{border-left:1px solid var(--line)}
+.cifras b{font-family:var(--display);font-stretch:68%;font-size:clamp(28px,3.4vw,40px);font-weight:850;line-height:1;font-variant-numeric:tabular-nums}
+.cifras span{font-size:14px;color:var(--ink-2);line-height:1.35}
+
+/* secciones */
+.app-real{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px}
+.app-real a{display:grid;gap:4px;padding:18px;border-radius:14px;text-decoration:none;color:var(--ink);background:var(--surf);box-shadow:inset 0 0 0 1.5px var(--line-2)}
+.app-real a:hover{box-shadow:inset 0 0 0 1.5px var(--ink-2)}
+.app-real b{font-size:18px}
+.app-real small{color:var(--ink-2)}
+.sec{padding-block:56px 8px;display:grid;gap:18px}
+.sec-cab{display:grid;gap:10px;max-width:780px}
+.sec h2{font-size:clamp(34px,4.6vw,56px);font-weight:820;font-stretch:66%}
+.sec-cab p{color:var(--ink-2);max-width:66ch}
+.sonido{justify-self:start;display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;padding:8px 14px;border-radius:10px;box-shadow:inset 0 0 0 1.5px var(--line-2)}
+.sonido[aria-pressed="true"]{background:var(--canal-suave);box-shadow:inset 0 0 0 1.5px var(--canal)}
+
+/* ---------------- banco de pruebas ---------------- */
+.banco{display:grid;grid-template-columns:250px minmax(0,1fr);gap:24px;align-items:start}
+.menu{position:sticky;top:12px;display:grid;gap:16px}
+.menu h3{font-family:var(--mono);font-stretch:100%;font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin:0 4px 4px}
+.menu-grupo{display:grid;gap:2px}
+.opc{display:grid;grid-template-columns:48px 1fr;gap:2px 8px;text-align:left;padding:8px 10px;border-radius:12px;color:var(--ink-2);font-weight:600;font-size:14.5px;line-height:1.25;align-items:baseline}
+.opc .hr{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+.opc small{grid-column:2;font-weight:400;font-size:12.5px;color:var(--muted)}
+.opc:hover{background:var(--surf)}
+.opc.on{background:var(--surf);color:var(--ink);box-shadow:var(--sombra)}
+.opc.on .hr{color:var(--acento)}
+.opc.hecha .t::after{content:" ✓";color:var(--ok);font-weight:800}
+.escena{display:grid;gap:16px;min-width:0}
+.escena-cab h3{font-size:clamp(26px,3vw,34px);font-weight:800}
+.escena-cab p{color:var(--ink-2);margin-top:4px}
+.mirar{display:none}
+.mesa{display:grid;grid-template-columns:repeat(2,minmax(0,300px)) minmax(0,1fr);gap:20px;align-items:start}
+.col-tel{display:grid;gap:10px;justify-items:center;min-width:0}
+.rol{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;min-height:28px}
+.rol span{font-weight:500;color:var(--muted)}
+.rol.le-toca{color:var(--acento)}
+.rol.le-toca::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--acento);animation:vivo 1.5s infinite}
+@keyframes vivo{0%{box-shadow:0 0 0 0 rgba(217,72,31,.5)}70%{box-shadow:0 0 0 8px rgba(217,72,31,0)}100%{box-shadow:0 0 0 0 rgba(217,72,31,0)}}
+
+/* el teléfono */
+.tel{position:relative;width:min(300px,100%);height:614px;border-radius:44px;background:#0A1116;padding:10px;box-shadow:0 0 0 1.5px #26353D,var(--sombra)}
+.tel-pantalla{position:relative;height:100%;border-radius:35px;overflow:hidden;display:flex;flex-direction:column}
+.tel-isla{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:86px;height:25px;border-radius:14px;background:#000;z-index:7}
+.tel-estado{flex:none;display:flex;justify-content:space-between;align-items:center;padding:11px 22px 5px;font:600 12px var(--mono)}
+.tel-estado i{font-style:normal;font-size:10px;letter-spacing:1px;opacity:.8}
+.tel-app{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;position:relative}
+.tel-app::-webkit-scrollbar{display:none}
+.tel.a .tel-pantalla{background:#F6F8F9;color:#10222C}
+.tel.b .tel-pantalla{background:#06141B;color:#E6F0F4}
+.tel-push{position:absolute;top:42px;left:9px;right:9px;z-index:8;display:grid;gap:6px;pointer-events:none}
+.push{display:grid;grid-template-columns:30px 1fr;gap:9px;align-items:start;padding:9px 11px;border-radius:17px;font-size:12px;line-height:1.35;animation:baja .35s ease both;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.tel.a .push{background:rgba(255,255,255,.93);color:#10222C;box-shadow:0 10px 26px rgba(10,30,40,.22)}
+.tel.b .push{background:rgba(28,52,64,.95);color:#E6F0F4;box-shadow:0 10px 26px rgba(0,0,0,.45)}
+.push .pi{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:15px;background:#0F4C5E;color:#fff}
+.push small{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;opacity:.65}
+.push b{display:block;font-size:12.5px}
+.push.sale{animation:sube .35s ease-in both}
+@keyframes baja{from{transform:translateY(-110%);opacity:0}}
+@keyframes sube{to{transform:translateY(-110%);opacity:0}}
+.tel-toast{position:absolute;left:12px;right:12px;bottom:14px;z-index:9;padding:9px 12px;border-radius:12px;font-size:12px;font-weight:700;text-align:center;animation:baja .25s both}
+.tel.a .tel-toast{background:#10222C;color:#fff}
+.tel.b .tel-toast{background:#E6F0F4;color:#06141B}
+
+/* dentro del teléfono de quien reserva (claro) */
+.pa-top,.pc-top{position:sticky;top:0;z-index:4;display:flex;align-items:center;gap:9px;padding:6px 12px 9px;background:rgba(246,248,249,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid #E0E7EB}
+.logo{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#0F4C5E;color:#fff;font-family:var(--display);font-stretch:70%;font-weight:850;font-size:17px}
+.pa-top .t,.pc-top .t{min-width:0;flex:1}
+.pa-top b,.pc-top b{display:block;font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pa-top small,.pc-top small{display:block;font-size:10.5px;color:#687B86}
+.pa{padding:10px 12px 18px;display:grid;gap:10px;font-size:13px}
+.pa-hero{border-radius:16px;padding:14px 14px 12px;color:#fff;background:linear-gradient(160deg,#0F4C5E 0%,#0A2F3B 70%);position:relative;overflow:hidden}
+.pa-hero svg{position:absolute;left:0;right:0;bottom:0;width:100%;height:34px}
+.pa-hero b{display:block;font-family:var(--display);font-stretch:70%;font-size:25px;font-weight:850;line-height:1}
+.pa-hero small{display:block;font-size:11.5px;opacity:.85;margin:3px 0 22px}
+.pa-lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#687B86}
+.pa-chips{display:flex;flex-wrap:wrap;gap:6px}
+.pa-chip{padding:7px 10px;border-radius:10px;border:1.5px solid #C8D4DB;background:#fff;font-size:12px;font-weight:700;color:#10222C;line-height:1.1}
+.pa-chip small{display:block;font-size:10px;font-weight:600;color:#687B86;margin-top:1px}
+.pa-chip.on{border-color:#0F4C5E;background:#DDEEF2;color:#0F4C5E}
+.pa-chip.off{opacity:.45;text-decoration:line-through;cursor:not-allowed}
+.pa-pax{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1.5px solid #C8D4DB;border-radius:12px;padding:5px 6px 5px 12px}
+.pa-pax b{font-size:14px}
+.pa-pax .c{display:flex;align-items:center;gap:10px}
+.pa-pax button{width:32px;height:30px;border-radius:9px;background:#E6ECEF;font-size:17px;font-weight:700}
+.pa-card{background:#fff;border:1px solid #E0E7EB;border-radius:14px;padding:11px 12px;display:grid;gap:6px}
+.pa-fila{display:flex;justify-content:space-between;gap:10px;font-size:12.5px}
+.pa-fila span{color:#687B86}
+.pa-fila b{text-align:right}
+.pa-campo{display:grid;gap:3px}
+.pa-campo label{font-size:10.5px;font-weight:700;color:#3F535F}
+.pa-campo div{border:1.5px solid #C8D4DB;background:#fff;border-radius:10px;padding:7px 10px;font-size:12.5px}
+.pa-pol{background:#FBF0D9;color:#6B4406;border-radius:12px;padding:10px 11px;font-size:12px;line-height:1.45}
+.pa-pol b{color:#4A2F03}
+.pa-ok{background:#DDF1E6;color:#155E3A;border-radius:12px;padding:10px 11px;font-size:12px;line-height:1.45}
+.pa-mal{background:#FBE4E4;color:#8E2020;border-radius:12px;padding:10px 11px;font-size:12px;line-height:1.45}
+.pa-check{display:flex;gap:9px;align-items:flex-start;text-align:left;font-size:12px;line-height:1.4;color:#3F535F;width:100%}
+.pa-check .o{flex:none;width:20px;height:20px;border-radius:6px;border:2px solid #9FB2BD;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:800;margin-top:1px}
+.pa-check.on .o{background:#0F4C5E;border-color:#0F4C5E}
+.pa-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:12px;border-radius:13px;background:#D9481F;color:#fff;font-weight:700;font-size:13.5px;position:relative;overflow:hidden}
+.pa-btn.sec{background:#E6ECEF;color:#10222C}
+.pa-btn.rojo{background:#BF2F2F}
+.pa-btn.canal{background:#0F4C5E}
+.pa-nota{font-size:11px;color:#687B86;text-align:center;line-height:1.4}
+.pa-sim{font-size:10px;font-weight:800;color:#9A5F07;text-transform:uppercase;letter-spacing:.07em;text-align:center}
+.pa-ticket{--r:6px;background:#fff;padding:16px 14px;display:grid;gap:6px;font-family:var(--mono);font-size:12px;
+  -webkit-mask:radial-gradient(var(--r) at 50% 0,#0000 98%,#000) 50% 0/calc(2*var(--r) + 6px) 51% repeat-x,radial-gradient(var(--r) at 50% 100%,#0000 98%,#000) 50% 100%/calc(2*var(--r) + 6px) 51% repeat-x;
+  mask:radial-gradient(var(--r) at 50% 0,#0000 98%,#000) 50% 0/calc(2*var(--r) + 6px) 51% repeat-x,radial-gradient(var(--r) at 50% 100%,#0000 98%,#000) 50% 100%/calc(2*var(--r) + 6px) 51% repeat-x}
+.pa-ticket .loc{font-size:24px;font-weight:600;letter-spacing:.16em;text-align:center;color:#C23E17}
+.pa-ticket .l{display:flex;justify-content:space-between;gap:8px;border-top:1px dotted #C8D4DB;padding-top:5px}
+.pa-ticket .l span{color:#687B86}
+.pa-hoja{position:absolute;inset:0;z-index:5;background:rgba(6,20,27,.42);display:flex;align-items:flex-end}
+.pa-hoja>div{width:100%;background:#fff;border-radius:22px 22px 0 0;padding:16px 14px 18px;display:grid;gap:10px;animation:baja .01s}
+.pa-hoja h4{margin:0;font-size:15px}
+.plano-leyenda{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:10.5px;color:#687B86}
+.plano-leyenda i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.pa-lang{display:flex;gap:4px;justify-content:flex-end}
+.pa-lang button{font-size:11px;font-weight:800;padding:4px 8px;border-radius:8px;border:1.5px solid #C8D4DB;background:#fff}
+.pa-lang button.on{background:#0F4C5E;border-color:#0F4C5E;color:#fff}
+/* el chat */
+.pc{min-height:100%;background:#E5EBEE;padding:10px 10px 16px;display:flex;flex-direction:column;gap:6px}
+.m{max-width:88%;padding:8px 10px 6px;border-radius:14px;font-size:12.5px;line-height:1.42;box-shadow:0 1px 1px rgba(10,30,40,.08)}
+.m p{margin:0}
+.m time{display:block;text-align:right;font-size:10px;color:#6D7F89;margin-top:2px;font-family:var(--mono)}
+.m.in{align-self:flex-start;background:#fff;border-top-left-radius:4px}
+.m.out{align-self:flex-end;background:#D5F2DF;border-top-right-radius:4px}
+.m-btns{align-self:flex-start;display:grid;gap:4px;width:88%}
+.m-b{background:#fff;border-radius:11px;padding:9px;font-size:12.5px;font-weight:700;color:#0F6E8A;box-shadow:0 1px 1px rgba(10,30,40,.08)}
+.dia{align-self:center;font-size:10.5px;font-weight:700;color:#5D6F79;background:#D6DEE2;padding:3px 9px;border-radius:8px;margin:2px 0}
+
+/* dentro de la tablet de la sala (oscuro) */
+.pb-top{position:sticky;top:0;z-index:4;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 12px 9px;background:rgba(6,20,27,.95);border-bottom:1px solid #1C3845}
+.pb-top b{display:block;font-size:13px}
+.pb-top small{display:block;font-size:10.5px;color:#8DA5B1}
+.pb-clima{font:600 10.5px var(--mono);color:#8FD0E2;background:#10303D;padding:4px 7px;border-radius:7px;white-space:nowrap}
+.pb{padding:10px 12px 18px;display:grid;gap:10px;font-size:12.5px}
+.pb-nums{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.pb-nums div{background:#0F2530;border-radius:10px;padding:6px 7px;display:grid}
+.pb-nums b{font-family:var(--display);font-stretch:70%;font-size:22px;font-weight:850;line-height:1;font-variant-numeric:tabular-nums}
+.pb-nums span{font-size:9.5px;color:#8DA5B1;text-transform:uppercase;letter-spacing:.05em}
+.pb-nums .warn b{color:#F2B14C}
+.pb-lista{background:#0F2530;border-radius:14px;padding:2px 10px}
+.pb-fila{display:grid;grid-template-columns:40px 1fr auto;gap:2px 8px;align-items:center;padding:8px 0;border-bottom:1px solid #1C3845}
+.pb-fila:last-child{border-bottom:0}
+.pb-fila time{font:600 12px var(--mono);color:#8FD0E2}
+.pb-fila b{display:block;font-size:12.5px}
+.pb-fila span.d{display:block;font-size:11px;color:#8DA5B1}
+.pb-fila.nueva{background:linear-gradient(90deg,rgba(255,123,80,.18),transparent);margin:0 -10px;padding-inline:10px;animation:brilla 1.4s ease 2}
+@keyframes brilla{50%{background:rgba(255,123,80,.32)}}
+.pb-chips{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px}
+.pb-chip{font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;background:#17313D;color:#CFE0E7}
+.pb-pill{font-size:10px;font-weight:800;padding:3px 7px;border-radius:999px;background:#17313D;color:#CFE0E7;white-space:nowrap}
+.pb-pill.ok{background:rgba(76,208,140,.16);color:#6FE0A4}
+.pb-pill.warn{background:rgba(242,177,76,.16);color:#F5C06A}
+.pb-pill.mal{background:rgba(244,114,114,.17);color:#FF9A9A}
+.pb-pill.info{background:rgba(143,208,226,.15);color:#A9DDEB}
+.pb-aviso{display:grid;grid-template-columns:22px 1fr;gap:8px;padding:10px;border-radius:12px;font-size:12px;line-height:1.42}
+.pb-aviso b{display:block;font-size:12.5px}
+.pb-aviso.ok{background:rgba(76,208,140,.13);color:#BFF2D6}
+.pb-aviso.warn{background:rgba(242,177,76,.14);color:#FBE0B0}
+.pb-aviso.mal{background:rgba(244,114,114,.15);color:#FFD0D0}
+.pb-aviso.info{background:rgba(143,208,226,.12);color:#CDEBF3}
+.pb-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:12px;border-radius:13px;background:#FF7B50;color:#1A0A04;font-weight:800;font-size:13px;position:relative;overflow:hidden}
+.pb-btn.sec{background:#17313D;color:#E6F0F4}
+.pb-btn.ok{background:#4CD08C;color:#06221A}
+.pb-btn.rojo{background:#E05252;color:#fff}
+.pb-btns{display:flex;gap:6px}
+.pb-btns>*{flex:1}
+.pb-card{background:#0F2530;border-radius:14px;padding:11px;display:grid;gap:6px}
+.pb-card h4{margin:0;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:#8DA5B1}
+.pb-barra{height:10px;border-radius:6px;background:#17313D;overflow:hidden}
+.pb-barra i{display:block;height:100%;background:#4CD08C;transition:width .4s}
+.pb-hoja{position:absolute;inset:0;z-index:5;background:rgba(0,0,0,.5);display:flex;align-items:flex-end}
+.pb-hoja>div{width:100%;background:#0F2530;border-radius:22px 22px 0 0;padding:16px 14px 18px;display:grid;gap:10px}
+.pb-hoja h4{margin:0;font-size:15px}
+.cuenta{font:600 22px var(--mono);color:#F5C06A;text-align:center}
+[data-hold]::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.28);transform-origin:left;transform:scaleX(var(--carga,0))}
+[data-hold]>*{position:relative}
+.toca{animation:tocame 1.3s ease-in-out infinite}
+.tel.a .toca{box-shadow:0 0 0 3px #F6F8F9,0 0 0 6px #D9481F}
+.tel.b .toca{box-shadow:0 0 0 3px #06141B,0 0 0 6px #FF7B50}
+@keyframes tocame{50%{filter:brightness(1.12)}}
+
+/* plano (SVG) */
+.plano svg{display:block;width:100%;height:auto}
+.plano .suelo{fill:var(--pl-suelo);stroke:var(--pl-pared);stroke-width:2.5}
+.plano .et{fill:var(--pl-et);font:700 8.5px var(--body);letter-spacing:.08em}
+.plano .silla{fill:var(--pl-silla)}
+.plano .mesa-g{cursor:pointer}
+.plano .mesa-g text{pointer-events:none}
+.plano .libera{font:700 9px var(--mono);paint-order:stroke;stroke:var(--pl-suelo);stroke-width:3px}
+.tel.a .plano{--pl-suelo:#FFFFFF;--pl-pared:#A9BAC4;--pl-et:#7D909B;--pl-silla:#D6DFE4;border-radius:14px;overflow:hidden;border:1px solid #E0E7EB}
+.tel.b .plano{--pl-suelo:#0F2530;--pl-pared:#35586A;--pl-et:#86A0AD;--pl-silla:#23404E;border-radius:14px;overflow:hidden}
+
+/* el relato */
+.relato{background:var(--surf);border:1px solid var(--line);border-radius:18px;padding:18px;display:grid;gap:12px;position:sticky;top:12px}
+.paso-n{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.06em}
+.relato ol{margin:0;padding:0;list-style:none;display:grid;gap:3px;counter-reset:p}
+.relato li{counter-increment:p;display:grid;grid-template-columns:26px 1fr;gap:8px;padding:8px;border-radius:12px;color:var(--muted);font-size:14px;line-height:1.45}
+.relato li::before{content:counter(p);width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;background:var(--surf-3);color:var(--muted)}
+.relato li.hecho{color:var(--ink-2)}
+.relato li.hecho::before{content:"✓";background:var(--ok-suave);color:var(--ok)}
+.relato li.ahora{background:var(--acento-suave);color:var(--ink)}
+.relato li.ahora::before{background:var(--acento);color:var(--acento-ink)}
+.relato li b{color:var(--ink)}
+.relato .fin{padding:12px;border-radius:12px;background:var(--ok-suave);font-size:14px}
+.relato .fin b{color:var(--ok)}
+.relato-btns{display:flex;flex-wrap:wrap;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:11px;font-weight:700;font-size:14px;background:var(--surf-3);color:var(--ink)}
+.btn.pri{background:var(--acento);color:var(--acento-ink)}
+
+/* ---------------- panel del dueño ---------------- */
+.panel{background:var(--surf);border:1px solid var(--line);border-radius:22px;box-shadow:var(--sombra);overflow:hidden}
+.pn-cab{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.pn-marca{display:flex;align-items:center;gap:10px}
+.pn-marca b{display:block;font-size:15px}
+.pn-marca small{display:block;font-size:12.5px;color:var(--muted)}
+.pn-tabs{display:inline-flex;background:var(--surf-3);border-radius:12px;padding:4px;gap:2px}
+.pn-tabs button{padding:8px 14px;border-radius:9px;font-weight:700;font-size:14px;color:var(--ink-2)}
+.pn-tabs button[aria-selected="true"]{background:var(--surf);color:var(--ink);box-shadow:0 1px 3px rgba(13,35,48,.12)}
+.pn-cuerpo{padding:18px}
+.pn-nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.pn-num{background:var(--surf-2);border-radius:14px;padding:12px 14px;display:grid;gap:1px}
+.pn-num span{font-size:12.5px;color:var(--muted);font-weight:600}
+.pn-num b{font-family:var(--display);font-stretch:66%;font-size:36px;font-weight:850;line-height:1;font-variant-numeric:tabular-nums}
+.pn-num small{font-size:12.5px;color:var(--ink-2)}
+.pn-num.warn b{color:var(--aviso)}
+.pn-num.ok b{color:var(--ok)}
+.pn-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:18px;margin-top:16px;align-items:start}
+.pn-bloque{display:grid;gap:10px}
+.pn-t{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 10px}
+.pn-t b{font-size:15px}
+.pn-t span{font-size:12.5px;color:var(--muted)}
+.marea svg{display:block;width:100%;height:auto}
+.marea .area{fill:var(--mapa);opacity:.22}
+.marea .linea{fill:none;stroke:var(--mapa);stroke-width:2.2}
+.marea .tope{stroke:var(--mal);stroke-width:1.2;stroke-dasharray:4 4}
+.marea .grilla{stroke:var(--line);stroke-width:1}
+.marea .eje{fill:var(--muted);font:500 11px var(--mono)}
+.marea .cursor{stroke:var(--acento);stroke-width:2}
+.marea .punto{fill:var(--acento)}
+.marea .rot{fill:var(--acento);font:700 12px var(--mono)}
+.marea .tope-t{fill:var(--mal);font:600 10.5px var(--mono)}
+.hora-ctl{display:grid;gap:6px;background:var(--surf-2);border-radius:14px;padding:12px 14px}
+.hora-ctl label{font-size:14px;color:var(--ink-2)}
+.hora-ctl label b{font-family:var(--mono);color:var(--ink);font-size:16px}
+input[type="range"]{width:100%;accent-color:var(--acento);height:28px}
+.atencion{display:grid;gap:6px}
+.at{display:grid;grid-template-columns:10px 1fr;gap:10px;align-items:start;padding:10px 12px;border-radius:12px;background:var(--surf-2);font-size:14px;line-height:1.4}
+.at i{width:10px;height:10px;border-radius:50%;margin-top:5px}
+.at.warn i{background:var(--aviso)} .at.mal i{background:var(--mal)} .at.ok i{background:var(--ok)}
+.at small{display:block;color:var(--muted);font-size:12.5px}
+.pn-plano{background:var(--surf-2);border-radius:16px;padding:10px}
+.leyenda-pn{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--ink-2);padding:8px 4px 0}
+.leyenda-pn i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.pn-mesa{background:var(--surf-2);border-radius:14px;padding:14px;display:grid;gap:8px;font-size:14px}
+.pn-mesa h4{margin:0;font-family:var(--display);font-stretch:72%;font-size:24px;font-weight:800}
+.pn-mesa .fila{display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:6px}
+.pn-mesa .fila span{color:var(--muted)}
+.pn-mesa .chips{display:flex;flex-wrap:wrap;gap:4px}
+.pn-mesa .chip{font-size:12px;font-weight:700;padding:3px 8px;border-radius:7px;background:var(--surf-3)}
+.pn-acc{display:flex;flex-wrap:wrap;gap:6px}
+.pn-acc button{padding:8px 12px;border-radius:10px;font-weight:700;font-size:13.5px;background:var(--surf);box-shadow:inset 0 0 0 1.5px var(--line-2)}
+.pn-acc button.pri{background:var(--acento);color:var(--acento-ink);box-shadow:none}
+.pn-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:50;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:700;font-size:14px;animation:entra .3s both;max-width:calc(100% - 32px)}
+/* el mes */
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.cal .dsem{font:600 11px var(--mono);color:var(--muted);text-align:center;padding-bottom:2px}
+.cal button,.cal .vacio{aspect-ratio:1/1;max-width:100%;border-radius:9px;display:grid;align-content:space-between;padding:5px 6px;text-align:left;font-size:11px;line-height:1}
+.cal button{background:color-mix(in srgb,var(--mapa) var(--p,0%),var(--surf-2));color:var(--ink)}
+.cal button.alto{color:#fff}
+.cal button b{font:600 12px var(--mono)}
+.cal button span{font-size:10.5px;font-weight:700;opacity:.9}
+.cal button.cerrado{background:repeating-linear-gradient(135deg,var(--surf-3) 0 5px,var(--surf-2) 5px 10px);color:var(--muted)}
+.cal button.futuro{background:var(--surf-2);color:var(--muted);opacity:.6}
+.cal button.hoy{box-shadow:inset 0 0 0 2px var(--acento)}
+.cal button[aria-pressed="true"]{outline:2.5px solid var(--ink);outline-offset:1px}
+.semana{display:grid;gap:6px}
+.sem-f{display:grid;grid-template-columns:34px 1fr 44px;gap:8px;align-items:center;font-size:13px}
+.sem-f span{font-family:var(--mono);color:var(--muted)}
+.sem-f i{display:block;height:12px;border-radius:6px;background:var(--mapa)}
+.sem-f b{font-family:var(--mono);font-weight:600;text-align:right}
+.dia-det{background:var(--surf-2);border-radius:14px;padding:14px;display:grid;gap:6px;font-size:14px}
+.dia-det h4{margin:0;font-family:var(--display);font-stretch:72%;font-size:22px;font-weight:800}
+.dia-det .fila{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:6px}
+.dia-det .fila span{color:var(--muted)}
+/* las reglas */
+.reglas{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:22px;align-items:start}
+.rg{display:grid;gap:4px;padding:12px 0;border-bottom:1px solid var(--line)}
+.rg:first-child{padding-top:0}
+.rg-t{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.rg-t label{font-weight:700;font-size:15px}
+.rg-t output{font-family:var(--mono);font-weight:600;font-size:15px;color:var(--acento);white-space:nowrap}
+.rg small{color:var(--muted);font-size:13px}
+.sw{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.sw label{font-weight:700;font-size:15px}
+.sw input{appearance:none;-webkit-appearance:none;flex:none;width:46px;height:28px;border-radius:14px;background:var(--line-2);position:relative;cursor:pointer;transition:background .2s;margin:0}
+.sw input::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+.sw input:checked{background:var(--ok)}
+.sw input:checked::after{transform:translateX(18px)}
+.tono{display:flex;gap:4px;margin-top:4px}
+.tono span{flex:1;text-align:center;font-size:11.5px;font-weight:700;padding:4px;border-radius:7px;background:var(--surf-3);color:var(--muted)}
+.tono span.on{background:var(--acento-suave);color:var(--acento-2)}
+.vista{position:sticky;top:12px;display:grid;gap:12px}
+.vista-chat{background:#E5EBEE;border-radius:18px;padding:14px;display:grid;gap:6px}
+.vista-ej{background:var(--surf-2);border-radius:14px;padding:14px;font-size:14px;display:grid;gap:6px}
+.vista-ej b.gr{font-family:var(--display);font-stretch:66%;font-size:30px;font-weight:850;color:var(--acento)}
+.vista-ej .fila{display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:6px}
+.vista-ej .fila span{color:var(--muted)}
+
+/* ---------------- calculadora ---------------- */
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;background:var(--surf);border:1px solid var(--line);border-radius:22px;padding:22px}
+.calc-in{display:grid;gap:4px}
+.calc-res{background:var(--hondo);color:var(--hondo-ink);border-radius:18px;padding:22px;display:grid;gap:14px;align-content:start}
+.calc-res .l{font-size:14px;opacity:.85}
+.calc-res .g{font-family:var(--display);font-stretch:64%;font-size:clamp(40px,5vw,60px);font-weight:850;line-height:.95;font-variant-numeric:tabular-nums}
+.calc-res .g.acc{color:#FF9A74}
+.calc-res .dos{display:grid;grid-template-columns:1fr 1fr;gap:14px;border-top:1px solid rgba(255,255,255,.18);padding-top:14px}
+.calc-res .dos b{font-family:var(--display);font-stretch:68%;font-size:28px;font-weight:800;display:block;font-variant-numeric:tabular-nums}
+.calc-res small{font-size:12.5px;opacity:.78;line-height:1.45}
+
+/* ---------------- antes y después ---------------- */
+.cambia{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surf)}
+.cambia-f{display:grid;grid-template-columns:170px minmax(0,1fr) minmax(0,1fr);border-top:1px solid var(--line)}
+.cambia-f:first-child{border-top:0}
+.cambia-f>*{padding:13px 16px;font-size:15px;line-height:1.45}
+.cambia-f .q{font-family:var(--display);font-stretch:74%;font-weight:800;font-size:18px}
+.cambia-f .hoy{color:var(--ink-2);border-left:1px solid var(--line)}
+.cambia-f .con{border-left:1px solid var(--line);background:color-mix(in srgb,var(--ok) 6%,var(--surf))}
+.cambia-f.cab>*{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-block:10px;background:var(--surf-2)}
+
+/* ---------------- datos ---------------- */
+.datos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.datos div{background:var(--surf);padding:16px 18px;display:grid;gap:4px;align-content:start}
+.datos b{font-family:var(--display);font-stretch:76%;font-size:20px;font-weight:800}
+.datos p{color:var(--ink-2);font-size:14.5px}
+.legal{font-size:13px;color:var(--muted)}
+
+/* ---------------- próximos pasos ---------------- */
+.pasos3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.pasos3 div{display:grid;gap:6px;align-content:start;padding-top:14px;border-top:2.5px solid var(--acento)}
+.pasos3 h3{font-size:24px;font-weight:800}
+.pasos3 p{color:var(--ink-2);font-size:15.5px}
+.contacto{background:var(--hondo);color:var(--hondo-ink);border-radius:22px;padding:24px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center}
+.contacto h3{font-size:clamp(28px,3.4vw,40px);font-weight:820}
+.contacto p{opacity:.88;margin-top:6px;max-width:52ch}
+.contacto .nro{font:600 20px var(--mono);user-select:all}
+.contacto-acc{display:grid;gap:10px;justify-items:start}
+.wa{display:inline-flex;align-items:center;gap:8px;background:#FF7B50;color:#1A0A04;font-weight:800;padding:12px 18px;border-radius:12px;text-decoration:none}
+.copiar{font-weight:700;font-size:14px;padding:8px 12px;border-radius:10px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.35);color:var(--hondo-ink)}
+footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);max-width:100ch;line-height:1.5}
+
+/* ---------------- anchos ---------------- */
+@media (max-width:1180px){
+  .mesa{grid-template-columns:repeat(2,minmax(0,300px));justify-content:center}
+  .relato{grid-column:1/-1;position:static}
+}
+@media (max-width:980px){
+  .portada{grid-template-columns:1fr;gap:34px}
+  .comanda-sombra{transform:none}
+  .banco{grid-template-columns:1fr}
+  .menu{position:static;display:flex;overflow-x:auto;gap:18px;padding-bottom:6px;scrollbar-width:thin}
+  .menu-grupo{flex:none}
+  .menu-grupo .lista{display:flex;gap:6px}
+  .opc{grid-template-columns:auto auto;white-space:nowrap}
+  .opc small{display:none}
+  .pn-grid,.reglas,.calc{grid-template-columns:1fr}
+  .vista{position:static}
+  .cifras,.pn-nums{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cifras div:nth-child(3){border-left:0}
+  .cifras div:nth-child(n+3){border-top:1px solid var(--line)}
+  .datos{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:680px){
+  .promesas,.pasos3,.datos{grid-template-columns:1fr}
+  .promesas div+div{padding-left:0;border-left:0;border-top:1px solid var(--line);padding-top:12px}
+  .promesas div{padding-bottom:12px}
+  .mesa{grid-template-columns:minmax(0,300px);justify-content:center}
+  .mirar{display:flex;justify-content:center}
+  .mirar .seg{display:inline-flex;background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:3px}
+  .mirar button{padding:8px 12px;border-radius:9px;font-size:13.5px;font-weight:700;color:var(--muted)}
+  .mirar button[aria-pressed="true"]{background:var(--acento);color:var(--acento-ink)}
+  .col-tel.oculto{display:none}
+  .cambia-f{grid-template-columns:1fr}
+  .cambia-f .hoy,.cambia-f .con{border-left:0;border-top:1px dashed var(--line)}
+  .cambia-f.cab{display:none}
+  .cambia-f .hoy::before{content:"Hoy: ";font-weight:700;color:var(--muted)}
+  .cambia-f .con::before{content:"Con Mesa Austral: ";font-weight:700;color:var(--ok)}
+  .contacto{grid-template-columns:1fr}
+  .pn-cuerpo,.calc{padding:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important}
+}
+</style>
+
+<div class="envol">
+
+  <header class="portada">
+    <div class="portada-txt">
+      <span class="ojo">Mesa Austral · reservas para restaurantes de Ushuaia</span>
+      <h1>Ni una mesa vacía por un <em>plantón</em>.</h1>
+      <p class="bajada">Tus clientes reservan solos, a cualquier hora, eligiendo la mesa en el plano de tu salón. La app confirma por WhatsApp, recuerda, avisa cuándo se libera cada mesa y, si alguien no viene, se la ofrece al siguiente. Vos lo mirás desde el teléfono.</p>
+      <div class="promesas">
+        <div><b>Reservas las 24 horas</b><small>Sin atender el teléfono ni contestar mensajes a medianoche.</small></div>
+        <div><b>El plano en vivo</b><small>Cada mesa ocupada dice a qué hora se libera, y se puede pedir para ese momento.</small></div>
+        <div><b>El plantón deja constancia</b><small>Un incidente y un compromiso chico, que vuelve como crédito si regresa.</small></div>
+      </div>
+      <div class="acciones">
+        <a class="boton pri" href="#probar">Probar la demo</a>
+        <a class="boton" href="#panel">Ver el panel del dueño</a>
+        <a class="boton" href="#app-real">Abrir la app real ↗</a>
+      </div>
+    </div>
+    <div class="comanda-sombra" aria-label="Lo que va pasando esta noche en el restaurante de ejemplo">
+      <div class="comanda">
+        <div class="cm-cab"><b id="cmResto">FOGÓN DEL ÑIRE</b><span>Cena · hoy</span></div>
+        <div class="cm-tot">
+          <div><b class="num">18</b><span>reservas</span></div>
+          <div><b class="num">59</b><span>personas</span></div>
+          <div><b class="num" id="cmEvit">2</b><span>plantones evitados</span></div>
+        </div>
+        <ol class="cm-lineas" id="cmLineas"></ol>
+        <div class="cm-pie">Ejemplo · así se ve la noche en vivo</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="cifras" aria-label="Mesa Austral en números">
+    <div><b>24 h</b><span>para reservar, también a la medianoche</span></div>
+    <div><b>3 avisos</b><span>por reserva: confirmación, recordatorio y «¿venís?»</span></div>
+    <div><b id="cifraMonto">$ 10.000</b><span>compromiso sugerido por persona que falta sin avisar</span></div>
+    <div><b>3 idiomas</b><span>español, inglés y portugués, según el teléfono de quien reserva</span></div>
+  </div>
+
+  <section class="sec" id="probar" aria-labelledby="hProbar">
+    <div class="sec-cab">
+      <span class="ojo">Probalo acá</span>
+      <h2 id="hProbar">Un día en el Fogón, en dos teléfonos</h2>
+      <p>A la izquierda, el teléfono de quien reserva. A la derecha, la tablet de la entrada del restaurante. Tocá el botón que late y mirá cómo le llega al otro. Todo es de ejemplo: no se guarda ni se envía nada.</p>
+      <button class="sonido" id="sonido" aria-pressed="false">Activar el sonido de los avisos</button>
+    </div>
+    <div class="banco">
+      <nav class="menu" id="menu" aria-label="Situaciones para probar"></nav>
+      <div class="escena">
+        <div class="escena-cab"><h3 id="escTit"></h3><p id="escSub"></p></div>
+        <div class="mirar"><div class="seg" role="group" aria-label="Qué teléfono mirar"><button id="verA" aria-pressed="true"></button><button id="verB" aria-pressed="false"></button></div></div>
+        <div class="mesa">
+          <div class="col-tel" id="colA"><div class="rol" id="rolA"></div>
+            <div class="tel a"><div class="tel-pantalla"><div class="tel-isla"></div><div class="tel-estado"><span class="hora"></span><i>●●● 4G ▮</i></div><div class="tel-app" id="appA"></div><div class="tel-push" id="pushA"></div></div></div></div>
+          <div class="col-tel" id="colB"><div class="rol" id="rolB"></div>
+            <div class="tel b"><div class="tel-pantalla"><div class="tel-isla"></div><div class="tel-estado"><span class="hora"></span><i>WIFI ▮</i></div><div class="tel-app" id="appB"></div><div class="tel-push" id="pushB"></div></div></div></div>
+          <aside class="relato" aria-live="polite">
+            <div class="paso-n" id="pasoN"></div>
+            <ol id="pasos"></ol>
+            <div class="relato-btns"><button class="btn" id="reiniciar">↺ Empezar de nuevo</button><button class="btn pri" id="siguiente" hidden>Probar la siguiente →</button></div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="panel" aria-labelledby="hPanel">
+    <div class="sec-cab">
+      <span class="ojo">Para el dueño</span>
+      <h2 id="hPanel">Tu restaurante en una pantalla</h2>
+      <p>Tres solapas, nada más: lo de esta noche, cómo viene el mes y tus reglas. Deslizá la hora para ver cómo se llena el salón y tocá cualquier mesa.</p>
+    </div>
+    <div class="panel">
+      <div class="pn-cab">
+        <div class="pn-marca"><span class="logo" aria-hidden="true">Ñ</span><div><b id="pnResto">Fogón del Ñire</b><small>Panel del dueño · datos de ejemplo</small></div></div>
+        <div class="pn-tabs" role="tablist" aria-label="Secciones del panel">
+          <button role="tab" id="tab-noche" data-tab="noche" aria-selected="true">Esta noche</button>
+          <button role="tab" id="tab-mes" data-tab="mes" aria-selected="false">El mes</button>
+          <button role="tab" id="tab-reglas" data-tab="reglas" aria-selected="false">Tus reglas</button>
+        </div>
+      </div>
+      <div class="pn-cuerpo" id="pnCuerpo" role="tabpanel"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="app-real" aria-labelledby="hAppReal">
+    <div class="sec-cab">
+      <span class="ojo">La app de verdad</span>
+      <h2 id="hAppReal">Abrila en tu teléfono</h2>
+      <p>Hasta que el restaurante tenga su servidor, la app corre en «modo prueba»: todo pasa dentro de tu navegador, con el Fogón del Ñire inventado y un reloj de prueba.</p>
+    </div>
+    <div class="app-real">
+      <a href="https://claudioravasi-ai.github.io/mesa-austral/app/" target="_blank" rel="noopener"><b>Reservar una mesa ↗</b><small>Lo que ve el cliente</small></a>
+      <a href="https://claudioravasi-ai.github.io/mesa-austral/app/equipo.html" target="_blank" rel="noopener"><b>Entrada del equipo ↗</b><small>La sala y el panel del dueño, en una dirección aparte</small></a>
+    </div>
+  </section>
+
+  <section class="sec" id="cuentas" aria-labelledby="hCuentas">
+    <div class="sec-cab">
+      <span class="ojo">Hacé la cuenta</span>
+      <h2 id="hCuentas">¿Cuánto te cuestan los plantones?</h2>
+      <p>Poné los números de tu restaurante. Contamos lo que dejás de ganar, no lo que dejás de facturar: la mercadería que no se usó vuelve a la heladera, pero la mesa vacía no vuelve.</p>
+    </div>
+    <div class="calc">
+      <div class="calc-in">
+        <div class="rg"><div class="rg-t"><label for="cRes">Reservas por semana</label><output id="oRes" for="cRes"></output></div><input type="range" id="cRes" min="20" max="300" step="5" value="70"></div>
+        <div class="rg"><div class="rg-t"><label for="cPax">Personas por reserva</label><output id="oPax" for="cPax"></output></div><input type="range" id="cPax" min="2" max="6" step=".5" value="3"></div>
+        <div class="rg"><div class="rg-t"><label for="cTic">Ticket promedio por persona</label><output id="oTic" for="cTic"></output></div><input type="range" id="cTic" min="20000" max="120000" step="2500" value="55000"><small>En Ushuaia, una cena ronda entre $ 45.000 y $ 80.000 por persona (septiembre de 2026).</small></div>
+        <div class="rg"><div class="rg-t"><label for="cPct">Reservas que hoy no vienen ni avisan</label><output id="oPct" for="cPct"></output></div><input type="range" id="cPct" min="2" max="25" step="1" value="8"></div>
+      </div>
+      <div class="calc-res" aria-live="polite">
+        <div><div class="l">Hoy dejás de ganar, por mes, cerca de</div><div class="g" id="rPerd">$ 0</div></div>
+        <div class="dos">
+          <div><b id="rCon">$ 0</b><small>con recordatorios, lista de espera y compromiso</small></div>
+          <div><b id="rDif" style="color:#FF9A74">$ 0</b><small>a tu favor por mes <span id="rCenas"></span></small></div>
+        </div>
+        <small>Cómo lo calculamos: margen del 65 % del ticket (la comida ronda el 35 %). Con confirmación por WhatsApp y lista de espera, los plantones bajan a la mitad; plataformas similares informan alrededor del 2 %. De los que igual faltan, la mitad paga el compromiso. Es una estimación, no una promesa.</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="hCambia">
+    <div class="sec-cab">
+      <span class="ojo">Antes y después</span>
+      <h2 id="hCambia">Lo que cambia en tu salón</h2>
+    </div>
+    <div class="cambia">
+      <div class="cambia-f cab"><span></span><span>Hoy, con cuaderno y WhatsApp</span><span>Con Mesa Austral</span></div>
+      <div class="cambia-f"><span class="q">Reservar</span><span class="hoy">Mensajes y llamadas a toda hora. Alguien tiene que contestar.</span><span class="con">El cliente elige día, hora y mesa en el plano, solo, las 24 horas.</span></div>
+      <div class="cambia-f"><span class="q">Mesas ocupadas</span><span class="hoy">«Llamá más tarde, a ver si se libera.»</span><span class="con">Ve a qué hora se libera cada mesa y la pide para ese momento, con la limpieza incluida.</span></div>
+      <div class="cambia-f"><span class="q">Confirmar</span><span class="hoy">Llamar uno por uno la tarde del servicio.</span><span class="con">Recordatorio con botones. Ves en verde quién confirmó y en amarillo a quién llamar.</span></div>
+      <div class="cambia-f"><span class="q">Plantón</span><span class="hoy">La mesa queda vacía y nadie se entera hasta tarde.</span><span class="con">A los minutos pregunta «¿venís?», después libera la mesa y se la ofrece a la lista de espera.</span></div>
+      <div class="cambia-f"><span class="q">Grupos y fechas especiales</span><span class="hoy">Seña por transferencia y capturas de pantalla.</span><span class="con">Seña con Mercado Pago, acreditada sola y descontada de la cuenta.</span></div>
+      <div class="cambia-f"><span class="q">Temporal</span><span class="hoy">Llamar a todos, uno por uno.</span><span class="con">Un gesto avisa a todas las reservas y ofrece otra fecha.</span></div>
+      <div class="cambia-f"><span class="q">Números</span><span class="hoy">El cuaderno, si alguien lo pasó en limpio.</span><span class="con">Personas, ocupación y plantones por noche y por mes, sin cargar nada.</span></div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="hDatos">
+    <div class="sec-cab">
+      <span class="ojo">Ley 25.326 de protección de datos personales</span>
+      <h2 id="hDatos">Tus datos y los de tus clientes</h2>
+    </div>
+    <div class="datos">
+      <div><b>Lo mínimo</b><p>Nombre y teléfono para reservar. El correo es opcional. Nada de DNI.</p></div>
+      <div><b>Alergias con cuidado</b><p>Es un dato de salud: solo si el cliente lo marca, lo ven la sala y la cocina esa noche y se borra a los 7 días.</p></div>
+      <div><b>Sin tarjetas en nuestro servidor</b><p>Señas y compromisos se pagan en Mercado Pago. Mesa Austral nunca ve los números de tarjeta.</p></div>
+      <div><b>Cada uno ve lo suyo</b><p>La sala, la cocina y el dueño tienen permisos distintos, y queda registro de quién hizo cada cambio.</p></div>
+      <div><b>Los incidentes son de tu restaurante</b><p>No se comparten con otros locales ni se publican. Vencen a los 12 meses.</p></div>
+      <div><b>El cliente decide</b><p>Desde el enlace de su reserva puede ver, corregir o borrar sus datos.</p></div>
+    </div>
+    <p class="legal">Los textos legales de la app son un modelo y los tiene que revisar un abogado matriculado antes de usarse con clientes reales.</p>
+  </section>
+
+  <section class="sec" aria-labelledby="hPasos">
+    <div class="sec-cab">
+      <span class="ojo">Cómo seguimos</span>
+      <h2 id="hPasos">Tres pasos para tenerlo en tu salón</h2>
+    </div>
+    <div class="pasos3">
+      <div><h3>Te lo mostramos en tu local</h3><p>Veinte minutos, con tus mesas y tus horarios, en tu teléfono.</p></div>
+      <div><h3>Cargamos tu plano y tus reglas</h3><p>Mesas, turnos, cuánto dura cada mesa, la limpieza entre una y otra, y la política de plantones que elijas.</p></div>
+      <div><h3>Lo usás y medimos</h3><p>Desde la primera semana contamos plantones, mesas recuperadas y reservas que llegaron solas.</p></div>
+    </div>
+    <div class="contacto">
+      <div><h3>¿Lo probamos en tu restaurante?</h3><p>Escribile a Claudio Ravasi, de Ushuaia. Te muestra la app en tu salón y te cuenta cómo sería con tus números.</p></div>
+      <div class="contacto-acc">
+        <span class="nro" id="nroWa">+54 9 2901 494953</span>
+        <a class="wa" href="https://wa.me/5492901494953?text=Hola%20Claudio%2C%20vi%20la%20demo%20de%20Mesa%20Austral%20y%20me%20interesa%20para%20mi%20restaurante." target="_blank" rel="noopener">Escribir por WhatsApp</a>
+        <button class="copiar" id="copiarNro">Copiar el número</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>Mesa Austral es un nombre de trabajo. Fogón del Ñire es un restaurante inventado para esta demo: los nombres, las mesas, los montos y los mensajes son de ejemplo, y esta página no se conecta con ningún sistema real. Los montos sugeridos parten de un ticket promedio de $ 55.000 por persona en una cena en Ushuaia (septiembre de 2026). Los pagos que se ven son simulaciones; en la app real se hacen en Mercado Pago.</footer>
+</div>
+
+<script>
+(function(){
+'use strict';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = t => String(t ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+const pesos = n => '$ ' + Math.round(n).toLocaleString('es-AR');
+const hhmm = m => { m = ((Math.round(m) % 1440) + 1440) % 1440; return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); };
+const h2m = t => { const [a, b] = t.split(':').map(Number); return a * 60 + b; };
+const reducido = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ======================= la configuración (se cambia acá) ======================= */
+const CONF = { resto:'Fogón del Ñire', ticket:55000, limpieza:15 };
+/* La política que el dueño ajusta en «Tus reglas». */
+const POL = { horas:3, monto:10000, credito:true, dias:90, tolerancia:15, grupoDesde:8, sena:15000, smn:true };
+const DUR = pax => pax <= 2 ? 90 : pax <= 4 ? 105 : 120;
+const HOY = new Date(2026, 8, 28);
+const fechaCredito = () => { const d = new Date(HOY); d.setDate(d.getDate() + POL.dias); return String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0'); };
+const limite = inicio => hhmm(inicio - POL.horas * 60);
+const polCorta = (inicio = 1260) => `Podés cancelar sin cargo hasta las <b>${limite(inicio)}</b>. Si cancelás después o no venís, queda un compromiso de <b>${pesos(POL.monto)} por persona</b>${POL.credito ? `, que te devolvemos como crédito si volvés antes del ${fechaCredito()}` : ''}.`;
+
+/* ======================= el salón ======================= */
+const MESAS = [
+  { id:'V1', f:'c', cx:50, cy:46, r:17, cap:2, z:'Ventanal' }, { id:'V2', f:'c', cx:108, cy:46, r:17, cap:2, z:'Ventanal' },
+  { id:'V3', f:'r', x:150, y:29, w:58, h:34, cap:4, z:'Ventanal' }, { id:'V4', f:'r', x:228, y:29, w:58, h:34, cap:4, z:'Ventanal' },
+  { id:'V5', f:'c', cx:318, cy:46, r:17, cap:2, z:'Ventanal' },
+  { id:'M1', f:'r', x:30, y:94, w:46, h:46, cap:4, z:'Salón' }, { id:'M2', f:'r', x:100, y:94, w:46, h:46, cap:4, z:'Salón' },
+  { id:'M3', f:'r', x:170, y:94, w:46, h:46, cap:4, z:'Salón' }, { id:'M4', f:'c', cx:262, cy:117, r:22, cap:4, z:'Salón' },
+  { id:'M5', f:'c', cx:318, cy:117, r:16, cap:2, z:'Salón' },
+  { id:'F1', f:'r', x:30, y:176, w:86, h:44, cap:6, z:'Junto al hogar' }, { id:'F2', f:'r', x:134, y:176, w:86, h:44, cap:6, z:'Junto al hogar' },
+  { id:'M6', f:'c', cx:252, cy:198, r:16, cap:2, z:'Salón' }, { id:'M7', f:'c', cx:300, cy:198, r:16, cap:2, z:'Salón' },
+];
+const CAPACIDAD = MESAS.reduce((s, m) => s + m.cap, 0);
+const mesa = id => MESAS.find(m => m.id === id);
+/* Las reservas de esta noche (inventadas). h = minuto del día. */
+const RES = [
+  { id:1, m:'V1', h:1230, pax:2, n:'Lucía M.', est:'sentada', ch:['🥂 Aniversario'] },
+  { id:2, m:'V3', h:1260, pax:4, n:'Sofía L.', est:'confirmada', ch:['🎂 Cumpleaños', '🌾 Sin TACC'] },
+  { id:3, m:'M1', h:1170, pax:4, n:'Familia Gómez', est:'finalizada', dur:90 },
+  { id:4, m:'M2', h:1230, pax:3, n:'Ricardo P.', est:'sentada' },
+  { id:5, m:'M3', h:1290, pax:4, n:'Ana Clara S.', est:'confirmada', ch:['🇧🇷 Portugués'] },
+  { id:6, m:'M4', h:1200, pax:4, n:'Tomás y amigos', est:'sentada', dur:90 },
+  { id:7, m:'M7', h:1260, pax:2, n:'Diego A.', est:'sin_confirmar' },
+  { id:8, m:'F1', h:1215, pax:6, n:'Mesa de los Ruiz', est:'sentada' },
+  { id:9, m:'F2', h:1290, pax:6, n:'Grupo Pérez', est:'confirmada', ch:['💳 Seña pagada'] },
+  { id:10, m:'V2', h:1320, pax:2, n:'Martín R.', est:'confirmada' },
+  { id:11, m:'V4', h:1185, pax:4, n:'Julia W.', est:'sentada', ch:['🇬🇧 Inglés'], dur:90 },
+  { id:12, m:'V4', h:1305, pax:3, n:'Paula G.', est:'confirmada' },
+  { id:13, m:'M5', h:1245, pax:2, n:'Nico F.', est:'sentada', dur:75 },
+  { id:14, m:'M6', h:1335, pax:2, n:'Valen B.', est:'sin_confirmar', dur:75 },
+  { id:15, m:'V5', h:1230, pax:2, n:'Carla y Seba', est:'sentada' },
+  { id:16, m:'M1', h:1290, pax:4, n:'Hernán D.', est:'confirmada', dur:90 },
+  { id:17, m:'M2', h:1350, pax:2, n:'Flor T.', est:'confirmada', dur:75 },
+  { id:18, m:'M4', h:1320, pax:3, n:'Los Ibáñez', est:'confirmada', dur:90 },
+];
+RES.forEach(r => { if (!r.dur) r.dur = DUR(r.pax); });
+const fin = r => r.h + r.dur;
+
+/* ¿La mesa está libre para [ini, fin) contando la limpieza antes y después? */
+function mesaLibre(id, ini, finM, lista, sin = []){
+  return !lista.some(r => r.m === id && !sin.includes(r.id) && r.est !== 'planton' && r.est !== 'cancelada' &&
+    ini < fin(r) + CONF.limpieza && r.h - CONF.limpieza < finM);
+}
+/* Cuándo se libera la mesa si a esa hora está ocupada (fin estimado + limpieza). */
+function liberaDe(id, t, lista, sin = []){
+  const r = lista.find(x => x.m === id && !sin.includes(x.id) && x.est !== 'planton' && x.h <= t && t < fin(x));
+  return r ? { r, libre:fin(r), reservable:fin(r) + CONF.limpieza } : null;
+}
+
+/* ======================= el plano (SVG) ======================= */
+const COLOR = {
+  libre:{ f:'#2FA36B', t:'#fff', n:'Libre' }, elegida:{ f:'#1789A6', t:'#fff', n:'Tu mesa' },
+  ocupada:{ f:'#D9481F', t:'#fff', n:'Ocupada' }, pronto:{ f:'#E9A23B', t:'#2E1E04', n:'Se libera pronto' },
+  reservada:{ f:'#3E6FA8', t:'#fff', n:'Reservada' }, no:{ f:'#AEBAC1', t:'#fff', n:'No es para tu grupo' },
+  espera:{ f:'#E9A23B', t:'#2E1E04', n:'No llegó' },
+};
+function sillas(m){
+  const s = [];
+  if (m.f === 'c'){ for (let i = 0; i < m.cap; i++){ const a = i / m.cap * Math.PI * 2 - Math.PI / 2; s.push([m.cx + Math.cos(a) * (m.r + 7), m.cy + Math.sin(a) * (m.r + 7)]); } }
+  else { const arr = Math.ceil(m.cap / 2), aba = m.cap - arr;
+    for (let i = 0; i < arr; i++) s.push([m.x + m.w * (i + .5) / arr, m.y - 7]);
+    for (let i = 0; i < aba; i++) s.push([m.x + m.w * (i + .5) / aba, m.y + m.h + 7]); }
+  return s.map(([x, y]) => `<circle class="silla" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.2"/>`).join('');
+}
+function plano({ estado, nota = () => '', act = '', combo = null, sel = null }){
+  const mesas = MESAS.map(m => {
+    const e = estado(m.id), c = COLOR[e] || COLOR.libre, marca = sel === m.id;
+    const cx = m.f === 'c' ? m.cx : m.x + m.w / 2, cy = m.f === 'c' ? m.cy : m.y + m.h / 2;
+    const borde = marca ? 'stroke="#0B3A48" stroke-width="3"' : '';
+    const forma = m.f === 'c' ? `<circle cx="${m.cx}" cy="${m.cy}" r="${m.r}" fill="${c.f}" ${borde}/>` : `<rect x="${m.x}" y="${m.y}" width="${m.w}" height="${m.h}" rx="7" fill="${c.f}" ${borde}/>`;
+    const bajo = m.f === 'c' ? m.cy + m.r + 18 : m.y + m.h + 18, txt = nota(m.id, e);
+    return `<g class="mesa-g" ${act ? `data-act="${act}" data-v="${m.id}"` : ''} data-mesa="${m.id}" role="button" aria-label="Mesa ${m.id}, ${c.n}">${sillas(m)}${forma}
+      <text x="${cx}" y="${cy + 1}" text-anchor="middle" font-size="11" font-weight="800" fill="${c.t}" font-family="Instrument Sans,system-ui,sans-serif">${m.id}</text>
+      <text x="${cx}" y="${cy + 11}" text-anchor="middle" font-size="7.5" font-weight="700" fill="${c.t}" opacity=".9" font-family="Instrument Sans,system-ui,sans-serif">${m.cap} p.</text>
+      ${txt ? `<text class="libera" x="${cx}" y="${bajo}" text-anchor="middle" fill="${e === 'pronto' || e === 'espera' ? '#B26F06' : '#C23E17'}">${txt}</text>` : ''}</g>`;
+  }).join('');
+  let comboSvg = '';
+  if (combo){ const ms = combo.map(mesa); const x0 = Math.min(...ms.map(m => m.x)) - 10, y0 = Math.min(...ms.map(m => m.y)) - 14, x1 = Math.max(...ms.map(m => m.x + m.w)) + 10, y1 = Math.max(...ms.map(m => m.y + m.h)) + 14;
+    comboSvg = `<rect x="${x0}" y="${y0}" width="${x1 - x0}" height="${y1 - y0}" rx="14" fill="none" stroke="#1789A6" stroke-width="2.5" stroke-dasharray="7 5"/>`; }
+  return `<svg viewBox="0 0 400 268" role="img" aria-label="Plano del salón">
+    <rect class="suelo" x="6" y="6" width="388" height="256" rx="16"/>
+    <line x1="40" y1="6" x2="352" y2="6" stroke="#7CC4D8" stroke-width="5" stroke-linecap="round"/>
+    <text class="et" x="196" y="19" text-anchor="middle">VENTANAL · CANAL BEAGLE</text>
+    <rect x="352" y="96" width="32" height="96" rx="6" fill="#8A6A45" opacity=".85"/>
+    <text x="368" y="144" text-anchor="middle" font-size="8.5" font-weight="800" fill="#fff" letter-spacing="1.5" transform="rotate(90 368 144)" font-family="Instrument Sans,system-ui,sans-serif">BARRA</text>
+    <rect x="34" y="256" width="78" height="8" rx="3" fill="#D9481F" opacity=".85"/><text class="et" x="73" y="249" text-anchor="middle">HOGAR</text>
+    <rect x="300" y="256" width="54" height="8" rx="3" fill="#2FA36B"/><text class="et" x="327" y="249" text-anchor="middle">ENTRADA</text>
+    ${comboSvg}${mesas}</svg>`;
+}
+const leyenda = claves => `<div class="plano-leyenda">${claves.map(k => `<span><i style="background:${COLOR[k].f}"></i>${COLOR[k].n}</span>`).join('')}</div>`;
+
+/* ======================= piezas del teléfono de quien reserva ======================= */
+const OLAS = `<svg viewBox="0 0 300 34" preserveAspectRatio="none" aria-hidden="true"><path d="M0 34V22l30-12 22 8 26-14 30 16 24-9 28 12 26-15 30 13 24-8 30 12 30-10v29z" fill="#0A2530" opacity=".85"/><path d="M0 34v-6c20-4 40 4 60 0s40-4 60 0 40 4 60 0 40-4 60 0 40 4 60 0v6z" fill="#7CC4D8" opacity=".35"/></svg>`;
+const web = (inner, sub = 'Reservas online') => `<div class="pa-top"><span class="logo" aria-hidden="true">Ñ</span><div class="t"><b>${esc(CONF.resto)}</b><small>${esc(sub)}</small></div></div><div class="pa">${inner}</div>`;
+const chat = inner => `<div class="pc-top"><span class="logo" aria-hidden="true">Ñ</span><div class="t"><b>${esc(CONF.resto)}</b><small>Reservas · mensajes automáticos</small></div></div><div class="pc">${inner}</div>`;
+const mIn = (txt, hora) => `<div class="m in"><p>${txt}</p><time>${hora}</time></div>`;
+const mOut = (txt, hora) => `<div class="m out"><p>${txt}</p><time>${hora} ✓✓</time></div>`;
+const mBtns = (...b) => `<div class="m-btns">${b.join('')}</div>`;
+const mB = (txt, o = {}) => `<button class="m-b" ${o.go === false ? '' : 'data-go'} ${o.act ? `data-act="${o.act}"` : ''} ${o.v != null ? `data-v="${esc(o.v)}"` : ''}>${txt}</button>`;
+const aBtn = (txt, o = {}) => `<button class="pa-btn ${o.cl || ''}" ${o.go === false ? '' : 'data-go'} ${o.act ? `data-act="${o.act}"` : ''} ${o.v != null ? `data-v="${esc(o.v)}"` : ''} ${o.need ? `data-need="${o.need}" data-msg="${esc(o.msg || '')}"` : ''}><span>${txt}</span></button>`;
+const fila = (a, b) => `<div class="pa-fila"><span>${a}</span><b>${b}</b></div>`;
+const campo = (l, v) => `<div class="pa-campo"><label>${l}</label><div>${v}</div></div>`;
+const ticket = (loc, filas) => `<div class="pa-ticket"><div class="loc">${loc}</div>${filas.map(([a, b]) => `<div class="l"><span>${a}</span><b>${b}</b></div>`).join('')}</div>`;
+const hojaA = inner => `<div class="pa-hoja"><div>${inner}</div></div>`;
+const pagoSim = (concepto, monto) => hojaA(`<div class="pa-sim">Pago simulado · en la app real se abre Mercado Pago</div><h4>${concepto}</h4>
+  ${fila('Total', pesos(monto))}${fila('Tarjeta', 'Visa ···· 4242 (de prueba)')}${aBtn('Pagar ' + pesos(monto), { cl:'canal' })}<div class="pa-nota">Mesa Austral no ve ni guarda los datos de la tarjeta.</div>`);
+
+/* ======================= piezas de la tablet de la sala ======================= */
+const sala = (inner, sub = 'Cena de hoy', clima = '4 °C · ráfagas 38 km/h') => `<div class="pb-top"><div><b>${esc(CONF.resto)}</b><small>Sala · ${sub}</small></div><span class="pb-clima">${clima}</span></div><div class="pb">${inner}</div>`;
+const nums = arr => `<div class="pb-nums">${arr.map(([n, l, c]) => `<div class="${c || ''}"><b>${n}</b><span>${l}</span></div>`).join('')}</div>`;
+const sFila = (hora, nombre, det, pill, cls = '', chips = [], nueva = false) => `<div class="pb-fila ${nueva ? 'nueva' : ''}"><time>${hora}</time><div><b>${nombre}</b><span class="d">${det}</span>${chips.length ? `<div class="pb-chips">${chips.map(c => `<span class="pb-chip">${c}</span>`).join('')}</div>` : ''}</div><span class="pb-pill ${cls}">${pill}</span></div>`;
+const lista = filas => `<div class="pb-lista">${filas.join('')}</div>`;
+const bAviso = (cls, ic, t, s = '') => `<div class="pb-aviso ${cls}"><span>${ic}</span><div><b>${t}</b>${s}</div></div>`;
+const bBtn = (txt, o = {}) => `<button class="pb-btn ${o.cl || ''}" ${o.go === false ? '' : 'data-go'} ${o.act ? `data-act="${o.act}"` : ''} ${o.v != null ? `data-v="${esc(o.v)}"` : ''} ${o.hold ? `data-hold="${o.hold}"` : ''}><span>${txt}</span></button>`;
+const hojaB = inner => `<div class="pb-hoja"><div>${inner}</div></div>`;
+const filasBase = () => [
+  sFila('20:30', 'Lucía M.', 'V1 · 2 personas · sentada', 'Sentada', 'info', ['🥂 Aniversario']),
+  sFila('21:00', 'Diego A.', 'M7 · 2 personas', 'Sin confirmar', 'warn'),
+  sFila('21:30', 'Grupo Pérez', 'F2 · 6 personas', 'Confirmó', 'ok', ['💳 Seña pagada']),
+  sFila('21:45', 'Paula G.', 'V4 · 3 personas', 'Confirmó', 'ok'),
+];
+const numsBase = (conf = 15) => nums([['18', 'reservas'], ['59', 'personas'], [conf, 'confirm.'], ['2', 'sin conf.', 'warn']]);
+
+/* ======================= las situaciones ======================= */
+const HORAS = ['20:00', '20:30', '21:00', '21:30', '22:00', '22:30'];
+/* Para la demo del paso 1, Sofía todavía no reservó: se saca su reserva. */
+const libresPara = (hora, pax) => MESAS.filter(m => m.cap >= pax && m.cap <= pax + 2 && mesaLibre(m.id, h2m(hora), h2m(hora) + DUR(pax), RES, [2]));
+const estadoParaReservar = (hora, pax, sel) => id => {
+  const m = mesa(id), t = h2m(hora);
+  if (id === sel) return 'elegida';
+  if (m.cap < pax || m.cap > pax + 2) return 'no';
+  return mesaLibre(id, t, t + DUR(pax), RES, [2]) ? 'libre' : 'ocupada';
+};
+
+const ESC = [
+{ id:'reservar', grupo:'Un día en el Fogón', hr:'10:30', t:'Reservar desde Instagram', s:'Elige hora, gente y mesa en el plano',
+  a:['Quien reserva', 'Sofía'], b:['La sala', 'tablet de la entrada'], init(d){ d.hora = '21:00'; d.pax = 4; d.mesa = null; d.acepto = false; },
+  pasos:[
+  { lado:'a', hora:'10:30', txt:'Sofía toca <b>Reservar</b> en el Instagram del restaurante. Elegí la hora y cuántas personas van (las horas tachadas no tienen mesa para ese grupo) y tocá <b>Ver mesas libres</b>.',
+    a:d => web(`<div class="pa-hero"><b>Reservá tu mesa</b><small>Cocina fueguina · frente al canal</small>${OLAS}</div>
+      <div class="pa-lbl">Día</div><div class="pa-chips"><span class="pa-chip on">Hoy<small>lun 28</small></span><span class="pa-chip">Mañana<small>mar 29</small></span><span class="pa-chip">Miér.<small>30</small></span></div>
+      <div class="pa-lbl">¿Cuántos van?</div><div class="pa-pax"><b>${d.pax} ${d.pax === 1 ? 'persona' : 'personas'}</b><span class="c"><button data-act="pax" data-v="-1" aria-label="Uno menos">−</button><button data-act="pax" data-v="1" aria-label="Uno más">+</button></span></div>
+      <div class="pa-lbl">Hora</div><div class="pa-chips">${HORAS.map(h => { const ok = libresPara(h, d.pax).length > 0; return `<button class="pa-chip ${h === d.hora ? 'on' : ''} ${ok ? '' : 'off'}" ${ok ? `data-act="hora" data-v="${h}"` : 'disabled'}>${h}</button>`; }).join('')}</div>
+      <div class="pa-nota">Una mesa para ${d.pax} dura unos ${DUR(d.pax)} minutos.</div>${aBtn('Ver mesas libres')}`),
+    b:() => sala(numsBase() + lista(filasBase())) },
+  { lado:'a', txt:'Aparece el plano real del salón, en vivo. Las mesas ocupadas dicen <b>a qué hora se liberan</b>. Tocá una verde (la del ventanal mira al canal) y después <b>Elegir esta mesa</b>.',
+    a:d => { const t = h2m(d.hora), est = estadoParaReservar(d.hora, d.pax, d.mesa);
+      const info = d.mesa ? `<div class="pa-card">${fila('Mesa', d.mesa + ' · ' + mesa(d.mesa).z)}${fila('Horario', d.hora + ' a ' + hhmm(t + DUR(d.pax)))}${fila('Lugares', 'hasta ' + mesa(d.mesa).cap)}</div>` : '<div class="pa-nota">Tocá una mesa verde del plano.</div>';
+      return web(`<div class="pa-lbl">Hoy ${d.hora} · ${d.pax} personas</div><div class="plano">${plano({ estado:est, act:'mesa', sel:d.mesa,
+        nota:(id, e) => { if (e !== 'ocupada') return ''; const l = liberaDe(id, t, RES, [2]); return l ? hhmm(l.reservable) : ''; } })}</div>
+        ${leyenda(['libre', 'ocupada', 'no', 'elegida'])}<div class="plano-leyenda"><span>La hora bajo una mesa ocupada: desde cuándo se puede pedir</span></div>${info}${aBtn(d.mesa ? 'Elegir la mesa ' + d.mesa : 'Elegir esta mesa', { need:'mesa', msg:'Primero tocá una mesa verde del plano' })}`, 'Elegí dónde sentarte'); } },
+  { lado:'a', txt:'Sofía deja nombre y teléfono y marca que es un cumpleaños y que alguien es celíaco. Antes de confirmar ve la política en dos líneas. Tildá <b>Leí y acepto</b> y tocá <b>Confirmar</b>.',
+    a:d => web(`${campo('Nombre', 'Sofía Ledesma')}${campo('Teléfono (WhatsApp)', '+54 9 2901 55-0142')}
+      <div class="pa-lbl">¿Es una ocasión especial?</div><div class="pa-chips"><span class="pa-chip on">🎂 Cumpleaños</span><span class="pa-chip">Aniversario</span><span class="pa-chip">Trabajo</span></div>
+      <div class="pa-lbl">Alergias (opcional)</div><div class="pa-chips"><span class="pa-chip on">🌾 Sin TACC · 1</span><span class="pa-chip">Mariscos</span><span class="pa-chip">Frutos secos</span></div>
+      <div class="pa-pol">${polCorta(h2m(d.hora))}</div>
+      <button class="pa-check ${d.acepto ? 'on' : ''}" data-act="acepto"><span class="o">${d.acepto ? '✓' : ''}</span><span>Leí y acepto las condiciones. Mis datos se usan solo para esta reserva.</span></button>
+      ${aBtn('Confirmar la reserva', { need:'acepto', msg:'Tildá «Leí y acepto» para confirmar' })}`, 'Tus datos') },
+  { lado:'b', hora:'10:31', txt:'En la sala suena el aviso y la reserva aparece en la lista de la noche con las marcas de <b>cumpleaños</b> y <b>sin TACC</b>, para que la cocina lo sepa. A Sofía le llega la confirmación por WhatsApp. Tocá <b>Ver en el plano</b>.',
+    al:d => { push('b', '🔔', 'Nueva reserva · ' + d.hora, `Sofía L. · ${d.pax} personas · mesa ${d.mesa}`); tiempo(() => push('a', '💬', 'Tu reserva está confirmada', `${d.hora} · ${d.pax} personas · mesa ${d.mesa}`, 'WhatsApp'), 1100); },
+    a:d => chat(`<span class="dia">HOY</span>${mIn(`¡Listo, Sofía! Tu reserva está confirmada 🎉<br><b>Hoy ${d.hora}</b> · ${d.pax} personas · mesa <b>${d.mesa}</b> (${mesa(d.mesa).z.toLowerCase()}).<br>Código <b>KX4-218</b>.<br><br>${polCorta(h2m(d.hora))}<br><br>Para cambiar o cancelar, tocá acá: mesaaustral.ar/r/KX4-218`, '10:31')}`),
+    b:d => sala(numsBase(16) + lista([sFila(d.hora, 'Sofía L.', `${d.mesa} · ${d.pax} personas · desde Instagram`, 'Nueva', 'info', ['🎂 Cumpleaños', '🌾 Sin TACC'], true), ...filasBase()]) + bBtn('Ver en el plano')) },
+  { lado:'b', txt:'En la tablet, la mesa queda reservada para esa franja y el sistema ya la bloqueó: <b>no hay forma de reservarla dos veces</b>, aunque dos personas toquen al mismo tiempo.',
+    b:d => { const t = h2m(d.hora); return sala(`<div class="plano">${plano({ estado:id => id === d.mesa ? 'reservada' : (liberaDe(id, 1270, RES, [2]) ? 'ocupada' : 'libre'), sel:d.mesa })}</div>
+      ${bAviso('ok', '🔒', `Mesa ${d.mesa} reservada de ${d.hora} a ${hhmm(t + DUR(d.pax))}`, `<br>Más ${CONF.limpieza} min de limpieza antes y después.`)}`); } },
+  ], fin:'Reservó sola, en menos de un minuto, eligiendo la mesa en el plano, y nadie del restaurante tuvo que atender el teléfono.' },
+
+{ id:'liberar', grupo:'Un día en el Fogón', hr:'20:40', t:'Pedir la mesa que se libera', s:'Ve cuándo se desocupa y la reserva para ese momento',
+  a:['Quien reserva', 'Mariano, 2 personas'], b:['La sala', 'tablet de la entrada'], init(d){ d.mesa = null; },
+  pasos:[
+  { lado:'a', hora:'20:40', txt:'Son las 20:40. Mariano quiere la mesa del ventanal para dos, la <b>V1</b>, pero está ocupada: se sentaron a las 20:30. Una mesa de dos dura unos 90 minutos, así que la app calcula que se libera a las 22:00 y, con la limpieza, <b>se puede reservar desde las 22:15</b>. Tocá la V1.',
+    a:d => web(`<div class="pa-lbl">Ahora · 2 personas</div><div class="plano">${plano({ estado:id => { const m = mesa(id); if (id === d.mesa) return 'elegida'; if (m.cap < 2 || m.cap > 4) return 'no'; return liberaDe(id, 1240, RES) ? 'ocupada' : 'libre'; }, act:'mesa', sel:d.mesa,
+      nota:(id, e) => { if (e !== 'ocupada') return ''; const l = liberaDe(id, 1240, RES); return l ? hhmm(l.reservable) : ''; } })}</div>${leyenda(['libre', 'ocupada', 'elegida'])}<div class="plano-leyenda"><span>La hora bajo una mesa ocupada: desde cuándo se puede pedir</span></div>
+      ${d.mesa ? `<div class="pa-card">${fila('Mesa ' + d.mesa, mesa(d.mesa).z)}${liberaDe(d.mesa, 1240, RES) ? fila('Ocupada desde', hhmm(liberaDe(d.mesa, 1240, RES).r.h)) + fila('Se libera cerca de', hhmm(liberaDe(d.mesa, 1240, RES).libre)) + fila('La podés pedir para', hhmm(liberaDe(d.mesa, 1240, RES).reservable)) : fila('Estado', 'libre ahora')}</div>` : '<div class="pa-nota">Tocá la V1, junto al ventanal.</div>'}
+      ${aBtn(d.mesa === 'V1' ? 'Pedir la V1 para las 22:15' : 'Pedir esta mesa', { need:'mesaV1', msg:'Para este ejemplo, tocá la V1' })}`, 'Ahora, en vivo') },
+  { lado:'b', hora:'20:41', txt:'La sala recibe el pedido: la V1 queda <b>comprometida para las 22:15</b>. La app sigue midiendo cuánto lleva la mesa de Lucía. Si piden la cuenta antes, avisa; si se demoran, también. Tocá <b>La V1 pidió la cuenta</b>.',
+    al:() => { push('b', '🔔', 'Mesa pedida · V1 · 22:15', 'Mariano · 2 personas · cuando se libere'); tiempo(() => push('a', '💬', 'Te guardamos la V1 para las 22:15', 'Te avisamos si se libera antes', 'WhatsApp'), 1100); },
+    a:() => chat(mIn('¡Listo, Mariano! Te guardamos la <b>V1, junto al ventanal</b>, para hoy a las <b>22:15</b>, 2 personas.<br><br>Ahora está ocupada. Si se libera antes, te avisamos para que vengas cuando quieras.<br><br>' + polCorta(1335), '20:41')),
+    b:() => sala(lista([sFila('20:30', 'Lucía M.', 'V1 · 2 personas · sentada hace 11 min', 'Hasta ~22:00', 'info', ['🥂 Aniversario']),
+      sFila('22:15', 'Mariano', 'V1 · 2 personas · pidió la mesa al liberarse', 'Nueva', 'info', [], true)]) +
+      bAviso('info', '⏱', 'V1: ocupada desde las 20:30', '<br>Se estima libre a las 22:00. Limpieza hasta las 22:15.') + bBtn('La V1 pidió la cuenta · 21:40', { cl:'sec' })) },
+  { lado:'a', hora:'21:47', txt:'Lucía pagó a las 21:40 y la mesa se limpió. La app le escribe a Mariano: <b>«tu mesa se liberó antes, ¿querés venir ya?»</b>. Tocá <b>Voy ahora</b>.',
+    al:() => { push('a', '💬', 'Tu mesa se liberó antes', 'La V1 ya está lista', 'WhatsApp'); },
+    a:() => chat(mIn('¡Tu mesa te espera! Te guardamos la V1 para las <b>22:15</b>, 2 personas.', '20:41') + mIn('Buenas noticias: <b>la V1 se liberó antes</b> y ya está lista. ¿Querés venir ahora?', '21:47') + mBtns(mB('Voy ahora'), mB('Mantengo las 22:15', { go:false, act:'toast', v:'La mesa queda para las 22:15' }))),
+    b:() => sala(lista([sFila('21:40', 'Lucía M.', 'V1 · pidió la cuenta · 70 min de mesa', 'Se fue', 'info'), sFila('22:15', 'Mariano', 'V1 · 2 personas', 'Avisado', 'warn')]) + bAviso('ok', '✨', 'V1 limpia a las 21:47', '<br>Le avisamos a Mariano por si quiere adelantarse.')) },
+  { lado:'b', hora:'21:48', txt:'Mariano viene antes: la V1 no quedó vacía ni un minuto de más. Si en cambio la mesa se demoraba, la app le avisaba a Mariano con tiempo y le ofrecía esperar en la barra.',
+    al:() => push('b', '✅', 'Mariano llega ahora', 'V1 · 2 personas · adelantó a las 21:55'),
+    a:() => chat(mIn('Buenas noticias: <b>la V1 se liberó antes</b> y ya está lista. ¿Querés venir ahora?', '21:47') + mOut('Voy ahora', '21:48') + mIn('¡Perfecto! Te esperamos en la V1. 🔥', '21:48')),
+    b:() => sala(`<div class="plano">${plano({ estado:id => id === 'V1' ? 'reservada' : (liberaDe(id, 1308, RES) ? 'ocupada' : 'libre'), sel:'V1' })}</div>` + bAviso('ok', '✅', 'V1 · Mariano llega a las 21:55', '<br>La app aprende: las mesas de 2 de los lunes duran 72 min en promedio.')) },
+  ], fin:'La mesa se reservó mientras estaba ocupada y no quedó vacía entre una y otra. El cliente eligió exactamente dónde sentarse.' },
+
+{ id:'recordatorio', grupo:'Un día en el Fogón', hr:'12:00', t:'El recordatorio que confirma solo', s:'Tres botones: confirmo, cambio o cancelo',
+  a:['Quien reservó', 'Sofía'], b:['La sala', 'tablet de la entrada'],
+  pasos:[
+  { lado:'a', hora:'12:00', txt:'Al mediodía, la app le escribe a Sofía con tres botones. Tocá <b>Confirmo</b>.',
+    a:() => chat(`<span class="dia">HOY</span>${mIn('¡Hola, Sofía! Hoy te esperamos a las <b>21:00</b>, 4 personas, mesa V3. ¿Seguís viniendo?', '12:00')}${mBtns(mB('✅ Confirmo'), mB('🕘 Cambiar la hora', { go:false, act:'toast', v:'Se abre la página para elegir otra hora' }), mB('✖ Cancelar', { go:false, act:'toast', v:'Probalo en «Cancelar a tiempo»' }))}`),
+    b:() => sala(numsBase(15) + lista([sFila('21:00', 'Sofía L.', 'V3 · 4 personas', 'Esperando', 'warn', ['🎂 Cumpleaños', '🌾 Sin TACC']), ...filasBase().slice(1)])) },
+  { lado:'b', hora:'12:01', txt:'La sala ve la confirmación al instante. Los que no contestan quedan en amarillo: dos horas antes la app les vuelve a escribir. Tocá <b>Ver los sin confirmar</b>.',
+    al:() => push('b', '✅', 'Sofía confirmó', '21:00 · 4 personas · V3'),
+    a:() => chat(`${mIn('¡Hola, Sofía! Hoy te esperamos a las <b>21:00</b>, 4 personas, mesa V3. ¿Seguís viniendo?', '12:00')}${mOut('✅ Confirmo', '12:01')}${mIn('¡Genial! Te esperamos. Si algo cambia, avisanos desde acá.', '12:01')}`),
+    b:() => sala(numsBase(16) + lista([sFila('21:00', 'Sofía L.', 'V3 · 4 personas', 'Confirmó', 'ok', ['🎂 Cumpleaños', '🌾 Sin TACC'], true), ...filasBase().slice(1)]) + bBtn('Ver los sin confirmar')) },
+  { lado:'b', txt:'Quedan dos sin contestar. Con un toque se llama o se deja que la app insista. Lo importante: <b>ya nadie llama a las dieciocho reservas</b>.',
+    b:() => sala(`<div class="pb-card"><h4>Sin confirmar · 2</h4>${lista([sFila('21:00', 'Diego A.', 'M7 · 2 personas · no contestó a las 12:00', 'Llamar', 'warn'), sFila('22:15', 'Valen B.', 'M6 · 2 personas · no contestó', 'Llamar', 'warn')])}</div>
+      <div class="pb-btns">${bBtn('Llamar', { go:false, act:'toast', v:'Se abriría el teléfono con el número' , cl:'sec' })}${bBtn('Insistir', { go:false, act:'toast', v:'Enviado. Si contestan, lo ves acá', cl:'sec' })}</div>
+      ${bAviso('info', 'ℹ️', 'A las 19:00 la app les vuelve a escribir sola.')}`) },
+  ], fin:'La confirmación se hace sola y el equipo llama solo a quien hace falta.' },
+
+{ id:'turista', grupo:'Un día en el Fogón', hr:'13:40', t:'Turistas en su idioma', s:'Del crucero, en portugués o en inglés',
+  a:['Una turista', 'Ana Clara, del crucero'], b:['La sala', 'tablet de la entrada'], init(d){ d.lang = 'pt'; },
+  pasos:[
+  { lado:'a', hora:'13:40', txt:'Ana Clara bajó de un crucero y su teléfono está en portugués: la página se abre en su idioma. Probá <b>EN</b> o <b>ES</b> y tocá <b>Reservar</b>.',
+    a:d => { const T = { pt:['Reserve sua mesa', 'Hoje · 21:30 · 4 pessoas', 'Mesa M3 · salão', 'Pode cancelar sem custo até 18:30.', 'Reservar', 'Português'], en:['Book your table', 'Today · 21:30 · 4 people', 'Table M3 · main room', 'Free cancellation until 18:30.', 'Book', 'English'], es:['Reservá tu mesa', 'Hoy · 21:30 · 4 personas', 'Mesa M3 · salón', 'Cancelás sin cargo hasta las 18:30.', 'Reservar', 'Español'] }[d.lang];
+      return web(`<div class="pa-lang">${['pt', 'en', 'es'].map(l => `<button class="${l === d.lang ? 'on' : ''}" data-act="lang" data-v="${l}">${l.toUpperCase()}</button>`).join('')}</div>
+        <div class="pa-hero"><b>${T[0]}</b><small>${esc(CONF.resto)} · Ushuaia</small>${OLAS}</div><div class="pa-card">${fila('📅', T[1])}${fila('🪑', T[2])}</div><div class="pa-pol">${T[3]}</div>${aBtn(T[4])}`, T[5]); },
+    b:() => sala(numsBase() + lista(filasBase())) },
+  { lado:'b', hora:'13:41', txt:'En la sala llega en castellano, con la marca de idioma y la hora en que zarpa su barco. El mozo sabe antes de saludarla que le conviene hablarle en portugués y que a las 23:30 tiene que estar a bordo.',
+    al:() => push('b', '🔔', 'Nueva reserva · 21:30', 'Ana Clara S. · 4 personas · habla portugués'),
+    a:d => chat(mIn({ pt:'Sua reserva está confirmada! <b>Hoje às 21:30</b>, 4 pessoas, mesa M3. Até mais tarde! 🇦🇷', en:'Your booking is confirmed! <b>Today at 21:30</b>, 4 people, table M3. See you tonight!', es:'¡Reserva confirmada! <b>Hoy 21:30</b>, 4 personas, mesa M3.' }[d.lang], '13:41')),
+    b:d => sala(lista([sFila('21:30', 'Ana Clara S.', 'M3 · 4 personas · turista', 'Nueva', 'info', [d.lang === 'en' ? '🇬🇧 Inglés' : d.lang === 'pt' ? '🇧🇷 Portugués' : '🇦🇷 Español', '⚓ Zarpa 23:30'], true), ...filasBase()])) },
+  ], fin:'Español, inglés y portugués, sin que nadie del restaurante tenga que traducir nada.' },
+
+{ id:'atiempo', grupo:'Un día en el Fogón', hr:'15:10', t:'Cancelar a tiempo', s:'Sin cargo, y la mesa se vuelve a ocupar sola',
+  a:['Quien reservó', 'Sofía'], b:['La sala', 'tablet de la entrada'],
+  pasos:[
+  { lado:'a', hora:'15:10', txt:'A Sofía se le complicó. Desde el enlace de su WhatsApp abre <b>Mi reserva</b>: la app le dice que todavía está a tiempo. Tocá <b>Cancelar la reserva</b>.',
+    a:() => web(`${ticket('KX4-218', [['Día', 'Hoy'], ['Hora', '21:00'], ['Personas', '4'], ['Mesa', 'V3 · ventanal']])}<div class="pa-ok">Estás a tiempo: podés cancelar <b>sin cargo</b> hasta las ${limite(1260)}.</div>${aBtn('Cambiar día u hora', { go:false, cl:'sec', act:'toast', v:'Se abre el buscador con tu reserva' })}${aBtn('Cancelar la reserva', { cl:'rojo' })}`, 'Mi reserva'),
+    b:() => sala(numsBase(16) + lista([sFila('21:00', 'Sofía L.', 'V3 · 4 personas', 'Confirmó', 'ok', ['🎂 Cumpleaños']), ...filasBase().slice(1)])) },
+  { lado:'a', txt:'Antes de cancelar, la app pregunta. Tocá <b>Sí, cancelar</b>.',
+    a:() => web(ticket('KX4-218', [['Día', 'Hoy'], ['Hora', '21:00'], ['Personas', '4']]) + hojaA(`<h4>¿Cancelar la reserva de hoy a las 21:00?</h4><div class="pa-nota" style="text-align:left">Es sin cargo. La mesa se le ofrece a otra persona.</div>${aBtn('Sí, cancelar', { cl:'rojo' })}${aBtn('No, la mantengo', { go:false, cl:'sec', act:'toast', v:'Tu reserva sigue en pie' })}`), 'Mi reserva') },
+  { lado:'a', hora:'15:10', rolA:['Otro cliente', 'Martín, en la lista de espera'], txt:'La sala se entera y la app, sola, le ofrece la mesa al primero de la <b>lista de espera</b> para esa hora: Martín, 4 personas. Tiene 10 minutos para aceptarla. Tocá <b>Sí, la quiero</b>.',
+    al:() => { push('b', '↩️', 'Sofía canceló a tiempo', 'V3 libre · ofrecida a la lista de espera'); tiempo(() => push('a', '💬', '¡Se liberó una mesa!', 'Hoy 21:00 · 4 personas', 'WhatsApp'), 1100);
+      let s = 600; cada(() => { s--; const c = $('#cuentaB'); if (c) c.textContent = hhmm(s).replace(/^(\d\d):/, (x, a) => String(+a) + ':'); }, 1000); },
+    a:() => chat(mIn('Hola, Martín. Estás en la lista de espera para hoy 21:00, 4 personas.', '11:20') + mIn('¡Se liberó una mesa! <b>V3, junto al ventanal</b>, hoy a las 21:00, 4 personas. ¿La querés? Te la guardamos 10 minutos.', '15:10') + mBtns(mB('Sí, la quiero'), mB('No, gracias', { go:false, act:'toast', v:'Se le ofrece al segundo de la lista' }))),
+    b:() => sala(bAviso('info', '↩️', 'Sofía L. canceló a tiempo (15:10)', '<br>Sin cargo. V3 · 21:00 quedó libre.') + `<div class="pb-card"><h4>Ofrecida a la lista de espera</h4>${lista([sFila('1.º', 'Martín R.', '4 personas · 21:00', 'Esperando', 'warn'), sFila('2.º', 'Caro y Juan', '2 personas · 21:00 a 22:00', 'En fila', '')])}<div class="cuenta" id="cuentaB">10:00</div></div>`) },
+  { lado:'b', hora:'15:11', txt:'Martín acepta y la mesa vuelve a estar ocupada. Si no contestaba en 10 minutos, pasaba sola al segundo de la lista.',
+    al:() => push('b', '✅', 'Martín aceptó la mesa', 'V3 · 21:00 · 4 personas'),
+    a:() => chat(mIn('¡Se liberó una mesa! <b>V3, junto al ventanal</b>, hoy a las 21:00, 4 personas. ¿La querés?', '15:10') + mOut('Sí, la quiero', '15:11') + mIn('¡Es tuya! Te esperamos a las 21:00. ' + polCorta(1260), '15:11')),
+    b:() => sala(bAviso('ok', '✅', 'Mesa recuperada', '<br>V3 · 21:00 · Martín R. · 4 personas.') + lista([sFila('21:00', 'Martín R.', 'V3 · 4 personas · desde la lista de espera', 'Nueva', 'info', [], true), ...filasBase().slice(1)])) },
+  ], fin:'La mesa se volvió a llenar sola. El restaurante no perdió nada y Sofía no pagó nada.' },
+
+{ id:'grupo', grupo:'Un día en el Fogón', hr:'16:30', t:'Un grupo de 12 con seña', s:'Seña con Mercado Pago, descontada de la cuenta',
+  a:['Quien reserva', 'Lucas, cumpleaños de 12'], b:['La sala', 'tablet de la entrada'],
+  pasos:[
+  { lado:'a', hora:'16:30', txt:() => `Lucas quiere reservar para <b>12 personas</b> el sábado. Como el grupo es de ${POL.grupoDesde} o más, la app explica que hay una seña de ${pesos(POL.sena)} por persona que después se descuenta de la cuenta. Tocá <b>Reservar y pagar la seña</b>.`,
+    a:() => web(`<div class="pa-card">${fila('Día', 'Sábado 3/10')}${fila('Hora', '21:30')}${fila('Personas', '12')}${fila('Mesa', 'F1 + F2, junto al hogar')}</div>
+      <div class="pa-pol">Para grupos de ${POL.grupoDesde} o más pedimos una <b>seña de ${pesos(POL.sena)} por persona</b> (${pesos(12 * POL.sena)}). <b>Se descuenta de la cuenta.</b> Si cancelás con más de 48 horas, te la devolvemos completa.</div>${aBtn('Reservar y pagar la seña')}`, 'Grupo grande') },
+  { lado:'a', txt:'El pago se hace en Mercado Pago. En la demo lo simulamos: tocá <b>Pagar</b>.',
+    a:() => web(`<div class="pa-card">${fila('Sábado 3/10 · 21:30', '12 personas')}</div>` + pagoSim('Seña · Fogón del Ñire · sábado 3/10', 12 * POL.sena), 'Pagar la seña') },
+  { lado:'b', hora:'16:31', txt:'La sala ve la seña acreditada y el grupo ya tiene armadas las dos mesas del hogar juntas. El sábado la seña aparece descontada en la cuenta.',
+    al:() => { push('b', '💳', 'Seña acreditada', `Lucas M. · 12 personas · ${pesos(12 * POL.sena)}`); tiempo(() => push('a', '✅', 'Seña pagada', 'Reserva del sábado confirmada', CONF.resto), 1000); },
+    a:() => web(ticket('GR7-903', [['Día', 'Sáb 3/10'], ['Hora', '21:30'], ['Personas', '12'], ['Seña pagada', pesos(12 * POL.sena)], ['Se descuenta', 'de la cuenta']]) + '<div class="pa-ok">¡Listo! Te mandamos el comprobante por WhatsApp.</div>', 'Reserva confirmada'),
+    b:() => sala(`<div class="plano">${plano({ estado:id => (id === 'F1' || id === 'F2') ? 'reservada' : 'libre', combo:['F1', 'F2'] })}</div>` + bAviso('ok', '💳', `Seña acreditada · ${pesos(12 * POL.sena)}`, '<br>Sábado 3/10 · 21:30 · Lucas M. · F1 + F2 juntas.'), 'Sábado 3/10') },
+  ], fin:'Sin capturas de transferencias ni planillas: la seña se acredita sola y queda pegada a la reserva.' },
+
+{ id:'tarde', grupo:'Un día en el Fogón', hr:'20:15', t:'Cancelar sobre la hora', s:'Incidente y compromiso de pago, sin maltrato',
+  a:['Quien reservó', 'Sofía'], b:['La sala', 'tablet de la entrada'],
+  pasos:[
+  { lado:'a', hora:'20:15', txt:() => `Son las 20:15 y Sofía reservó para las 21:00. Ya pasó el horario para cancelar sin cargo (${limite(1260)}). La app no la reta: primero le ofrece alternativas. Tocá <b>Cancelar igual</b>.`,
+    a:() => web(`${ticket('KX4-218', [['Hoy', '21:00'], ['Personas', '4'], ['Mesa', 'V3']])}<div class="pa-pol">Ya pasó el horario para cancelar sin cargo (${limite(1260)}). ¿Te sirve alguna de estas opciones?</div>
+      ${aBtn('Llegamos 20 minutos tarde', { go:false, cl:'sec', act:'toast', v:'La sala se entera y te guarda la mesa' })}${aBtn('Pasar a las 22:30', { go:false, cl:'sec', act:'toast', v:'Si hay lugar, se cambia sin cargo' })}${aBtn('Venimos 2 en vez de 4', { go:false, cl:'sec', act:'toast', v:'Se ajusta la mesa, sin cargo' })}${aBtn('Cancelar igual', { cl:'rojo' })}`, 'Mi reserva') },
+  { lado:'a', txt:() => `Antes de confirmar, la app explica qué pasa, sin letra chica: queda un incidente y un compromiso de ${pesos(4 * POL.monto)} (4 × ${pesos(POL.monto)}).${POL.credito ? ` Si lo paga y vuelve en ${POL.dias} días, se le descuenta de la cuenta.` : ''} Tocá <b>Cancelar y ver el compromiso</b>.`,
+    a:() => web(ticket('KX4-218', [['Hoy', '21:00'], ['Personas', '4']]) + hojaA(`<h4>Cancelar con menos de ${POL.horas} ${POL.horas === 1 ? 'hora' : 'horas'}</h4>
+      <div class="pa-nota" style="text-align:left">La mesa estaba preparada para vos y se les dijo que no a otras personas. Por eso queda un compromiso:</div>
+      <div class="pa-card">${fila('4 personas × ' + pesos(POL.monto), '<span style="color:#C23E17">' + pesos(4 * POL.monto) + '</span>')}${POL.credito ? fila('Si volvés antes del ' + fechaCredito(), 'se descuenta') : ''}</div>
+      ${aBtn('Cancelar y ver el compromiso', { cl:'rojo' })}${aBtn('Mejor vamos', { go:false, cl:'sec', act:'toast', v:'¡Buenísimo! Tu reserva sigue en pie' })}`), 'Mi reserva') },
+  { lado:'b', hora:'20:15', txt:'En la sala, la mesa se libera y se ofrece a la lista de espera o a quien llegue a la puerta. Queda anotado el incidente, el primero de Sofía en 12 meses. Si hubo fuerza mayor, el encargado lo puede <b>condonar</b> y queda registrado quién lo hizo. Tocá <b>Seguir</b>.',
+    al:() => push('b', '⚠️', 'Cancelación sobre la hora', 'Sofía L. · V3 · 21:00 · 4 personas'),
+    b:() => sala(bAviso('warn', '⚠️', 'Cancelación a las 20:15 (45 min antes)', '<br>V3 · 21:00 · ofrecida a la lista de espera (2 en fila).') +
+      `<div class="pb-card"><h4>Incidente</h4>${lista([sFila('20:15', 'Sofía L.', `1.º en 12 meses · compromiso ${pesos(4 * POL.monto)}`, 'Pendiente', 'warn')])}</div>
+      <div class="pb-btns">${bBtn('Condonar', { go:false, cl:'sec', act:'toast', v:'Condonado por el encargado. Queda en el registro.' })}${bBtn('Seguir')}</div>`) },
+  { lado:'a', hora:'20:16', txt:'A Sofía le llega un mensaje amable con el enlace de pago. No es una deuda que se cobra a la fuerza: si no lo paga, la próxima vez que reserve online le va a pedir una seña. Tocá <b>Pagar con Mercado Pago</b>.',
+    al:() => push('a', '💬', 'Registramos tu cancelación', CONF.resto, 'WhatsApp'),
+    a:() => chat(mIn(`Hola, Sofía. Registramos tu cancelación de las 20:15 para las 21:00. Como avisaste con menos de ${POL.horas} ${POL.horas === 1 ? 'hora' : 'horas'}, queda un compromiso de <b>${pesos(4 * POL.monto)}</b>.<br><br>${POL.credito ? `Sabemos que a veces pasa: si lo pagás y volvés antes del ${fechaCredito()}, te lo descontamos de la cuenta. ` : ''}Si no lo pagás, tu próxima reserva online va a pedir una seña.`, '20:16') + mBtns(mB('Pagar con Mercado Pago'), mB('Tuve una emergencia', { go:false, act:'toast', v:'Le llega al encargado, que puede condonarlo' }))) },
+  { lado:'a', txt:'Pago simulado. Tocá <b>Pagar</b>.',
+    a:() => chat(mIn('Hola, Sofía. Registramos tu cancelación de las 20:15…', '20:16')) + pagoSim('Compromiso por cancelación tardía · 21:00', 4 * POL.monto) },
+  { lado:'b', hora:'20:18', txt:'Queda pagado y, si está activado, se genera el crédito a nombre de Sofía. El incidente vence a los 12 meses: un error no la marca para siempre.',
+    al:() => { push('b', '💳', 'Compromiso pagado', `Sofía L. · ${pesos(4 * POL.monto)}${POL.credito ? ' · crédito hasta el ' + fechaCredito() : ''}`); tiempo(() => push('a', '✅', 'Pago recibido', POL.credito ? 'Tenés un crédito para tu próxima visita' : 'Gracias por avisar', CONF.resto), 1000); },
+    a:() => chat(mIn('Hola, Sofía. Registramos tu cancelación de las 20:15…', '20:16') + mIn(`Recibimos tu pago de ${pesos(4 * POL.monto)}. ¡Gracias!${POL.credito ? ` Tenés ese crédito para usar antes del ${fechaCredito()}. Te esperamos 🔥` : ''}`, '20:18')),
+    b:() => sala(`<div class="pb-card"><h4>Incidente</h4>${lista([sFila('20:15', 'Sofía L.', `compromiso ${pesos(4 * POL.monto)} · pagado 20:18`, 'Pagado', 'ok')])}</div>` + (POL.credito ? bAviso('ok', '🎟️', `Crédito de ${pesos(4 * POL.monto)} para Sofía L.`, `<br>Se descuenta sola si reserva antes del ${fechaCredito()}.`) : '') + bAviso('info', 'ℹ️', 'El incidente vence en 12 meses.')) },
+  ], fin:() => `Sofía entendió que dejar una mesa vacía tiene un costo y el restaurante recuperó parte de lo perdido${POL.credito ? '; con el crédito, lo más probable es que vuelva' : ''}.` },
+
+{ id:'planton', grupo:'Un día en el Fogón', hr:'21:10', t:'El plantón', s:'Pregunta «¿venís?», libera la mesa y la vuelve a ocupar',
+  a:['Quien reservó', 'Diego, 2 personas a las 21:00'], b:['La sala', 'tablet de la entrada'],
+  pasos:[
+  { lado:'b', hora:() => hhmm(1260 + Math.max(5, Math.round(POL.tolerancia / 2))), txt:() => `Son las ${hhmm(1260 + Math.max(5, Math.round(POL.tolerancia / 2)))} y Diego no llegó. La app ya le escribió sola. En la tablet, la M7 aparece en amarillo con la tolerancia hasta las ${hhmm(1260 + POL.tolerancia)}. Tocá <b>Dejar pasar el tiempo</b>.`,
+    a:() => chat(mIn(`Diego, te estamos esperando 🙂 ¿Vienen? Te guardamos la mesa hasta las <b>${hhmm(1260 + POL.tolerancia)}</b>.`, hhmm(1260 + Math.max(5, Math.round(POL.tolerancia / 2)))) + mBtns(mB('Llegamos en 10', { go:false, act:'toast', v:'La sala ve «llegan en 10» y guarda la mesa' }), mB('No vamos a poder', { go:false, act:'toast', v:'Cuenta como cancelación sobre la hora' }))),
+    b:() => sala(`<div class="plano">${plano({ estado:id => id === 'M7' ? 'espera' : (liberaDe(id, 1270, RES) ? 'ocupada' : 'libre'), nota:(id, e) => e === 'espera' ? 'no llegó' : '' })}</div>` + lista([sFila('21:00', 'Diego A.', 'M7 · 2 personas · le preguntamos por WhatsApp', 'No llegó', 'warn')]) + bBtn('Dejar pasar el tiempo →', { cl:'sec' })) },
+  { lado:'b', hora:() => hhmm(1260 + POL.tolerancia), txt:() => `A las ${hhmm(1260 + POL.tolerancia)} sin respuesta, la app marca el plantón y libera la mesa. En la puerta hay una pareja sin reserva: tocá <b>Sentarlos en la M7</b>.`,
+    al:() => push('b', '⏱', 'Plantón · M7', 'Diego A. no llegó · la mesa quedó libre'),
+    b:() => sala(bAviso('mal', '⏱', 'Plantón · Diego A. · 2 personas', `<br>Pasaron ${POL.tolerancia} minutos sin respuesta. M7 libre.`) + bAviso('info', '🚪', 'En la puerta: pareja sin reserva', '<br>Anotada en la lista de espera a las 21:05.') + bBtn('Sentarlos en la M7', { cl:'ok' })) },
+  { lado:'a', hora:() => hhmm(1262 + POL.tolerancia), txt:() => `A Diego le llega el aviso con el compromiso de ${pesos(2 * POL.monto)}.${POL.smn ? ' Si esa noche había alerta del SMN por nieve o viento, no se le cobraba nada.' : ''} La mesa ya está ocupada de nuevo.`,
+    al:() => { push('b', '✅', 'M7 ocupada', 'Pareja sin reserva · 2 personas'); tiempo(() => push('a', '💬', 'No te vimos esta noche', CONF.resto, 'WhatsApp'), 900); },
+    a:() => chat(mIn(`Diego, te estamos esperando 🙂 ¿Vienen?`, '21:07') + mIn(`No te vimos esta noche y liberamos la mesa. Queda un compromiso de <b>${pesos(2 * POL.monto)}</b> por la reserva.${POL.credito ? ` Si lo pagás y volvés antes del ${fechaCredito()}, te lo descontamos.` : ''} Si fue una emergencia, contestanos y lo vemos.`, hhmm(1262 + POL.tolerancia)) + mBtns(mB('Pagar con Mercado Pago', { go:false, act:'toast', v:'Se abriría Mercado Pago' }), mB('Tuve una emergencia', { go:false, act:'toast', v:'Le llega al encargado, que puede condonarlo' }))),
+    b:() => sala(lista([sFila(hhmm(1262 + POL.tolerancia), 'Sin reserva', 'M7 · 2 personas · desde la puerta', 'Sentada', 'ok', [], true), sFila('21:00', 'Diego A.', 'M7 · plantón · incidente registrado', 'Plantón', 'mal')])) },
+  ], fin:'El plantón no dejó la mesa vacía: se ocupó en minutos y quedó constancia.' },
+
+{ id:'temporal', grupo:'Cuando el clima manda', hr:'17:30', t:'Cerrar por temporal', s:'Un gesto avisa a todas las reservas',
+  a:['Quien reservó', 'Paula, 3 personas'], b:['La sala', 'el encargado'],
+  pasos:[
+  { lado:'b', hora:'17:30', txt:'Otro día: el SMN da alerta naranja por nieve y viento para Ushuaia, y la app la muestra arriba en la sala. Si se decide cerrar, <b>mantené apretado</b> el botón hasta que se llene.',
+    a:() => chat(`<span class="dia">HOY</span>${mIn('¡Listo, Paula! Te esperamos hoy a las 21:45, 3 personas.', '10:12')}`),
+    b:() => sala(bAviso('mal', '🌨️', 'Alerta naranja · nieve y viento', '<br>Ushuaia, desde las 19:00. Fuente: SMN.') + nums([['23', 'reservas'], ['71', 'personas'], ['2', 'señas'], ['0', 'avisados']]) + bBtn('Mantener para cerrar el servicio', { hold:1800, cl:'rojo' }), 'Cena de hoy', '−2 °C · ráfagas 85 km/h') },
+  { lado:'b', txt:() => `La app arma el aviso para las 23 reservas y ofrece tres fechas nuevas. Las señas se devuelven solas.${POL.smn ? ' Nadie paga compromiso por no venir con alerta.' : ''} Tocá <b>Avisar a todos</b>.`,
+    b:() => sala(hojaB(`<h4>Avisar a 23 reservas (71 personas)</h4><div class="pb-card" style="background:#17313D">«Por el temporal, hoy cerramos. Perdón por el cambio. Elegí otra fecha y te guardamos la mesa.»<br><b>Mañana 21:45 · Jueves 21:45 · Otra fecha</b></div>${bBtn('Avisar a todos')}${bBtn('Todavía no', { go:false, cl:'sec', act:'toast', v:'No se mandó nada' })}`), 'Cena de hoy', '−2 °C · ráfagas 85 km/h') },
+  { lado:'a', hora:'17:31', txt:'A Paula le llega el mensaje con botones para elegir otra fecha. Tocá <b>Mañana 21:45</b>.',
+    al:() => push('a', '💬', 'Hoy cerramos por el temporal', 'Elegí otra fecha', 'WhatsApp'),
+    a:() => chat(`<span class="dia">HOY</span>${mIn('¡Listo, Paula! Te esperamos hoy a las 21:45, 3 personas.', '10:12')}${mIn('Paula, por el temporal <b>hoy cerramos</b>. Perdón por el cambio. ¿Te guardamos la mesa otro día?', '17:31')}${mBtns(mB('Mañana 21:45'), mB('Jueves 21:45', { go:false, act:'toast', v:'También funciona' }), mB('Otra fecha', { go:false, act:'toast', v:'Se abre el buscador' }))}`) },
+  { lado:'b', hora:'17:44', txt:'En la sala se ve quién ya eligió fecha y a quién hay que llamar. Nadie viaja con nieve para encontrarse la persiana baja.',
+    al:() => { push('b', '📅', 'Paula G. pasó a mañana', '21:45 · 3 personas'); let n = 1; cada(() => { if (n >= 17) return; n++; const b = $('#repro'), t = $('#reproN'); if (b) b.style.width = (n / 23 * 100) + '%'; if (t) t.textContent = n; }, 700); },
+    a:() => chat(`${mIn('Paula, por el temporal <b>hoy cerramos</b>. ¿Te guardamos la mesa otro día?', '17:31')}${mOut('Mañana 21:45', '17:32')}${mIn('¡Hecho! Mañana 21:45, 3 personas. Cuidate con el viento.', '17:32')}`),
+    b:() => sala(`<div class="pb-card"><h4>Reprogramadas</h4><div style="font-size:14px"><b id="reproN">1</b> de 23</div><div class="pb-barra"><i id="repro" style="width:4.3%"></i></div></div>` + lista([sFila('mañana', 'Paula G.', '21:45 · 3 personas', 'Movida', 'ok', [], true), sFila('—', 'Grupo Pérez', 'seña devuelta · eligiendo fecha', 'Esperando', 'warn')]), 'Servicio cerrado', '−2 °C · ráfagas 85 km/h') },
+  ], fin:'Un solo gesto avisó a 71 personas y reordenó la semana.' },
+];
+
+/* Ordenadas por la hora del día en que pasan. */
+const ORDEN = ['reservar', 'recordatorio', 'turista', 'atiempo', 'grupo', 'tarde', 'liberar', 'planton', 'temporal'];
+ESC.sort((x, y) => ORDEN.indexOf(x.id) - ORDEN.indexOf(y.id));
+
+/* ======================= el motor de la demo ======================= */
+const S = { esc:0, paso:0, d:{}, sonido:false, ver:'a', hechas:new Set(), timers:[] };
+const tiempo = (f, ms) => { const t = setTimeout(f, ms); S.timers.push(() => clearTimeout(t)); };
+const cada = (f, ms) => { const t = setInterval(f, ms); S.timers.push(() => clearInterval(t)); };
+const limpiar = () => { S.timers.forEach(f => f()); S.timers = []; $$('.tel-push').forEach(b => b.innerHTML = ''); };
+const val = x => typeof x === 'function' ? x(S.d) : x;
+
+let ac = null;
+function tono(notas){ if (!S.sonido) return; try { ac = ac || new (window.AudioContext || window.webkitAudioContext)(); const t0 = ac.currentTime;
+  notas.forEach(([f, t, d]) => { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = f; g.gain.setValueAtTime(0, t0 + t); g.gain.linearRampToValueAtTime(.13, t0 + t + .02); g.gain.exponentialRampToValueAtTime(.001, t0 + t + d); o.connect(g).connect(ac.destination); o.start(t0 + t); o.stop(t0 + t + d + .05); }); } catch (e) {} }
+$('#sonido').addEventListener('click', e => { S.sonido = !S.sonido; e.currentTarget.setAttribute('aria-pressed', S.sonido); e.currentTarget.textContent = S.sonido ? 'Sonido de los avisos: activado' : 'Activar el sonido de los avisos'; if (S.sonido) tono([[880, 0, .3], [660, .16, .35]]); });
+
+function push(l, ic, tit, txt, de = CONF.resto){
+  const box = $('#push' + l.toUpperCase()); if (!box) return;
+  const p = document.createElement('div'); p.className = 'push';
+  p.innerHTML = `<span class="pi">${ic}</span><div><small>${esc(de)} · ahora</small><b>${esc(tit)}</b>${esc(txt)}</div>`;
+  box.appendChild(p); tono([[880, 0, .3], [660, .16, .35]]);
+  const q = setTimeout(() => { p.classList.add('sale'); setTimeout(() => p.remove(), 380); }, 4600); S.timers.push(() => clearTimeout(q));
+}
+function toastTel(l, msg){
+  const pant = $('#app' + l.toUpperCase()).parentElement; $$('.tel-toast', pant).forEach(t => t.remove());
+  const t = document.createElement('div'); t.className = 'tel-toast'; t.textContent = msg; pant.appendChild(t); setTimeout(() => t.remove(), 2400);
+}
+const pasoDe = (e, i, l) => { for (let k = i; k >= 0; k--) if (e.pasos[k][l]) return e.pasos[k][l]; return null; };
+const horaDe = (e, i) => { for (let k = i; k >= 0; k--) if (e.pasos[k].hora) return val(e.pasos[k].hora); return e.hr; };
+const rolDe = (e, i, l) => { const k2 = 'rol' + l.toUpperCase(); for (let k = i; k >= 0; k--) if (e.pasos[k][k2]) return e.pasos[k][k2]; return e[l]; };
+
+function pintarMenu(){
+  const grupos = [...new Set(ESC.map(e => e.grupo))];
+  $('#menu').innerHTML = grupos.map(g => `<div class="menu-grupo"><h3>${g}</h3><div class="lista">${ESC.map((e, i) => e.grupo !== g ? '' :
+    `<button class="opc ${i === S.esc ? 'on' : ''} ${S.hechas.has(e.id) ? 'hecha' : ''}" data-esc="${i}" ${i === S.esc ? 'aria-current="true"' : ''}><span class="hr">${e.hr}</span><span class="t">${e.t}</span><small>${e.s}</small></button>`).join('')}</div></div>`).join('');
+}
+function pintarLado(l){
+  const e = ESC[S.esc], p = e.pasos[S.paso], f = pasoDe(e, S.paso, l), app = $('#app' + l.toUpperCase());
+  const scroll = app.scrollTop; app.innerHTML = f ? f(S.d) : ''; app.scrollTop = scroll;
+  if (p.lado === l){ const o = app.querySelector('[data-go]'); if (o) o.classList.add('toca'); }
+}
+function pintar(sinEfectos){
+  if (!sinEfectos) limpiar();
+  const e = ESC[S.esc], p = e.pasos[S.paso], esFin = S.paso >= e.pasos.length - 1;
+  $('#escTit').textContent = e.t; $('#escSub').textContent = e.s;
+  $$('.hora').forEach(h => h.textContent = horaDe(e, S.paso));
+  ['a', 'b'].forEach(l => {
+    const r = rolDe(e, S.paso, l), el = $('#rol' + l.toUpperCase());
+    el.innerHTML = `${esc(r[0])} <span>· ${esc(r[1])}</span>`; el.classList.toggle('le-toca', p.lado === l && !esFin);
+    $('#ver' + l.toUpperCase()).textContent = r[0];
+    pintarLado(l);
+  });
+  if (!sinEfectos) mirar(p.lado);
+  $('#pasoN').textContent = `PASO ${S.paso + 1} DE ${e.pasos.length}`;
+  $('#pasos').innerHTML = e.pasos.map((x, i) => `<li class="${i < S.paso ? 'hecho' : i === S.paso ? 'ahora' : ''}"><span>${val(x.txt)}</span></li>`).join('') + (esFin ? `<div class="fin"><b>Listo.</b> ${val(e.fin)}</div>` : '');
+  $('#siguiente').hidden = !esFin;
+  if (esFin) S.hechas.add(e.id);
+  pintarMenu();
+  if (!sinEfectos && p.al) p.al(S.d);
+}
+function mirar(l){ S.ver = l; $('#verA').setAttribute('aria-pressed', l === 'a'); $('#verB').setAttribute('aria-pressed', l === 'b'); $('#colA').classList.toggle('oculto', l !== 'a'); $('#colB').classList.toggle('oculto', l !== 'b'); }
+function avanzar(){ const e = ESC[S.esc]; if (S.paso < e.pasos.length - 1){ S.paso++; pintar(); } }
+function irA(i, mover){ S.esc = i; S.paso = 0; S.d = {}; if (ESC[i].init) ESC[i].init(S.d); pintar(); if (mover && matchMedia('(max-width:980px)').matches) $('#escTit').scrollIntoView({ behavior:'smooth', block:'start' }); }
+
+/* mantener apretado */
+let sost = null;
+document.addEventListener('pointerdown', ev => {
+  const b = ev.target.closest('[data-hold]'); if (!b) return; ev.preventDefault();
+  const ms = +b.dataset.hold, desde = Date.now();
+  sost = { b, t:setInterval(() => { const p = Math.min(1, (Date.now() - desde) / ms); b.style.setProperty('--carga', p);
+    if (p >= 1){ clearInterval(sost.t); sost = null; tono([[660, 0, .15], [990, .12, .2]]); avanzar(); } }, 30) };
+});
+['pointerup', 'pointercancel'].forEach(t => document.addEventListener(t, () => {
+  if (!sost) return; clearInterval(sost.t); const b = sost.b; b.style.removeProperty('--carga'); sost = null;
+  toastTel(b.closest('#appA') ? 'a' : 'b', 'Mantenelo apretado hasta que se llene');
+}, true));
+
+document.addEventListener('click', ev => {
+  const opc = ev.target.closest('[data-esc]'); if (opc){ irA(+opc.dataset.esc, true); return; }
+  const tel = ev.target.closest('.tel-app'); if (!tel) return;
+  const lado = tel.id === 'appA' ? 'a' : 'b', e = ESC[S.esc], p = e.pasos[S.paso];
+  const act = ev.target.closest('[data-act]');
+  if (act){
+    const a = act.dataset.act, v = act.dataset.v;
+    if (a === 'toast'){ toastTel(lado, v); return; }
+    if (a === 'hora'){ S.d.hora = v; pintarLado('a'); return; }
+    if (a === 'pax'){ S.d.pax = Math.max(1, Math.min(6, S.d.pax + +v)); if (!libresPara(S.d.hora, S.d.pax).length){ const h = HORAS.find(x => libresPara(x, S.d.pax).length); if (h) S.d.hora = h; } pintarLado('a'); return; }
+    if (a === 'mesa'){
+      if (e.id === 'reservar'){ const est = estadoParaReservar(S.d.hora, S.d.pax, null)(v);
+        if (est === 'libre'){ S.d.mesa = v; pintarLado('a'); }
+        else if (est === 'ocupada'){ const l = liberaDe(v, h2m(S.d.hora), RES, [2]); toastTel('a', l ? `La ${v} está ocupada; se puede pedir desde las ${hhmm(l.reservable)}` : `La ${v} tiene otra reserva a esa hora`); }
+        else toastTel('a', `La ${v} es para ${mesa(v).cap} personas: no es para tu grupo`);
+      } else if (e.id === 'liberar'){ const m = mesa(v); if (m.cap < 2 || m.cap > 4){ toastTel('a', `La ${v} es para ${m.cap} personas`); return; } S.d.mesa = v; S.d.mesaV1 = v === 'V1'; pintarLado('a'); }
+      return;
+    }
+    if (a === 'acepto'){ S.d.acepto = !S.d.acepto; pintarLado('a'); return; }
+    if (a === 'lang'){ S.d.lang = v; pintarLado('a'); return; }
+  }
+  const go = ev.target.closest('[data-go]'); if (!go || go.dataset.hold) return;
+  if (lado !== p.lado){ toastTel(lado, 'Ahora le toca al otro teléfono'); mirar(p.lado); return; }
+  if (go.dataset.need && !S.d[go.dataset.need]){ toastTel(lado, go.dataset.msg || 'Falta un paso'); return; }
+  avanzar();
+});
+/* teclado: en el botón de mantener, Enter cuenta como sostenido */
+document.addEventListener('keydown', ev => { if ((ev.key === 'Enter' || ev.key === ' ') && ev.target.matches && ev.target.matches('[data-hold]')){ ev.preventDefault(); avanzar(); } });
+$('#verA').addEventListener('click', () => mirar('a'));
+$('#verB').addEventListener('click', () => mirar('b'));
+$('#reiniciar').addEventListener('click', () => irA(S.esc));
+$('#siguiente').addEventListener('click', () => irA((S.esc + 1) % ESC.length, true));
+
+/* ======================= la comanda de la portada ======================= */
+const TICKER = [
+  ['20:41', 'Mesa pedida', 'V1 para las 22:15 · cuando se libere'],
+  ['21:04', 'Nueva reserva', 'Paula G. · 3 personas · 21:45'],
+  ['21:05', 'Confirmó por WhatsApp', 'Hernán D. · 21:30'],
+  ['21:08', 'Llegaron', 'Sofía L. · V3 · cumpleaños'],
+  ['21:10', '¿Vienen?', 'le preguntamos a Diego A.'],
+  ['21:15', 'Plantón', 'M7 · incidente registrado'],
+  ['21:17', 'Sentados sin reserva', 'M7 · pareja de la puerta'],
+  ['21:25', 'Seña acreditada', 'Grupo Pérez · $ 90.000'],
+  ['21:40', 'Pidieron la cuenta', 'V1 · aviso a Mariano'],
+  ['21:48', 'Mesa adelantada', 'Mariano viene ahora a la V1'],
+];
+let tk = 4;
+function linea(x, nueva){ return `<li class="${nueva ? 'nueva' : ''}"><time>${x[0]}</time><b>${esc(x[1])}</b><span>${esc(x[2])}</span></li>`; }
+$('#cmLineas').innerHTML = TICKER.slice(0, 4).reverse().map(x => linea(x)).join('');
+if (!reducido) setInterval(() => { const ol = $('#cmLineas'); ol.insertAdjacentHTML('afterbegin', linea(TICKER[tk % TICKER.length], true)); tk++; while (ol.children.length > 5) ol.lastElementChild.remove(); }, 3400);
+
+/* ======================= el panel del dueño ======================= */
+const P = { tab:'noche', t:1270, mesa:'V1', dia:28, res:RES.map(r => ({ ...r })) };
+P.res.push({ id:99, m:'M7', h:1277, pax:2, n:'Sin reserva (puerta)', est:'sentada', dur:75, ch:['🚪 Llegó sin reservar'] });
+let pnToastT = null;
+function pnToast(msg){ $$('.pn-toast').forEach(t => t.remove()); const t = document.createElement('div'); t.className = 'pn-toast'; t.setAttribute('role', 'status'); t.textContent = msg; document.body.appendChild(t); clearTimeout(pnToastT); pnToastT = setTimeout(() => t.remove(), 2600); }
+/* Diego (id 7) no llegó: pasada la tolerancia es plantón. */
+const vigentes = t => P.res.filter(r => r.est !== 'planton' && !(r.id === 7 && t >= r.h));
+function estadoMesa(id, t){
+  const en = vigentes(t).find(r => r.m === id && r.h <= t && t < fin(r));
+  if (id === 'M7' && t >= 1260 && t < 1260 + POL.tolerancia && P.res.find(r => r.id === 7).est !== 'planton') return 'espera';
+  if (en) return (fin(en) - t <= 20) ? 'pronto' : 'ocupada';
+  const prox = vigentes(t).find(r => r.m === id && r.h > t && r.h - t <= 40);
+  return prox ? 'reservada' : 'libre';
+}
+const enSalon = t => vigentes(t).filter(r => r.h <= t && t < fin(r)).reduce((s, r) => s + r.pax, 0);
+function mareaSVG(){
+  const W = 560, H = 190, x0 = 34, x1 = W - 12, y0 = 16, y1 = H - 26, T0 = 1140, T1 = 1470;
+  const X = t => x0 + (t - T0) / (T1 - T0) * (x1 - x0), Y = v => y1 - v / CAPACIDAD * (y1 - y0);
+  let d = ''; for (let t = T0; t <= T1; t += 5) d += (t === T0 ? 'M' : 'L') + X(t).toFixed(1) + ' ' + Y(enSalon(t)).toFixed(1);
+  const area = d + `L${X(T1)} ${y1}L${X(T0)} ${y1}Z`;
+  const horas = [1140, 1200, 1260, 1320, 1380, 1440].map(t => `<line class="grilla" x1="${X(t)}" y1="${y0}" x2="${X(t)}" y2="${y1}"/><text class="eje" x="${X(t)}" y="${H - 8}" text-anchor="middle">${hhmm(t).slice(0, 2)} h</text>`).join('');
+  const niveles = [0, 24, 48].map(v => `<text class="eje" x="${x0 - 6}" y="${Y(v) + 4}" text-anchor="end">${v}</text>`).join('');
+  const c = enSalon(P.t);
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Personas en el salón a lo largo de la noche; a las ${hhmm(P.t)} hay ${c} de ${CAPACIDAD}">
+    ${horas}${niveles}<line class="tope" x1="${x0}" y1="${Y(CAPACIDAD)}" x2="${x1}" y2="${Y(CAPACIDAD)}"/><text class="tope-t" x="${x1}" y="${Y(CAPACIDAD) - 4}" text-anchor="end">${CAPACIDAD} lugares</text>
+    <path class="area" d="${area}"/><path class="linea" d="${d}"/>
+    <line class="cursor" x1="${X(P.t)}" y1="${y0}" x2="${X(P.t)}" y2="${y1}"/><circle class="punto" cx="${X(P.t)}" cy="${Y(c)}" r="5"/>
+    <text class="rot" x="${Math.min(X(P.t) + 8, x1 - 60)}" y="${Math.max(Y(c) - 8, y0 + 10)}">${c} personas</text></svg>`;
+}
+function tarjetaMesa(){
+  const id = P.mesa, t = P.t, m = mesa(id), e = estadoMesa(id, t);
+  const en = vigentes(t).find(r => r.m === id && r.h <= t && t < fin(r)), prox = vigentes(t).filter(r => r.m === id && r.h > t).sort((a, b) => a.h - b.h)[0];
+  const diego = P.res.find(r => r.id === 7);
+  let cuerpo = '';
+  if (e === 'espera'){ cuerpo = `<div class="fila"><span>Reserva</span><b>Diego A. · 21:00 · 2</b></div><div class="fila"><span>Estado</span><b>No llegó · se le preguntó</b></div><div class="fila"><span>Tolerancia hasta</span><b>${hhmm(1260 + POL.tolerancia)}</b></div>
+    <div class="pn-acc"><button data-pn="llego">Llegaron</button><button data-pn="planton" class="pri">Marcar plantón</button></div>`; }
+  else if (en){ const l = fin(en); cuerpo = `<div class="fila"><span>En la mesa</span><b>${esc(en.n)} · ${en.pax}</b></div><div class="fila"><span>Se sentaron</span><b>${hhmm(en.h)}</b></div><div class="fila"><span>Llevan</span><b>${t - en.h} min</b></div>
+    <div class="fila"><span>Se libera cerca de</span><b>${hhmm(l)}</b></div><div class="fila"><span>Lista para otra reserva</span><b>${hhmm(l + CONF.limpieza)}</b></div>
+    ${en.ch ? `<div class="chips">${en.ch.map(c => `<span class="chip">${c}</span>`).join('')}</div>` : ''}<div class="pn-acc"><button data-pn="liberar">Pidieron la cuenta</button><button data-pn="alargar">Se quedan 15 min más</button></div>`; }
+  else cuerpo = `<div class="fila"><span>Ahora</span><b>Libre</b></div>`;
+  if (prox) cuerpo += `<div class="fila"><span>Próxima reserva</span><b>${hhmm(prox.h)} · ${esc(prox.n)} · ${prox.pax}</b></div>`;
+  if (!en && !prox && e !== 'espera') cuerpo += `<div class="fila"><span>El resto de la noche</span><b>sin reservas</b></div>`;
+  if (id === 'M7' && diego.est === 'planton') cuerpo += `<div class="fila"><span>Plantón</span><b>Diego A. · incidente</b></div>`;
+  return `<h4>Mesa ${id}</h4><div style="color:var(--muted);font-size:13px">${m.z} · ${m.cap} lugares · ${COLOR[e].n.toLowerCase()} a las ${hhmm(t)}</div>${cuerpo}`;
+}
+function atencion(){
+  const t = P.t, items = [], diego = P.res.find(r => r.id === 7);
+  if (t >= 1260 && diego.est !== 'planton' && t < 1260 + POL.tolerancia) items.push(['warn', `M7: Diego A. no llegó (${t - 1260} min)`, 'Le preguntamos por WhatsApp. La mesa se libera sola si no contesta.']);
+  if (t >= 1260 + POL.tolerancia || diego.est === 'planton') items.push(['mal', 'M7: plantón de Diego A.', `Incidente con compromiso de ${pesos(2 * POL.monto)}. La mesa se ofreció a la puerta.`]);
+  const pronto = MESAS.filter(m => estadoMesa(m.id, t) === 'pronto').map(m => m.id);
+  if (pronto.length) items.push(['ok', `Se liberan en menos de 20 min: ${pronto.join(', ')}`, 'La lista de espera ya recibió el aviso.']);
+  if (t < 1260) items.push(['warn', '2 reservas sin confirmar', 'M7 21:00 y M6 22:15. La app les vuelve a escribir.']);
+  items.push(['ok', `Seña del Grupo Pérez acreditada (${pesos(6 * POL.sena)})`, 'F2 · 21:30 · se descuenta de la cuenta.']);
+  return items.slice(0, 3).map(([c, a, b]) => `<div class="at ${c}"><i></i><div>${a}<small>${b}</small></div></div>`).join('');
+}
+function pintarNoche(){
+  const conf = P.res.filter(r => r.id !== 99 && ['confirmada', 'sentada', 'finalizada'].includes(r.est)).length;
+  $('#pnCuerpo').innerHTML = `<div class="pn-nums">
+    <div class="pn-num"><span>Reservas</span><b>18</b><small>59 personas</small></div>
+    <div class="pn-num ok"><span>Confirmadas</span><b>${conf}</b><small>de 18</small></div>
+    <div class="pn-num"><span>En el salón a las <span id="nHora">${hhmm(P.t)}</span></span><b id="nSalon">${enSalon(P.t)}</b><small>de ${CAPACIDAD} lugares</small></div>
+    <div class="pn-num warn"><span>Plantones</span><b id="nPlant">0</b><small id="nPlantT">ninguno todavía</small></div></div>
+    <div class="pn-grid">
+      <div class="pn-bloque">
+        <div class="pn-t"><b>La marea de la cena</b><span>personas sentadas a cada hora</span></div>
+        <div class="marea" id="marea">${mareaSVG()}</div>
+        <div class="hora-ctl"><label for="horaR">Mirá el salón a las <b id="horaTxt">${hhmm(P.t)}</b></label><input type="range" id="horaR" min="1140" max="1470" step="5" value="${P.t}"></div>
+        <div class="pn-t"><b>Para mirar ahora</b></div><div class="atencion" id="atencion">${atencion()}</div>
+      </div>
+      <div class="pn-bloque">
+        <div class="pn-plano"><div class="plano" id="pnPlano"></div><div class="leyenda-pn">${['libre', 'reservada', 'ocupada', 'pronto', 'espera'].map(k => `<span><i style="background:${COLOR[k].f}"></i>${k === 'reservada' ? 'Llega en menos de 40 min' : COLOR[k].n}</span>`).join('')}<span>· la hora bajo la mesa: lista para otra reserva</span></div></div>
+        <div class="pn-mesa" id="pnMesa"></div>
+      </div>
+    </div>`;
+  refrescarNoche();
+  $('#horaR').addEventListener('input', e => { P.t = +e.target.value; refrescarNoche(); });
+}
+function refrescarNoche(){
+  $('#pnPlano').innerHTML = plano({ estado:id => estadoMesa(id, P.t), sel:P.mesa, nota:(id, e) => { if (e !== 'ocupada' && e !== 'pronto') return ''; const r = vigentes(P.t).find(x => x.m === id && x.h <= P.t && P.t < fin(x)); return r ? hhmm(fin(r) + CONF.limpieza) : ''; } });
+  $('#marea').innerHTML = mareaSVG(); $('#horaTxt').textContent = hhmm(P.t); $('#nHora').textContent = hhmm(P.t); $('#nSalon').textContent = enSalon(P.t);
+  $('#pnMesa').innerHTML = tarjetaMesa(); $('#atencion').innerHTML = atencion();
+  const hubo = P.t >= 1260 + POL.tolerancia || P.res.find(r => r.id === 7).est === 'planton'; $('#nPlant').textContent = hubo ? 1 : 0; $('#nPlantT').textContent = hubo ? 'la mesa se volvió a ocupar' : 'ninguno todavía';
+}
+/* el mes */
+function mesDatos(){
+  let seed = 11; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+  const base = [72, 44, 50, 56, 63, 86, 94];
+  const out = [];
+  for (let d = 1; d <= 30; d++){
+    const wd = new Date(2026, 8, d).getDay();
+    if (d === 16){ out.push({ d, wd, cerrado:true }); continue; }
+    if (d > 28){ out.push({ d, wd, futuro:true }); continue; }
+    const occ = Math.max(20, Math.min(100, Math.round(base[wd] + (rnd() - .5) * 16)));
+    const pers = Math.round(occ / 100 * CAPACIDAD * 1.8), plant = (wd === 5 || wd === 6) ? (rnd() < .5 ? 1 : 0) : (rnd() < .18 ? 1 : 0);
+    out.push({ d, wd, occ, pers, res:Math.round(pers / 3), plant, recup:plant ? 2 * POL.monto + (rnd() < .5 ? 2 * POL.monto : 0) : 0, espera:Math.round(rnd() * 3) });
+  }
+  return out;
+}
+function pintarMes(){
+  const D = mesDatos(), ab = D.filter(x => x.occ != null);
+  const pers = ab.reduce((s, x) => s + x.pers, 0), occ = Math.round(ab.reduce((s, x) => s + x.occ, 0) / ab.length), plant = ab.reduce((s, x) => s + x.plant, 0), recup = ab.reduce((s, x) => s + x.recup, 0) + 3 * 6 * POL.sena;
+  const sem = [1, 2, 3, 4, 5, 6, 0].map(w => { const xs = ab.filter(x => x.wd === w); return [w, xs.length ? Math.round(xs.reduce((s, x) => s + x.occ, 0) / xs.length) : 0]; });
+  const nombres = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
+  const primer = (new Date(2026, 8, 1).getDay() + 6) % 7;
+  $('#pnCuerpo').innerHTML = `<div class="pn-nums">
+    <div class="pn-num"><span>Personas en septiembre</span><b>${pers.toLocaleString('es-AR')}</b><small>hasta hoy, 28</small></div>
+    <div class="pn-num"><span>Ocupación media</span><b>${occ} %</b><small>de los lugares, en la cena</small></div>
+    <div class="pn-num warn"><span>Plantones</span><b>${plant}</b><small>${(plant / ab.reduce((s, x) => s + x.res, 0) * 100).toFixed(1).replace('.', ',')} % de las reservas</small></div>
+    <div class="pn-num ok"><span>Recuperado</span><b>${pesos(recup).replace('$ ', '$')}</b><small>compromisos y señas</small></div></div>
+    <div class="pn-grid">
+      <div class="pn-bloque"><div class="pn-t"><b>Septiembre, día por día</b><span>más oscuro = más lleno · tocá un día</span></div>
+        <div class="cal">${['L', 'M', 'M', 'J', 'V', 'S', 'D'].map(x => `<span class="dsem">${x}</span>`).join('')}${'<span class="vacio"></span>'.repeat(primer)}
+        ${D.map(x => x.cerrado ? `<button class="cerrado" data-dia="${x.d}" aria-pressed="${P.dia === x.d}"><b>${x.d}</b><span>cerrado</span></button>` : x.futuro ? `<button class="futuro" data-dia="${x.d}" aria-pressed="${P.dia === x.d}"><b>${x.d}</b><span></span></button>` :
+          `<button class="${x.occ >= 70 ? 'alto' : ''} ${x.d === 28 ? 'hoy' : ''}" style="--p:${Math.round(x.occ * .95)}%" data-dia="${x.d}" aria-pressed="${P.dia === x.d}" aria-label="${x.d} de septiembre, ${x.occ} por ciento"><b>${x.d}</b><span>${x.occ}%</span></button>`).join('')}</div></div>
+      <div class="pn-bloque"><div class="dia-det" id="diaDet"></div>
+        <div class="pn-t"><b>Por día de la semana</b><span>ocupación media</span></div>
+        <div class="semana">${sem.map(([w, v]) => `<div class="sem-f"><span>${nombres[w]}</span><i style="width:${v}%"></i><b>${v} %</b></div>`).join('')}</div></div>
+    </div>`;
+  const pintarDia = () => { const x = D.find(y => y.d === P.dia); let h = `<h4>${nombres[x.wd]} ${x.d} de septiembre</h4>`;
+    if (x.cerrado) h += `<div class="fila"><span>Estado</span><b>Cerrado por temporal</b></div><div class="fila"><span>Reservas avisadas</span><b>23, con otra fecha</b></div><div class="fila"><span>Compromisos</span><b>ninguno (alerta del SMN)</b></div>`;
+    else if (x.futuro) h += `<div class="fila"><span>Reservas hasta ahora</span><b>${x.d === 29 ? 11 : 7}</b></div><div class="fila"><span>Personas</span><b>${x.d === 29 ? 34 : 22}</b></div>`;
+    else h += `<div class="fila"><span>Personas</span><b>${x.pers}</b></div><div class="fila"><span>Ocupación</span><b>${x.occ} %</b></div><div class="fila"><span>Reservas</span><b>${x.res}</b></div><div class="fila"><span>Mesas desde la lista de espera</span><b>${x.espera}</b></div><div class="fila"><span>Plantones</span><b>${x.plant}${x.recup ? ' · ' + pesos(x.recup) + ' recuperados' : ''}</b></div>`;
+    $('#diaDet').innerHTML = h; };
+  pintarDia();
+  $$('.cal [data-dia]').forEach(b => b.addEventListener('click', () => { P.dia = +b.dataset.dia; $$('.cal [data-dia]').forEach(y => y.setAttribute('aria-pressed', +y.dataset.dia === P.dia)); pintarDia(); }));
+}
+/* las reglas */
+const REGLAS = [
+  { k:'horas', l:'Cancelar sin cargo hasta', min:1, max:5, step:1, f:v => `${v} ${v === 1 ? 'hora' : 'horas'} antes`, a:'Para Ushuaia sugerimos 3 horas: da tiempo a volver a ocupar la mesa.' },
+  { k:'monto', l:'Compromiso por persona', min:5000, max:20000, step:1000, f:pesos, a:'' },
+  { k:'tolerancia', l:'Tolerancia de llegada', min:10, max:30, step:5, f:v => `${v} minutos`, a:'Pasada la mitad, la app pregunta «¿vienen?»; al final, libera la mesa.' },
+  { k:'grupoDesde', l:'Seña para grupos desde', min:6, max:12, step:1, f:v => `${v} personas`, a:'' },
+  { k:'sena', l:'Seña por persona', min:5000, max:25000, step:1000, f:pesos, a:'Se descuenta de la cuenta. Con más de 48 horas de aviso, se devuelve completa.' },
+];
+function pintarReglas(){
+  $('#pnCuerpo').innerHTML = `<div class="reglas"><div>
+    ${REGLAS.map(r => `<div class="rg"><div class="rg-t"><label for="r-${r.k}">${r.l}</label><output id="o-${r.k}" for="r-${r.k}">${r.f(POL[r.k])}</output></div><input type="range" id="r-${r.k}" data-k="${r.k}" min="${r.min}" max="${r.max}" step="${r.step}" value="${POL[r.k]}">${r.k === 'monto' ? '<div class="tono" id="tono"></div><small id="montoAyuda"></small>' : r.a ? `<small>${r.a}</small>` : ''}</div>`).join('')}
+    <div class="rg"><div class="sw"><label for="r-credito">Devolverlo como crédito si vuelve en ${POL.dias} días</label><input type="checkbox" role="switch" id="r-credito" data-k="credito" ${POL.credito ? 'checked' : ''}></div><small>El compromiso se transforma en un descuento: el cliente aprende y vuelve.</small></div>
+    <div class="rg"><div class="sw"><label for="r-smn">Sin cargo si hay alerta del SMN</label><input type="checkbox" role="switch" id="r-smn" data-k="smn" ${POL.smn ? 'checked' : ''}></div><small>Con alerta por nieve o viento en Ushuaia, nadie paga por no venir.</small></div>
+    </div><div class="vista"><div class="pn-t"><b>Así lo lee tu cliente al reservar</b></div><div class="vista-chat" id="vChat"></div><div class="vista-ej" id="vEj"></div></div></div>`;
+  refrescarReglas();
+  $$('#pnCuerpo [data-k]').forEach(i => i.addEventListener('input', () => {
+    POL[i.dataset.k] = i.type === 'checkbox' ? i.checked : +i.value;
+    const o = $('#o-' + i.dataset.k), r = REGLAS.find(x => x.k === i.dataset.k); if (o && r) o.textContent = r.f(POL[r.k]);
+    refrescarReglas(); alCambiarPolitica();
+  }));
+}
+function refrescarReglas(){
+  const pct = POL.monto / CONF.ticket, margen = 4 * CONF.ticket * .65;
+  $('#tono').innerHTML = ['Suave', 'Educativo', 'Firme'].map((x, i) => `<span class="${(i === 0 && pct < .12) || (i === 1 && pct >= .12 && pct <= .25) || (i === 2 && pct > .25) ? 'on' : ''}">${x}</span>`).join('');
+  $('#montoAyuda').textContent = `Es el ${Math.round(pct * 100)} % del ticket promedio (${pesos(CONF.ticket)}). Sugerimos $ 10.000: alcanza para que el cliente lo piense dos veces sin sentirse multado.`;
+  $('#vChat').innerHTML = mIn(`¡Listo, Sofía! Te esperamos hoy a las <b>21:00</b>, 4 personas. ${polCorta(1260)}`, '10:31');
+  $('#vEj').innerHTML = `<span style="color:var(--muted)">Si una mesa de 4 cancela a las 20:15 para las 21:00</span><b class="gr">${pesos(4 * POL.monto)}</b>
+    <div class="fila"><span>Lo que pierde el restaurante (margen)</span><b>${pesos(margen)}</b></div><div class="fila"><span>El compromiso cubre</span><b>${Math.round(4 * POL.monto / margen * 100)} %</b></div>
+    <div class="fila"><span>Grupo de 12 · seña</span><b>${pesos(12 * POL.sena)}</b></div><div class="fila"><span>Si llega tarde</span><b>se guarda ${POL.tolerancia} min</b></div>`;
+}
+function alCambiarPolitica(){ $('#cifraMonto').textContent = pesos(POL.monto); pintar(true); calcular(); }
+function pintarPanel(){ $$('.pn-tabs [data-tab]').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === P.tab)); $('#pnCuerpo').setAttribute('aria-labelledby', 'tab-' + P.tab); ({ noche:pintarNoche, mes:pintarMes, reglas:pintarReglas })[P.tab](); }
+$$('.pn-tabs [data-tab]').forEach(b => b.addEventListener('click', () => { P.tab = b.dataset.tab; pintarPanel(); }));
+$('#pnCuerpo').addEventListener('click', ev => {
+  const g = ev.target.closest('#pnPlano [data-mesa]'); if (g){ P.mesa = g.dataset.mesa; refrescarNoche(); return; }
+  const b = ev.target.closest('[data-pn]'); if (!b) return;
+  const t = P.t, en = P.res.find(r => r.m === P.mesa && r.h <= t && t < fin(r) && r.est !== 'planton'), diego = P.res.find(r => r.id === 7);
+  if (b.dataset.pn === 'liberar' && en){ en.dur = Math.max(20, t - en.h); pnToast(`Mesa ${P.mesa} libre a las ${hhmm(t)}; lista a las ${hhmm(t + CONF.limpieza)}. Se avisa a quien la pidió.`); }
+  if (b.dataset.pn === 'alargar' && en){ en.dur += 15; pnToast(`Mesa ${P.mesa}: se libera a las ${hhmm(fin(en))}. Si hay una reserva después, se le avisa.`); }
+  if (b.dataset.pn === 'planton'){ diego.est = 'planton'; pnToast('Plantón registrado. La mesa se ofreció a la lista de espera.'); }
+  if (b.dataset.pn === 'llego'){ diego.est = 'sentada'; diego.id = 70; pnToast('Diego A. llegó: M7 ocupada.'); }
+  refrescarNoche();
+});
+
+/* ======================= la calculadora ======================= */
+function calcular(){
+  const R = +$('#cRes').value, Px = +$('#cPax').value, T = +$('#cTic').value, N = +$('#cPct').value;
+  $('#oRes').textContent = R; $('#oPax').textContent = String(Px).replace('.', ','); $('#oTic').textContent = pesos(T); $('#oPct').textContent = N + ' %';
+  const mes = 4.33, perd = R * mes * N / 100 * Px * T * .65, nApp = Math.max(2, N / 2);
+  const con = R * mes * nApp / 100 * Px * T * .65, compromisos = R * mes * nApp / 100 * Px * POL.monto * .5, dif = perd - con + compromisos;
+  const redondo = n => n >= 1e6 ? '$ ' + (n / 1e6).toFixed(1).replace('.', ',') + ' M' : pesos(Math.round(n / 1000) * 1000);
+  $('#rPerd').textContent = redondo(perd); $('#rCon').textContent = redondo(con - compromisos > 0 ? con - compromisos : 0); $('#rDif').textContent = redondo(dif);
+  const cenas = Math.round(dif / (4 * T)); $('#rCenas').textContent = cenas > 0 ? `(como ${cenas} cenas de 4 personas)` : '';
+}
+['cRes', 'cPax', 'cTic', 'cPct'].forEach(id => $('#' + id).addEventListener('input', calcular));
+
+/* copiar el número */
+$('#copiarNro').addEventListener('click', e => { const b = e.currentTarget, n = $('#nroWa').textContent;
+  const ok = () => { b.textContent = 'Copiado'; setTimeout(() => b.textContent = 'Copiar el número', 1800); };
+  const sel = () => { const r = document.createRange(); r.selectNodeContents($('#nroWa')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'Seleccionado: copialo'; };
+  try { navigator.clipboard.writeText(n).then(ok, sel); } catch (err) { sel(); } });
+
+/* arranque: …#planton abre esa situación */
+$('#cmResto').textContent = CONF.resto.toUpperCase(); $('#pnResto').textContent = CONF.resto;
+const ancla = (location.hash || '').slice(1), j = ESC.findIndex(x => x.id === ancla);
+irA(j >= 0 ? j : 0);
+pintarPanel(); calcular();
+})();
+</script>
+
+</html>
